@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.VideoMapper">
+	<resultMap type="com.p2p.pojo.Video" id="BaseResultMap">
+		  <id column="v_id" property="vid"/>
+ 		  <result column="v_name" property="vname"/>
+ 		  <result column="v_imgurl" property="vimgurl"/>
+ 		  <result column="v_vurl" property="vvurl"/>
+	</resultMap>
+	
+	<!--查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from video 
+ 	</select>
+ 	<!-- 添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="vid">
+ 		 insert into video(v_name,v_imgurl,v_vurl) 
+ 		 values(#{vname},#{vimgurl},#{vvurl})
+ 	</insert>
+ 	<!-- 删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Video">
+		delete from video where v_id = #{vid};
+	</delete>
+	 <!-- 查询总记录数 -->
+    <select id="videoCount" resultType="java.lang.Integer">
+        select count(*) from video;
+    </select>
+      <!-- 查询所有 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from video;        
+    </select>
+     <!-- 修改 -->
+    <update id="update" parameterType="com.p2p.pojo.Video" >
+        UPDATE video SET 
+			v_name=#{vname},
+			v_imgurl=#{vimgurl},
+			v_vurl =#{vvurl}
+		WHERE v_id=#{vid}
+    </update>
+      <!-- 前台font -->
+    <select id="getModel" parameterType="Video" resultType="com.p2p.pojo.Video" resultMap="BaseResultMap" >
+        select * from video where v_id = #{vid}
+    </select>
+</mapper>

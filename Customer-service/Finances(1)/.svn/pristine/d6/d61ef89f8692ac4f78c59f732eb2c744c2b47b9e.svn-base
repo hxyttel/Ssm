@@ -1,0 +1,12 @@
+package com.p2p.controller.front;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+
+import com.p2p.service.front.ProfitService;
+@Controller
+public class ProfitController {
+	@Resource(name="profitServiceImpl")
+	private ProfitService profitService;
+}

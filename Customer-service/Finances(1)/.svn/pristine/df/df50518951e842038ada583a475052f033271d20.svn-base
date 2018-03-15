@@ -1,0 +1,59 @@
+package com.p2p.controller.back;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.p2p.pojo.Withdrawals;
+import com.p2p.service.back.WithdrawalsService;
+import com.p2p.util.PageInfo;
+
+
+@Controller
+@RequestMapping(value="/back/admin")
+public class WithdrawalsController {
+	@Resource(name="withdrawalsServiceImpl")
+	private WithdrawalsService withdrawalsService;
+	
+	@RequestMapping(value="selectWithdrawalsList")
+	@ResponseBody
+	public PageInfo selectWithdrawalsList(Integer page,Integer rows) {
+		PageInfo pageInfo = new PageInfo(page+1,rows);
+		Integer count = withdrawalsService.withdrawalsCount();
+		Map<String,Object> map = new HashMap<String,Object>();
+		pageInfo.setCondition(map);
+		withdrawalsService.selectPage(pageInfo);
+		pageInfo.setTotal(pageInfo.getTotal());
+		return pageInfo;
+	}
+	//实现新增
+		@RequestMapping(value="insertWithdrawals")
+		@ResponseBody
+		public int insertWithdrawals(Withdrawals withdrawals) {
+			int count = withdrawalsService.addModel(withdrawals);
+			return count;
+		}
+		
+	
+	//删除
+	@RequestMapping(value ="deleteWithdrawals")
+	@ResponseBody
+	public  int deleteWithdrawals(String ids){ 
+		int count = 0;
+		String[] idStr = ids.split(",");
+		for (int i = 0; i < idStr.length;i++) {
+			String wid = (String) idStr[i];
+			Withdrawals withdrawals = new Withdrawals();
+			withdrawals.setWid(Integer.valueOf(wid));;
+			count =withdrawalsService.delete(withdrawals);
+		}
+		return count;
+	}
+}

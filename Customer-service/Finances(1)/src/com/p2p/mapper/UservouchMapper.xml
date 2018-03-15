@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.UservouchMapper">
+  <resultMap id="BaseResultMap" type="com.p2p.pojo.Uservouch">
+		<id column="uv_id" property="uvid"/>
+		<result column="uv_day" property="uvday"/>   
+		<result column="uv_money" property="uvmoney"/>  
+		<result column="uv_image" property="uvimage"/>  
+		<result column="uv_startDate" property="uvstartDate"/> 
+		<result column="uv_endDate" property="uvendDate"/>  
+		<result column="u_id" property="uid"/>  
+		<result column="u_condition" property="ucondition"/>  
+		<result column="u_strat" property="ustrat"/>  
+    </resultMap>
+     <resultMap type="com.p2p.pojo.Userinfo" id="userInfoBaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ic_id" property="icid"/>
+ 		   <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pe_id" property="peid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 	</resultMap>
+	 <!-- 代金券查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select uv.uv_id,uv.uv_day,uv.uv_money,uv.uv_image,uv.uv_startDate,uv.uv_endDate,uv.u_id,uv.u_condition,uv.u_strat,ui.ui_name as uiname,u.u_id  from  user_vouch uv,user u ,user_info ui 
+		<where>
+			 uv.u_id = u.u_id and ui.u_id = u.u_id
+			 </where>
+ 	</select>
+ 	  <!-- 查询代金券 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+			select uv.uv_id,uv.uv_day,uv.uv_money,uv.uv_image,uv.uv_startDate,uv.uv_endDate,uv.u_id,uv.u_condition,uv.u_strat,ui.ui_name as uiname,u.u_id  from  user_vouch uv,user u ,user_info ui 
+		<where>
+			 uv.u_id = u.u_id and ui.u_id = u.u_id
+			 </where>   
+    </select>
+    <!-- 查询代金券的总记录数 -->
+    <select id="UservouchyCount" resultType="java.lang.Integer">
+        select count(*) from user_vouch;
+    </select>
+     <!-- 代金券添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="uvid">
+ 		 insert into user_vouch(uv_day,uv_money,uv_image,uv_startDate,uv_endDate,u_id,u_condition,u_strat) 
+ 		 values(#{uvday},#{uvmoney},#{uvimage},#{uvstartDate},#{uvendDate},#{uid},#{ucondition},#{ustrat})
+ 	</insert>
+ 	 <!-- 修改代金券-->
+    <update id="update" parameterType="com.p2p.pojo.Uservouch" >
+        UPDATE user_vouch 
+         <trim prefix="set" suffixOverrides=",">
+        	<if test="uvday!=null">uv_day = #{uvday},</if>
+			<if test="uvmoney!=null">uv_money=#{uvmoney},</if>
+			<if test="uvimage!=null">uv_image=#{uvimage},</if>
+			<if test="uvstartDate!=null">uv_startDate =#{uvstartDate},</if>
+			<if test="uvendDate!=null">uv_endDate =#{uvendDate},</if>
+			<if test="uid!=null">u_id =#{uid},</if>
+			<if test="ucondition!=null">u_condition=#{ucondition},</if>
+			<if test="ustrat!=null">u_strat = #{ustrat},</if>
+		</trim>
+		WHERE uv_id=#{uvid}
+    </update>
+    <!-- 删除代金券 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Uservouch">
+        DELETE FROM user_vouch WHERE uv_id=#{uvid}
+    </delete>
+    <!-- 查询 -->
+     <select id="seleUservouchList" resultMap="userInfoBaseResultMap">
+      	select * from user_info 
+    </select> 
+    <select id="selectByUserId" resultMap="BaseResultMap">
+   	 <![CDATA[
+    	select * from user_vouch WHERE u_id=#{userid} and u_strat=0 and uv_endDate >=now(); 
+     ]]>
+    </select>
+    <select id="getModel" parameterType="com.p2p.pojo.Uservouch" resultMap="BaseResultMap">
+    	select * from user_vouch
+    	<where>
+    	1=1
+    		<if test="uvid!=null">and uv_id = #{uvid}</if>
+    		<if test="uvday!=null">and uv_day = #{uvday}</if>
+			<if test="uvmoney!=null and uvmoney!='0.0'.toString()">and uv_money=#{uvmoney}</if>
+			<if test="uvimage!=null">and uv_image=#{uvimage}</if>
+			<if test="uvstartDate!=null">and uv_startDate =#{uvstartDate}</if>
+			<if test="uvendDate!=null">and uv_endDate =#{uvendDate}</if>
+			<if test="uid!=null">and u_id =#{uid}</if>
+			<if test="ucondition!=null">and u_condition=#{ucondition}</if>
+			<if test="ustrat!=null">and u_strat = #{ustrat}</if>
+    	</where>
+    </select>
+    
+    
+    <!--查询还没过期的并且没有使用的  -->
+    <select id="selectByNIU" resultMap="BaseResultMap">
+		select * from user_vouch WHERE u_id=#{uvid} and u_strat=0 and uv_endDate>=now(); 
+    </select>
+    
+    <!-- 查询已使用 -->
+	<select id="selectByUse" resultMap="BaseResultMap">
+		select * from user_vouch WHERE u_id=#{uvid} and u_strat=1;
+	</select>
+	
+	<!-- 查询过期 -->
+	<select id="selectByOver" resultMap="BaseResultMap">
+	<![CDATA[
+		select * from user_vouch WHERE u_id=#{uvid} and uv_endDate<=now();
+	]]>
+	</select>
+    
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.UserlevelMapper">
+	<resultMap id="BaseResultMap" type="com.p2p.pojo.Userlevel">
+		<id column="ul_id" property="ulid"/> 
+		<result column="ul_name" property="ulname"/>  
+		<result column="ul_levelValue" property="ullevelValue"/> 
+		<result column="u_id" property="uid"/> 
+    </resultMap>
+    <resultMap type="com.p2p.pojo.Userinfo" id="userInfoBaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ic_id" property="icid"/>
+ 		   <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pe_id" property="peid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 	</resultMap>
+	 <!-- 查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select ul.ul_id,ul.ul_name,ul.ul_levelValue,ul.u_id,ui.ui_name as uiname,u.u_id  from  user_level ul ,user u ,user_info ui 
+		<where>
+			 ul.u_id = u.u_id and ui.u_id = u.u_id
+		</where>
+ 	</select>
+ 	  <!-- 查询 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select ul.ul_id,ul.ul_name,ul.ul_levelValue,ul.u_id,ui.ui_name as uiname,u.u_id  from  user_level ul ,user u ,user_info ui 
+		<where>
+			 ul.u_id = u.u_id and ui.u_id = u.u_id
+		</where>
+		        
+    </select>
+    <!-- 查询 -->
+    <select id="UserlevelCount" resultType="java.lang.Integer">
+        select count(*) from user_level;
+    </select>
+     <!-- 增加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="ulid">
+ 		 insert into user_level(ul_name,ul_levelValue,u_id) 
+ 		 values(#{ulname},#{ullevelValue},#{uid})
+ 	</insert>
+ 	 <!-- 删除-->
+    <delete id="delete" parameterType="com.p2p.pojo.Userlevel">
+        DELETE FROM user_level WHERE ul_id=#{ulid}
+    </delete>
+     <!-- 修改-->
+    <update id="update" parameterType="com.p2p.pojo.Userlevel" >
+        UPDATE user_level SET
+        	ul_name = #{ulname},
+			ul_levelValue=#{ullevelValue},
+			u_id =#{uid}
+		WHERE ul_id=#{ulid}
+    </update>
+    
+    <!-- 查询 -->
+     <select id="seleUserlevelList" resultMap="userInfoBaseResultMap">
+      	select * from user_info 
+    </select> 
+</mapper>

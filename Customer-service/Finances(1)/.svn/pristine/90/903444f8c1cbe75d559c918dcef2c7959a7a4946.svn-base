@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RecordMapper">
+	<resultMap id="BaseResultMap" type="com.p2p.pojo.Record">
+		<id column="rd_id" property="rdid"></id>
+		<result column="rd_name" property="rdname"></result>
+		<result column="e_id" property="reid"></result>
+		<result column="rd_status" property="rdstatus"></result>
+		<result column="rd_time" property="rdtime"></result>
+		<result column="rd_remark" property="rdremark"></result>
+	</resultMap>	
+	<!-- 后台管理员操作记录表查询 -->
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from record
+	</select>
+	<!-- 后台管理员操作记录表分页查询 -->
+	<select id="pageRecord" resultMap="BaseResultMap">
+		select * from record
+	</select>
+	<!-- 后台管理员操作记录表总记录数查询 -->
+	<select id="countRecord" resultType="java.lang.Integer">
+		select count(*) from record
+	</select>
+	<!-- 后台管理员操作记录表增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Record" useGeneratedKeys="true" keyColumn="rdid">
+		insert into record(rd_id,rd_name,e_id,rd_status,rd_time,rd_remark) 
+			values(#{rdid},#{rdname},#{reid},#{rdstatus},#{rdtime},#{rdremark})
+	</insert>
+	<!-- 后台管理员操作记录表修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Record">
+		update record set rd_name=#{rdname},e_id=#{reid},rd_status=#{rdstatus},
+			rd_time=#{rdtime},rd_remark=#{rdremark} where rd_id =#{rdid}
+	</update>
+	<!-- 后台管理员操作记录表删除 -->
+	<delete id="delete"  parameterType="java.lang.Integer">
+		delete from record where rd_id=#{rdid} 
+	</delete>
+</mapper>

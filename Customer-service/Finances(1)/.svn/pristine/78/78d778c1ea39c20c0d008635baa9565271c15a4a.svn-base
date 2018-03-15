@@ -1,0 +1,15 @@
+package com.p2p.mapper;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.p2p.base.IBaseDao;
+import com.p2p.pojo.Activity;
+/**
+ * 操作人:吴光海
+ * 创建时间:2017-12-19
+ * 操作后台员工的mapper
+ * */
+public interface ActivityMapper extends IBaseDao<Integer, Activity>{
+	List<Activity> listActivity();
+}

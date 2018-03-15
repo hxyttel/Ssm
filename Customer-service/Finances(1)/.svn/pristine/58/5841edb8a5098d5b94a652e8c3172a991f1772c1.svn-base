@@ -1,0 +1,60 @@
+package com.p2p.controller.front;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.p2p.controller.back.UtilController;
+import com.p2p.pojo.Fabiao;
+import com.p2p.pojo.User;
+import com.p2p.service.back.FabiaobackService;
+import com.p2p.util.DateUtils;
+
+@Controller
+@RequestMapping("/userFabiao")
+public class UserFabioController {
+	
+	@Resource(name="fabiaobackServiceImpl")	
+	private FabiaobackService fabiaoService;
+	
+	
+	@RequestMapping("/insertFabiao")
+	@ResponseBody
+	public int insertFabiao(Fabiao fabiao,HttpSession session,MultipartFile[] upfiles,MultipartFile upfile, HttpServletRequest request) throws Exception {
+		
+		String filepath = "";
+		if(upfiles.length!=0) {
+			filepath = UtilController.uploadReNames(upfiles,request.getSession());
+			String[] aa =  filepath.split(",");
+			fabiao.setFimage(aa[0]);
+		}
+		fabiao.setForderimg(filepath);
+		
+		//String fimage = UtilController.uploadFrom(request,file);
+		//fabiao.setFimage(fimage);
+		String fsecurity = UtilController.uploadFrom(request,upfile);
+		fabiao.setFsecurity(fsecurity);
+		
+		User user = (User)session.getAttribute("user");
+		fabiao.setUid(user.getUid());
+		BigDecimal big = new BigDecimal("0.00");
+		fabiao.setFendmoney(big);
+		fabiao.setFendtime(DateUtils.getDateTimeFormat(new Date()));
+		fabiao.setFminmoney(big);
+		fabiao.setFmaxmoney(big);
+		fabiao.setFrate(big);
+		fabiao.setFbidstatus(0);
+		fabiao.setFstatus(6);
+		
+		int count = fabiaoService.addModel(fabiao);
+		return count;
+	}
+}

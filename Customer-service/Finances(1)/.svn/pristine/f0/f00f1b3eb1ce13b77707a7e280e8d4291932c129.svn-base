@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.IUserMapper">
+<resultMap type="com.p2p.pojo.User" id="BaseResultMap">
+		  <id column="u_id" property="uid"/>
+ 		  <result column="u_password" property="upassword"/>
+ 		  <result column="u_headImg" property="uheadImg"/>
+ 		  <result column="u_phone" property="uphone"/>
+ 		  <result column="u_loginTime" property="uloginTime"/>
+ 		   <result column="order_invite" property="orderinvite"/>
+ 		  <result column="u_invite" property="uinvite"/>
+ 		  <result column="u_enable" property="uenable"/>
+ 		  <result column="u_isAccountSum" property="uisAccountSum"/>
+ 		  <result column="qr_code" property="qrcode"/>
+ 		   <result column="u_address" property="uaddress"/>
+ 		  <result column="u_ip" property="uip"/>
+ 		  <result column="uv_id" property="uvid"/>
+ 		  <result column="u_credit" property="ucredit"/>
+ 		  <result column="u_balance" property="ubalance"/>
+ 		  <result column="ul_id" property="ulid"/>
+ 		  <result column="vd_id" property="vdid"/>
+ 		 
+</resultMap>
+	
+	<sql id="myusersql">
+		u_password,u_headImg,u_phone,u_loginTime,order_invite,u_invite,
+		u_enable,u_isAccountSum,qr_code,u_address,u_ip,uv_id,u_credit,u_balance,ul_id,vd_id
+	</sql>
+	<!-- 增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.User" useGeneratedKeys="true" keyProperty="uid">
+ 		 insert into user(<include refid="myusersql" />)
+ 		 values(#{upassword},#{uheadImg},#{uphone},#{uloginTime},#{orderinvite},#{uinvite},#{uenable},#{uisAccountSum},#{qrcode},#{uaddress},#{uip},#{uvid},#{ucredit},#{ubalance},#{ulid},#{vdid})
+ 	</insert>
+ 	
+ 	<select id="getModel" parameterType="com.p2p.pojo.User" resultMap="BaseResultMap">
+ 		select * from user 
+ 		 <where>
+ 		     1=1
+ 			    <if test="uid!=null">and u_id=#{uid}</if>
+		  		<if test="upassword!=null">and u_password=#{upassword}</if>
+		  		<if test="uheadImg!=null">and u_headImg=#{uheadImg}</if>
+		  		<if test="uphone!=null">and u_phone=#{uphone}</if>
+		  		<if test="uloginTime!=null">and u_loginTime=#{uloginTime}</if>
+		  		<if test="orderinvite!=null">and order_invite=#{orderinvite}</if>
+		  		<if test="uinvite!=null">and u_invite=#{uinvite}</if>
+		  		<if test="uenable!=null">and u_enable=#{uenable}</if>
+		  		<if test="uisAccountSum!=null">and u_isAccountSum=#{uisAccountSum}</if>
+		  		<if test="qrcode!=null">and qr_code=#{qrcode}</if>
+		  		<if test="uaddress!=null">and u_address=#{uaddress}</if>
+		  		<if test="uip!=null">and u_ip=#{uip}</if>
+		  		<if test="uvid!=null">and uv_id=#{uvid}</if>
+		  		<if test="ucredit!=null">and u_credit=#{ucredit}</if>
+		  		<if test="ubalance!=null">and u_balance=#{ubalance}</if>
+		  		<if test="ulid!=null">and ul_id=#{ulid}</if>
+		  		<if test="vdid!=null">and vd_id=#{vdid}</if>
+ 		</where>
+ 	</select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.CooorganizMapper">
+<resultMap type="com.p2p.pojo.Cooorganiz" id="BaseResultMap">
+	      <id column="co_id" property="coid"/>
+ 		  <result column="co_name" property="coname"/>
+ 		  <result column="co_imgurl" property="coimgurl"/>
+ 		  <result column="co_linkurl" property="colinkurl"/>
+ 		  
+</resultMap>
+ 	<select id="selectPage" resultMap="BaseResultMap">
+ 		select * from cooorganiz 
+ 	</select>
+		 <!-- 填加角色 -->
+    <insert id="addModel" parameterType="com.p2p.pojo.Cooorganiz">
+        insert into cooorganiz(co_name,co_imgurl,co_linkurl) 
+		   values(#{coname},#{coimgurl},#{colinkurl})     
+    </insert>
+    
+     <!-- 修改合作机构 -->
+    <update id="update" parameterType="com.p2p.pojo.Cooorganiz" >
+        UPDATE cooorganiz SET 
+			co_name=#{coname},
+			co_imgurl=#{coimgurl},
+			co_linkurl =#{colinkurl}
+		WHERE co_id=#{coid}
+    </update>
+     
+     <!-- 删除角色 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Cooorganiz">
+        DELETE FROM cooorganiz WHERE co_id=#{coid} 
+    </delete>
+    
+    <!-- 查询角色的总记录数 -->
+    <select id="CooorganizCount" resultType="java.lang.Integer">
+        select count(*) from cooorganiz;
+    </select>																																 
+</mapper>

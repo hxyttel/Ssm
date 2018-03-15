@@ -1,0 +1,216 @@
+package com.p2p.controller.front;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.p2p.controller.back.UtilController;
+import com.p2p.pojo.User;
+import com.p2p.service.front.IUserService;
+import com.p2p.util.AddressUtils;
+import com.p2p.util.DateUtils;
+import com.p2p.util.IpChecker;
+/**
+ * 关于前台用户相关操作的controller
+ * 2017-11-16
+ * 操作人:汪栋才
+ * */
+@Controller
+@RequestMapping("/user")
+public class IUserController {
+	@Resource(name="IUserServiceImpl")
+	private IUserService iUserService;
+	
+	/**
+	 * 用户注册界面的注册方法
+	 * */
+	@RequestMapping("/userRegister")
+	@ResponseBody
+	 public String userRegister(@RequestParam String phone,@RequestParam String pass_word,@RequestParam String yqcode,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+		ObjectMapper mapper = new ObjectMapper(); //转换器  
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		AddressUtils addressUtils = new AddressUtils();
+		
+		/**
+		 * 1：密码加密（MD5）
+		 * 2：写进数据库
+		 * 3:根据返回id查找user对象
+		 * 4：把user对象放在session中
+		 * */
+		Object result = new SimpleHash("MD5", pass_word, ByteSource.Util.bytes(phone), 10);
+		System.out.println(result.toString());
+		User user = new User();
+		user.setUpassword(result.toString());
+		user.setUheadImg("/Finances/WebContent/front/images/IMG_2166.JPG");
+		user.setUphone(phone);
+		user.setUloginTime(DateUtils.getDateTimeFormat(new Date()));
+		
+		//别人的邀请码
+		if(!yqcode.equals("nowrite")) {
+			System.out.println("有邀请码，给体验券");
+			/**
+			 * 根据邀请码去查询是哪个邀请的
+			 * 1:被邀请用户增加一些权益(代金券,经验等..)
+			 * 2:邀请码的用户同上
+			 * */
+			user.setOrderinvite(yqcode);
+			
+		}
+		
+		//自己的邀请码
+		
+		String ranks = IUserController.getUUID();
+		user.setUinvite(ranks);
+		
+		
+		/**
+		 * 获取手机号生成URL
+		 * 此controller方法在下面
+		 * */
+		String url = "http://"+addressUtils.getIP()+":8080/Finances/user/toLoginHaveYaoqing?phone="+phone;
+		
+		//设置自己的二维码
+		String qrcode =   UtilController.createQRcode(url, request, response);
+		user.setQrcode(qrcode);
+		
+		user.setUenable(1);
+		user.setUisAccountSum(1);
+		
+		//设置ip
+		String ip = IpChecker.getIp();
+		user.setUip(ip);
+		
+		//设置自己的常用登入地
+		String  address = addressUtils.getAddresses("ip="+ip, "utf-8");
+		
+		user.setUaddress(address);
+
+		user.setUvid("1");
+		user.setUcredit(3000);
+		user.setUbalance(0.00);
+		
+		user.setUlid("0");
+		user.setVdid(0.00);
+		
+		try {
+			Integer userid = iUserService.addModel(user);
+			System.out.println(userid);
+			//如果注册成功
+			User user2 = new User();
+			user2.setUid(userid);
+			
+			//数据库
+			User user3 =  iUserService.getModel(user2);
+			/**
+			 * 把用户信息存放进session
+			 * */
+			session.setAttribute("user",user3);
+			map.put("status",1);
+		}catch (Exception e) {
+			//日志
+			e.printStackTrace();
+			map.put("status","5");
+			map.put("message", "注册失败,请稍后再试");
+		}
+		String aa = mapper.writeValueAsString(map);
+		//System.out.println(aa);
+		return aa;
+	}
+	
+	
+		/**
+		 * 用户登入界面的登入方法
+		 * */
+		@RequestMapping(value="/userLogin")
+		@ResponseBody
+		private String mnlogin(@RequestParam String user_name,@RequestParam String pass_word,HttpSession session) throws Exception {
+		
+			ObjectMapper mapper = new ObjectMapper(); //转换器  
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			System.out.println("手机号码"+user_name);
+			System.out.println("密码是"+pass_word);
+			
+			/**
+			 * 1：密码加密
+			 * 2：查找数据库
+			 * 3:根据返回id查找user对象
+			 * 4：把user对象放在session中
+			 * */
+			Object results = new SimpleHash("MD5", pass_word, ByteSource.Util.bytes(user_name), 10);
+			System.out.println(results.toString());
+			User user = new User();
+			user.setUphone(user_name);
+			user.setUpassword(results.toString());
+			//如果登入成功
+			User user2 =  iUserService.getModel(user);
+
+			if(user2!=null) {
+				//证明有值,登入成功
+				map.put("status",1);
+				//加密URL
+				String serchName = "http://127.0.0.1:8080/Finances/toindex";
+				serchName = java.net.URLDecoder.decode(serchName,"UTF-8");
+				System.out.println(serchName);
+				map.put("url",serchName);
+				map.put("comments","登入成功");
+				/**
+				 * 把用户信息存放进session
+				 * */
+				session.setAttribute("user",user);
+				
+			}else {
+				map.put("status",5);
+				map.put("message","账号密码输入错误或账号不存在");
+				
+			}
+			
+			String aa = mapper.writeValueAsString(map);
+			System.out.println(aa);
+
+			return aa;
+	}
+		
+	/**
+	 * 这里是在二维码扫描的时候进入的controller
+	 * 1:最好是自适应模板
+	 * 2:用户用手机扫描的时候进入页面
+	 * 	2.1:页面显示用户的一些个人信息
+	 * */	
+	@RequestMapping(value="/toLoginHaveYaoqing")
+	public ModelAndView toLoginHaveYaoqing(String phone) {
+		ModelAndView mo = new ModelAndView();
+		User user = new User();
+		user.setUphone(phone);
+		User user2 =  iUserService.getModel(user);
+		mo.addObject("ortheruser",user2);
+		mo.setViewName("views/front/qrcode");
+		return mo;
+	}	
+	
+	/**
+	 * 取得UUID
+	 * */
+	public static String getUUID(){ 
+		String uuid = UUID.randomUUID().toString(); 
+		//去掉“-”符号 
+		return uuid.replaceAll("-", "");
+	}	
+}

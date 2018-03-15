@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.p2p.pojo.Role">
+		<id column="re_id" property="reid"/>
+		<result column="pt_id" property="ptid"/>   
+		<result column="re_name" property="rename"/>  
+		<result column="re_remark" property="reremark"/>  
+		<result column="re_status" property="restatus"/>  
+    </resultMap>
+    <resultMap  id="TreeResultMap" type="com.p2p.pojo.Powertree">
+    	<id column="pt_id" property="ptid"/>
+    	<result column="pt_name" property="ptname"/>
+    	<result column="pt_node" property="ptnode"/>
+    	<result column="pt_status" property="ptstatus"/>
+    </resultMap>
+    <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from role 
+		<where>
+		    1=1
+			<if test="role.rename != null and role.rename !='' ">
+			    and re_name like CONCAT(CONCAT('%', #{role.rename}), '%')
+			</if>
+			<if test="role.reremark != null and role.reremark !=''">
+			     and re_remark like CONCAT(CONCAT('%', #{role.reremark}), '%')
+			</if>
+			<if test="role.restatus != null and role.restatus != -1">
+			    and re_status  like CONCAT(CONCAT('%', #{role.restatus}), '%')
+			</if>
+		</where>
+    </select>
+     <!-- 查询所有的角色 -->
+    <select id="seleRoleList" resultMap="BaseResultMap">
+    	select * from role
+    </select>
+     <!-- 填加角色 -->
+    <insert id="addModel" useGeneratedKeys="true" keyProperty="reid">
+        insert into role(pt_id,re_name,re_remark,re_status) 
+		   values('1',#{rename},#{reremark},#{restatus})     
+    </insert>
+    
+    <!-- 通过角色对象查询 -->
+    <select id="getUser" parameterType="com.p2p.pojo.Role" resultType="com.p2p.pojo.Role"></select>
+    
+    <!-- 通过id查询角色 -->
+    <select id="findUser" parameterType="java.lang.Integer" resultType="com.p2p.pojo.Role"></select>
+     
+     <!-- 修改角色 -->
+    <update id="update" parameterType="com.p2p.pojo.Role" >
+        UPDATE role 
+        <trim prefix="set" suffixOverrides=",">
+		  <if test="rename!=null">re_name=#{rename},</if>
+		  <if test="reremark!=null">re_remark=#{reremark},</if>
+		  <if test="restatus!=null">re_status =#{restatus},</if>
+ 		</trim>
+        <where>re_id=#{reid}</where>
+    </update>
+     <!-- 删除角色 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Role">
+        DELETE FROM role WHERE re_id=#{reid} 
+    </delete>
+    <!-- 查询角色的总记录数 -->
+    <select id="roleCount" resultType="java.lang.Integer">
+        select count(*) from role;
+    </select>
+    
+     <!-- 根据reid查询权限 -->
+    <select id="selePtidByreid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    	select pt_id from role <where>
+    		re_id=#{reid}
+    	</where>
+    </select>
+    
+      <!-- 查询所有的权限树 -->
+    <select id="selePowerTreeList" resultMap="TreeResultMap">
+    	select * from powertree
+    </select>
+    
+    <!-- 根据ptid得到权限树名 -->
+    <select id="selePtnameByptid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    	select pt_name from powertree <where>
+    		pt_id =#{ptid}
+    	</where>
+    </select>
+    
+    <!-- 修改权限树 -->
+    <update id="updatePowerTree" parameterType="com.p2p.pojo.Role">
+    	 UPDATE role SET 
+			pt_id =#{ptid}
+		<where>
+			re_id=#{reid}
+		</where>
+		
+    </update>
+    
+     <!-- 根据emp的reid得到Role对象 -->
+    <select id="getByereid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    	select * from role where re_id =#{reid}
+    </select>
+</mapper>

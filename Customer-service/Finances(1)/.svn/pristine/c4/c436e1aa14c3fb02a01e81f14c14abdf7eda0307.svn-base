@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.LoanMapper">
+	<resultMap type="com.p2p.pojo.Loan" id="BaseResultMap">
+		  <id column="l_id" property="lid"/>
+		   <result column="u_id" property="uid"/>
+ 		  <result column="l_money" property="lmoney"/>
+ 		  <result column="l_time" property="ltime"/>
+ 		  <result column="l_endtime" property="lendtime"/>
+ 		   <result column="l_status" property="lstatus"/>
+ 		  <result column="l_way" property="lway"/>
+ 		   <result column="l_interest" property="linterest"/>
+ 		   <!--配置一对一 -->
+ 		   <association property="user" javaType="com.p2p.pojo.User">
+ 		   <id column="u_id" property="uid"/>
+			<result column="u_password" property="upassword"/>   
+			<result column="u_headImg" property="uheadImg"/>  
+			<result column="u_phone" property="uphone"/>  
+			<result column="u_regTime" property="uregTime"/> 
+			<result column="u_loginTime" property="uloginTime"/>
+			<result column="order_invite" property="orderinvite"/>
+			<result column="u_invite" property="uinvite"/>
+			<result column="u_enable" property="uenable"/>
+			<result column="u_isAccountSum" property="uisAccountSum"/>
+			<result column="qr_code" property="qrcode"/> 
+			<result column="u_ip" property="uip"/> 
+			<result column="u_credit" property="ucredit"/> 
+			<result column="ul_id" property="ulid"/> 
+			<result column="u_regTime" property="uregTime"/> 
+			<result column="vd_id" property="ulid"/> 
+ 		   </association>
+	</resultMap>
+	
+	<!-- 联系人查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from loan
+ 		<where>
+		    1=1
+			<if test="loan.uid != null and loan.uid !='' ">
+			    and u_id like CONCAT(CONCAT('%', #{loan.uid}), '%')
+			</if>
+			<if test="loan.lmoney != null and loan.lmoney !=''">
+			     and l_money like CONCAT(CONCAT('%', #{loan.lmoney}), '%')
+			</if>
+			<if test="loan.ltime != null and loan.ltime != -1">
+			    and l_time  like CONCAT(CONCAT('%', #{loan.ltime}), '%')
+			</if>
+			<if test="loan.lendtime != null and loan.lendtime != -1">
+			    and l_endtime  like CONCAT(CONCAT('%', #{loan.lendtime}), '%')
+			</if>
+			<if test="loan.lstatus != null and loan.lstatus != -1">
+			    and l_status  like CONCAT(CONCAT('%', #{loan.lstatus}), '%')
+			</if>
+			<if test="loan.lway != null and loan.lway != -1">
+			    and l_way  like CONCAT(CONCAT('%', #{loan.lway}), '%')
+			</if>
+			<if test="loan.linterest != null and loan.linterest != -1">
+			    and l_interest  like CONCAT(CONCAT('%', #{loan.linterest}), '%')
+			</if>
+		</where>
+ 	</select>
+ 	<!-- 联系人添加 -->
+ 	
+	<insert id="addModel" parameterType="com.p2p.pojo.Loan" useGeneratedKeys="true" keyProperty="cid">
+ 		 insert into contact(u_id,l_money,l_time,l_endtime,l_status,l_way,l_interest) 
+ 		 values(#{uid},#{lmoney},#{ltime},#{lendtime},#{lstatus},#{lway},#{linterest})
+ 	</insert>
+ 	<!-- 联系人删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Loan">
+		delete from loan where l_id = #{lid};
+	</delete>
+	<update id="update" parameterType="com.p2p.pojo.Loan" >
+        UPDATE loan
+        <trim prefix="set" suffixOverrides=",">
+        	<if test="uid!=null">u_id=#{uid},</if>
+			<if test="lmoney!=null">l_money=#{lmoney},</if>
+			<if test="ltime!=null">l_time =#{ltime},</if>
+			<if test="lendtime!=null">l_endtime=#{lendtime},</if>
+			<if test="lstatus!=null">l_status =#{lstatus},</if>
+			<if test="lway!=null">l_way=#{lway},</if>
+			<if test="linterest!=null">l_interest=#{linterest},</if>
+		</trim>
+			WHERE l_id=#{lid}
+    </update>
+    <!-- 借款表查询 -->
+    <select id="getByemployname"  parameterType="java.lang.String" resultMap="BaseResultMap">
+ 		 select * from loan e ,user r 
+		<where>
+		    e.l_id = r.u_id and  u_phone=#{uphone}
+		</where>
+ 	</select>
+	 <!-- 查询角色的总记录数 -->
+    <select id="indexCount" resultType="java.lang.Integer">
+        select count(*) from loan
+    </select>
+      <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from loan l,user u
+		<where>
+			l.u_id = u.u_id;
+			<if test="loan.uid!= null and loan.uid!=''">
+			and u_id lise CONCAT(CONCAT('%',#{loan.uid}), '%')
+			</if>
+			<if test="loan.lmoney!= null and loan.lmoney!=''">
+			and l_money lise CONCAT(CONCAT('%',#{loan.lmoney}), '%')
+			</if>
+			<if test="loan.ltime!= null and loan.ltime!=''">
+			and l_time lise CONCAT(CONCAT('%',#{loan.ltime}), '%')
+			</if>
+			<if test="loan.lendtime!= null and loan.lendtime!=''">
+			and l_endtime lise CONCAT(CONCAT('%',#{loan.lendtime}), '%')
+			</if>	
+			<if test="loan.lstatus!= null and loan.lstatus!=''">
+			and l_status lise CONCAT(CONCAT('%',#{loan.lstatus}), '%')
+			</if>
+			<if test="loan.lway!= null and loan.lway!=''">
+			and l_way lise CONCAT(CONCAT('%',#{loan.lway}), '%')
+			</if>
+			<if test="loan.linterest!= null and loan.linterest!=''">
+			and l_interest lise CONCAT(CONCAT('%',#{loan.linterest}), '%')
+			</if>
+		</where>		
+    </select>
+      <select id="loanCount" resultType="java.lang.Integer">
+        select count(*) from loan;
+    </select>
+</mapper>

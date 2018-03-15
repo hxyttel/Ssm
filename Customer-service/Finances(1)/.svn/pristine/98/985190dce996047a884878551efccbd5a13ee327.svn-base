@@ -1,0 +1,12 @@
+package com.p2p.service.back;
+
+import com.p2p.base.IBaseService;
+import com.p2p.pojo.SendMail;
+/**
+ * 操作人:汪栋才
+ * 操作时间:2017-12-18
+ * 操作邮箱第三接口的Service
+ * */
+public interface SendMailService extends IBaseService<Integer, SendMail>{
+	SendMail findUserMail(Integer isuser);
+}

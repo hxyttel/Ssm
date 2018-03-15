@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.IndexpicMapper">
+	<resultMap type="com.p2p.pojo.Indexpic" id="BaseResultMap">
+		  <id column="ip_id" property="ipid"/>
+ 		  <result column="ip_name" property="ipname"/>
+ 		  <result column="ip_image" property="ipimage"/>
+ 		  <result column="ip_url" property="ipurl"/>
+	</resultMap>
+	
+	<!-- 轮播图增加 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from indexpic 
+ 	</select>
+</mapper>

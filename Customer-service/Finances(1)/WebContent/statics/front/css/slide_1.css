@@ -1,0 +1,38 @@
+﻿
+
+a {text-decoration: none!important;-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;transition:color .2s ease-in-out;}
+a:hover{text-decoration:none;}
+
+
+/* index_focus */
+.index_focus{width:100%;height:600px;margin:0 auto; position: relative;}
+.index_focus .bd ul{ width: 100%;}
+.index_focus .bd li{ width: 100%;}
+
+.index_focus_post{z-index:10;}
+.index_focus .pic{}
+.index_focus .pic:hover{text-decoration:none;}
+.index_focus .pic img{ width:100%;height:auto;}
+.index_focus .slide_nav{position:absolute; width:100%; text-align: center; bottom:6%;}
+.index_focus .slide_nav a{cursor:pointer;font-size:30px;font-family:arial;color:#fff;}
+.index_focus .slide_nav li:hover,.index_focus .slide_nav .on{text-decoration:none;color:#FF3D4B;filter:alpha(opacity=80);opacity:0.8;}
+.index_focus_pre,.index_focus_next{ background:url(../images/leftandright_1.png) no-repeat;display:none;position:absolute;margin-top:-36px;width:65px;height:65px;text-indent:100%;white-space:nowrap;overflow:hidden;z-index:100;}
+.index_focus_pre{left:30px;background-position:0 -62px;}
+.index_focus_pre:hover{background-position:0 -62px;}
+.index_focus_next{right:30px;background-position:0 0;}
+.index_focus_next:hover{background-position:0 0;}
+.ifp2,.ifn2{background:url(../images/icon_new1_1.png) no-repeat;margin-top:133px;}
+.ifp2{ background-position: -1px -514px;}
+.ifp2:hover{ background-position: -1px -514px;}
+.ifn2{ background-position: -1px -576px;}
+.ifn2:hover{ background-position: -1px -576px;}
+.index_focus_info{position:absolute;left:10%;bottom:12%;width:800px;height:200px;padding-bottom:10px;color:#fff;text-decoration:none;cursor:pointer;font-family:"\5fae\8f6f\96c5\9ed1";-moz-text-shadow:1px 1px 1px rgba(0, 0, 0, 0.6);-webkit-text-shadow:1px 1px 1px rgba(0, 0, 0, 0.6);text-shadow:1px 1px 1px rgba(0, 0, 0, 0.6);background:url("../images/index_focus_bg_1.png") no-repeat;_background:none;}
+.index_focus_info h3{font-size:36px;line-height:70px;font-family:\5fae\8f6f\96c5\9ed1, \u9ed1\u4f53, "Lucida Grande";display:none;}
+.index_focus_info .text{width:500px;line-height:24px;font-size:14px;word-wrap:break-word;overflow:hidden;display:none;}
+
+
+.index_focus,.dBodyIndex,.dBodyIndex .dLeft,.dRight{
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
+  transition: all 0.8s ease-in-out;}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.UserinfoMapper">
+<resultMap type="com.p2p.pojo.Userinfo" id="BaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ic_id" property="icid"/>
+ 		   <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pe_id" property="peid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 		 <!-- 一对一对应用户基本信息表 -->
+ 		<association property="user" javaType="com.p2p.pojo.User">
+ 		  <id column="u_id" property="uid"/>
+ 		  <result column="u_password" property="upassword"/>
+ 		  <result column="u_headImg" property="uheadImg"/>
+ 		  <result column="u_phone" property="uphone"/>
+ 		  <result column="u_loginTime" property="uloginTime"/>
+ 		   <result column="order_invite" property="orderinvite"/>
+ 		  <result column="u_invite" property="uinvite"/>
+ 		  <result column="u_enable" property="uenable"/>
+ 		  <result column="u_isAccountSum" property="uisAccountSum"/>
+ 		  <result column="qr_code" property="qrcode"/>
+ 		   <result column="u_address" property="uaddress"/>
+ 		  <result column="u_ip" property="uip"/>
+ 		  <result column="u_regTime" property="uregTime"/>
+ 		  <result column="u_credit" property="ucredit"/>
+ 		  <result column="u_balance" property="ubalance"/>
+ 		  <result column="ul_id" property="ulid"/>
+ 		  <result column="vd_id" property="vdid"/>
+ 		</association>
+</resultMap>
+	
+	<sql id="myusersql">
+		u_id,ui_name,ui_sex,ic_id,ui_birthday,pe_id,
+		cy_id,ae_id,ui_dealpwd,ui_email,ui_emailstatus
+	</sql>
+	<!-- 增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Userinfo" useGeneratedKeys="true" keyProperty="uiid">
+ 		 insert into user_info(<include refid="myusersql" />)
+ 		 values(#{uid},#{uiname},#{uisex},#{icid},#{uibirthday},#{peid},#{cyid},#{aeid},#{uidealpwd},#{uiemail},#{uiemailstatus})
+ 	</insert>
+ 	
+ 	<select id="getModel" parameterType="com.p2p.pojo.Userinfo" resultMap="BaseResultMap">
+ 		select * from user_info ui,user u 
+ 		 <where>
+ 		     1=1
+ 			    <if test="uiid!=null">and ui.ui_id=#{uiid}</if>
+		  		<if test="uid!=null">and ui.u_id=#{uid}</if>
+		  		<if test="uiname!=null">and ui.ui_name=#{uiname}</if>
+		  		<if test="uisex!=null">and ui.ui_sex=#{uisex}</if>
+		  		<if test="icid!=null">and ui.ic_id=#{icid}</if>
+		  		<if test="uibirthday!=null">and ui.ui_birthday=#{uibirthday}</if>
+		  		<if test="peid!=null">and ui.pe_id=#{peid}</if>
+		  		<if test="cyid!=null">and ui.cy_id=#{cyid}</if>
+		  		<if test="aeid!=null">and ui.ae_id=#{aeid}</if>
+		  		<if test="uidealpwd!=null">and ui.ui_dealpwd=#{uidealpwd}</if>
+		  		<if test="uiemail!=null">and ui.ui_email=#{uiemail}</if>
+		  		<if test="uiemailstatus!=null">and ui.ui_emailstatus=#{uiemailstatus}</if>
+		  		<!-- 下面多表二级查询user_info表 -->
+ 				<if test="uid!=null">and u.u_id=#{uid}</if>
+ 				<!-- 关键 -->
+ 				and  u.u_id = ui.u_id;
+ 		</where>
+ 	</select>
+ 	<update id="update" parameterType="com.p2p.pojo.Userinfo">
+ 		update user_info ui
+ 		<trim prefix="set" suffixOverrides=",">
+		  <if test="uidealpwd!=null">ui.ui_dealpwd=#{uidealpwd},</if>
+		  <if test="uiemail!=null">ui.ui_email=#{uiemail},</if>
+		  <if test="uiname!=null">ui.ui_name=#{uiname},</if>
+		  <if test="peid!=null">ui.pe_id=#{peid},</if>
+		  <if test="cyid!=null">ui.cy_id=#{cyid},</if>
+		  <if test="aeid!=null">ui.ae_id=#{aeid},</if>
+		  <if test="uiemailstatus!=null">ui.ui_emailstatus=#{uiemailstatus},</if>
+ 		</trim>
+ 		<where>
+ 		    ui.ui_id=#{uiid}
+ 		</where>
+ 	</update>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.RechargeMapper">
+		<resultMap type="com.p2p.pojo.Recharge" id="rechargema">
+			<result column="ch_id" property="chid"/>
+			<result column="ch_suid" property="chsuid"/>
+			<result column="ch_money" property="chmoney"/>
+			<result column="ch_order" property="chorder"/>
+			<result column="ch_state" property="chstate"/>
+			<result column="ch_time" property="chtime"/>
+			<result column="ch_bankid" property="chbankid"/>
+			<result column="ch_type" property="chtype"/>
+			<result column="ch_ip" property="chip"/>
+			<association property="user" javaType="com.p2p.pojo.Users">
+				<result column="su_name" property="suname"/>
+			</association>
+		</resultMap>
+		
+		<!-- 查询所有 -->
+		<select id="list" resultMap="rechargema">
+			select * from recharge r,users u where u.id=r.ch_suid
+		</select>
+		<!-- 模糊查询 -->
+		<select id="listLike" parameterType="com.p2p.pojo.Recharge" resultMap="rechargema">
+			select * from recharge r,users u
+			<where>
+				r.ch_suid=u.id
+				<if test="user.suname!=null">and u.su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')</if>
+				<if test="chorder!=null">and ch_order LIKE CONCAT(CONCAT('%', #{chorder}), '%')</if>
+				<if test="chstate!=null">and ch_state LIKE CONCAT(CONCAT('%', #{chstate}), '%')</if>
+			</where>
+		</select>
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.Recharge">
+			insert into recharge(ch_id,ch_suid,ch_money,ch_order,ch_state,ch_time,ch_bankid,ch_type,ch_ip)
+			values (#{chid},#{chsuid},#{chmoney},#{chorder},#{chstate},#{chtime},#{chbankid},#{chtype},#{chip} )
+		</select>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from recharge where ch_id = #{ch_id}
+		</delete>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.Recharge">
+			update recharge set ch_suid = #{chsuid},ch_money = #{chmoney},ch_order = #{chorder},
+			ch_state = #{chstate},ch_time = #{chtime},ch_bankid = #{chbankid},ch_type = #{chtype},ch_ip = #{chip}
+			where ch_id = #{chid}
+		</update>
+		
+		<!-- 根据id查用户 -->
+		<select id="getById" resultMap="rechargema" parameterType="java.lang.Integer">
+			select * from recharge where ch_id = #{ch_id}
+		</select>
+	</mapper>

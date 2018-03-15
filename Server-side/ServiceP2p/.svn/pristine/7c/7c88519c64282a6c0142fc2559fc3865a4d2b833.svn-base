@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.LoansMapper">
+		<resultMap type="com.p2p.pojo.Loans" id="loansss">
+			<result column="l_id" property="lid"/>
+			<result column="l_suid" property="lsuid"/>
+			<result column="l_suids" property="lsuids"/>
+			<result column="l_money" property="lmoney"/>
+			<result column="l_time" property="ltime"/>
+			<result column="l_state" property="lstate"/>
+			<result column="l_ip" property="lip"/>
+			<result column="l_ips" property="lips"/>
+		</resultMap>
+		
+		<!-- 查询所有 -->
+		<select id="list" resultMap="loansss">
+			select * from loans
+		</select>
+		
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.Loans">
+			insert into loans(l_id,l_suid,l_suids,l_money,l_time,l_state,l_ip,l_ips) values
+			(#{l_id},#{l_suid},#{l_suids},#{l_money},#{l_time},#{l_state},#{lip},#{lips}) 
+			(#{lid},#{lsuid},#{lsuids},#{lmoney},#{ltime},#{lstate},#{lip},#{lips}) 
+		</select>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from loans where l_id = #{l_id}
+		</delete>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.Loans">
+			update loans set l_suids=#{lsuids},l_suid=#{lsuid},l_money=#{lmoney},
+			l_time=#{ltime},l_state=#{lstate},l_ip=#{lip},l_ips=#{lips} where l_id=#{lid}
+		</update>
+		
+		<!-- 根据id查用户 -->
+		<select id="getById" resultMap="loansss" parameterType="java.lang.Integer">
+			select * from loans where l_id = #{l_id}
+		</select>
+		
+	</mapper>

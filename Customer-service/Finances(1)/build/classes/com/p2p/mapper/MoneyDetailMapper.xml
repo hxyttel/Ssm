@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.MoneyDetailMapper">
+	<resultMap type="com.p2p.pojo.MoneyDetail" id="BaseResultMap">
+		      <id column="md_id" property="mdid"/>
+	 		  <result column="u_id" property="uid"/>
+	 		  <result column="md_money" property="mdmoney"/>
+	 		  <result column="md_introduce" property="mdintroduce"/>
+	 		  <result column="md_stype" property="mdstype"/>
+	 		  <result column="md_time" property="mdtime"/>
+	</resultMap>
+	<!--查询 -->
+	<select id="selectMoney"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select m.*,ui.ui_name as uiname from moneydetail m ,user u ,user_info ui <where> m.u_id= u.u_id and ui.u_id = u.u_id and m.u_id = #{uid}</where>
+	</select>
+	<!-- 添加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.MoneyDetail" useGeneratedKeys="true" keyProperty="msgid">
+		insert into moneydetail(u_id,md_money,md_introduce,md_stype,md_time) values(#{uid},#{mdmoney},#{mdintroduce},#{mdstype},#{mdtime})
+	</insert>
+    <select id="moneyDetailCount" resultType="java.lang.Integer">
+        select count(*) from moneydetail;
+    </select>
+    <!-- 前台资金记录模糊查询 -->
+ 	<select id="seleMonreyReByTime" resultMap="BaseResultMap">
+ 		select md.*,ui.ui_name as uiname from moneydetail md ,user u ,user_info ui<where>
+ 		 1=1
+			<if test="mdmoney != null and mdmoney !='' ">
+			    and md.md_money like CONCAT(CONCAT('%', #{mdmoney}), '%')
+			</if>
+			<if test="mdtime !=null and mdtime != '' and mrendtime != null and mrendtime != ''">
+            	and md.md_time between #{mdtime} and #{mrendtime}
+ 			</if>
+ 			and md.u_id= u.u_id and ui.u_id = u.u_id and md.u_id = #{uid} 
+ 		</where>
+ 	</select>
+</mapper>
+

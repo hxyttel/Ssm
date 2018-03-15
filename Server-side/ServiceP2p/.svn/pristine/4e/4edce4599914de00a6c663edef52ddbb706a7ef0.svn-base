@@ -1,0 +1,10 @@
+package com.p2p.services;
+
+import com.p2p.base.IBaseService;
+import com.p2p.pojo.Stopmoney;
+
+public interface StopmoneyService extends IBaseService<Integer, Stopmoney> {
+
+	//根据订单号查询
+		Stopmoney getOrder(String order);
+}

@@ -1,0 +1,169 @@
+package com.p2p.pojo;
+
+import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+
+public class Userinfo implements Serializable{
+
+
+/**
+ * 用户表基本信息表
+ * 操作人:周俣帆
+ * 2017-11-14
+ * */
+	private static final long serialVersionUID = 1L;
+	
+	@TableField("ui_id")
+	private Integer uiid;//主键id
+	
+	@TableField("u_id")
+	private Integer uid;//用户表id
+	
+	@TableField("ui_name")
+	private String uiname;//昵称
+	
+	@TableField("ui_sex")
+	private String uisex;//性别
+	
+	@TableField("ui_idCard")
+	private String uiidCard;//身份证
+	
+	@TableField("ui_birthday")
+	private String uibirthday;//生日日期
+	
+	@TableField("pe_id")
+	private Integer peid;//省份id
+	
+	@TableField("cy_id")
+	private Integer cyid;//城市id
+	
+	@TableField("ae_id")
+	private Integer aeid;//地区id
+	
+	@TableField("ui_dealpwd")
+	private String uidealpwd;//交易密码
+	
+	@TableField("ui_email")
+	private String uiemail;//邮箱
+	
+	public Userinfo() {
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Userinfo [uiid=" + uiid + ", uid=" + uid + ", uiname=" + uiname + ", uisex=" + uisex + ", uiidCard="
+				+ uiidCard + ", uibirthday=" + uibirthday + ", peid=" + peid + ", cyid=" + cyid + ", aeid=" + aeid
+				+ ", uidealpwd=" + uidealpwd + ", uiemail=" + uiemail + "]";
+	}
+
+	public Userinfo(Integer uiid, Integer uid, String uiname, String uisex, String uiidCard, String uibirthday,
+			Integer peid, Integer cyid, Integer aeid, String uidealpwd, String uiemail) {
+		super();
+		this.uiid = uiid;
+		this.uid = uid;
+		this.uiname = uiname;
+		this.uisex = uisex;
+		this.uiidCard = uiidCard;
+		this.uibirthday = uibirthday;
+		this.peid = peid;
+		this.cyid = cyid;
+		this.aeid = aeid;
+		this.uidealpwd = uidealpwd;
+		this.uiemail = uiemail;
+	}
+
+	public Integer getUiid() {
+		return uiid;
+	}
+
+	public void setUiid(Integer uiid) {
+		this.uiid = uiid;
+	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+
+	public String getUiname() {
+		return uiname;
+	}
+
+	public void setUiname(String uiname) {
+		this.uiname = uiname;
+	}
+
+	public String getUisex() {
+		return uisex;
+	}
+
+	public void setUisex(String uisex) {
+		this.uisex = uisex;
+	}
+
+	public String getUiidCard() {
+		return uiidCard;
+	}
+
+	public void setUiidCard(String uiidCard) {
+		this.uiidCard = uiidCard;
+	}
+
+	public String getUibirthday() {
+		return uibirthday;
+	}
+
+	public void setUibirthday(String uibirthday) {
+		this.uibirthday = uibirthday;
+	}
+
+	public Integer getPeid() {
+		return peid;
+	}
+
+	public void setPeid(Integer peid) {
+		this.peid = peid;
+	}
+
+	public Integer getCyid() {
+		return cyid;
+	}
+
+	public void setCyid(Integer cyid) {
+		this.cyid = cyid;
+	}
+
+	public Integer getAeid() {
+		return aeid;
+	}
+
+	public void setAeid(Integer aeid) {
+		this.aeid = aeid;
+	}
+
+	public String getUidealpwd() {
+		return uidealpwd;
+	}
+
+	public void setUidealpwd(String uidealpwd) {
+		this.uidealpwd = uidealpwd;
+	}
+
+	public String getUiemail() {
+		return uiemail;
+	}
+
+	public void setUiemail(String uiemail) {
+		this.uiemail = uiemail;
+	}
+
+
+	
+	
+
+}

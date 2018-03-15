@@ -1,0 +1,12 @@
+package com.p2p.controller.front;
+
+import org.springframework.stereotype.Controller;
+/**
+ * 操作人:汪栋才
+ * 操作时间:2017-1-8
+ * 操作前台用户投标的Controller
+ * */
+@Controller
+public class ToubiaoController {
+	
+}

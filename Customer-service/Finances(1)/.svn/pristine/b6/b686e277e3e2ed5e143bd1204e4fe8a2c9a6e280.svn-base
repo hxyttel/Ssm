@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RechargeMapper">
+	<resultMap type="com.p2p.pojo.Recharge" id="BaseResultMap">
+		<id column="re_id" property="reid"/>
+		<result column="u_id" property="uid" />
+		<result column="re_money" property="remoney" />
+		<result column="re_time" property="retime" />
+	</resultMap>
+	<resultMap type="com.p2p.pojo.Userinfo" id="userInfoBaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pe_id" property="peid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 		  <result column="ui_openstatus" property="uiopenstatus"/>
+ 	</resultMap>
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from recharge;
+	</select>
+	
+	<select id="getModel" resultMap="BaseResultMap">
+		select * from recharge 
+		<where>
+			1=1
+			<if test="uid!=null">and u_id=#{uid}</if>
+			<if test="remoney=null">and re_money=#{remoney}</if> 
+			<if test="retime!=null">and re_time=#{retime}</if>
+			and re_id=#{reid}
+		</where>
+		
+	</select>
+	
+	<insert id="addModel" parameterType="com.p2p.pojo.Recharge">
+		insert into recharge(u_id,re_money,re_time) values(#{uid},#{remoney},#{retime})
+	</insert>
+	
+	<update id="update" parameterType="com.p2p.pojo.Recharge">
+		update recharge 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="uid!=null">and u_id=#{uid}</if>
+			<if test="remoney=null">and re_money=#{remoney}</if> 
+			<if test="retime!=null">and re_time=#{retime}</if>
+		</trim>
+		<where>
+			and re_id=#{reid}
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="com.p2p.pojo.Recharge">
+		delete from recharge where  re_id=#{reid}
+	</delete>
+	
+	<!-- 判断交易密码是否正确 -->
+	<select id="getUserinfo" resultMap="userInfoBaseResultMap">
+		select * from user_info ui <where>
+		   1=1 
+		   <if test="uidealpwd!=null">and ui.ui_dealpwd=#{uidealpwd}</if>
+ 			and ui.ui_id = #{uiid}
+ 		</where>
+	</select>
+</mapper>

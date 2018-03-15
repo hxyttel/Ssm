@@ -1,0 +1,58 @@
+.mod-transform-list {
+  margin-top: -10px;
+}
+.mod-transform-list table tr td p.gray {
+  color: #8d8d8d;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.mod-transform-list .tab {
+  font-size: 18px;
+  margin-bottom: 26px;
+}
+.mod-transform-list .tab ul {
+  overflow: hidden;
+  border-bottom: 1px solid #cbcbcb;
+}
+.mod-transform-list .tab li {
+  float: left;
+  margin-right: 20px;
+  padding: 0 10px 15px;
+}
+.mod-transform-list .tab li.on {
+  padding-bottom: 11px;
+  border-bottom: 4px solid #3180bf;
+}
+.mod-transform-list .tab li.on a {
+  color: #3180bf;
+}
+.mod-transform-list .tab a {
+  color: #8d8d8d;
+}
+.mod-transform-list .search {
+  position: absolute;
+  right: 0;
+  top: -10px;
+}
+.mod-transform-list .search input {
+  width: 300px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 3px 0  0 3px;
+  border: 1px solid #cbcbcb;
+  padding-left: .5em;
+  outline: none;
+  -webkit-outline: none;
+}
+.mod-transform-list .search .btn {
+  float: right;
+  line-height: 34px;
+  width: 58px;
+  height: 34px;
+  background: #3180BF;
+  color: #FFF;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 0 3px 3px 0;
+  border: none;
+}

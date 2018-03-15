@@ -1,0 +1,55 @@
+package com.p2p.service.impl.front;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.p2p.mapper.FabiaoMapper;
+import com.p2p.pojo.Fabiao;
+import com.p2p.service.front.FabiaoService;
+@Transactional
+@Service
+public class FabiaoServiceImpl implements FabiaoService{
+	
+	@Resource
+	private FabiaoMapper fabiaomapper;
+	
+	@Override
+	public int addModel(Fabiao model) {
+		return fabiaomapper.addModel(model);
+	}
+
+	@Override
+	public Fabiao getModel(Fabiao model) {
+		return fabiaomapper.getModel(model);
+	}
+
+	@Override
+	public List<Fabiao> getAllModel() {
+		return fabiaomapper.getAllModel();
+	}
+
+	@Override
+	public int update(Fabiao model) {
+		return fabiaomapper.update(model);
+	}
+
+	@Override
+	public int delete(Fabiao model) {
+		return fabiaomapper.delete(model);
+	}
+
+	@Override
+	public Fabiao findModel(Integer id) {
+		return fabiaomapper.findModel(id);
+	}
+
+	@Override
+	public List<Fabiao> selectByType(String type) {
+		return fabiaomapper.selectByType(type);
+	}
+
+}

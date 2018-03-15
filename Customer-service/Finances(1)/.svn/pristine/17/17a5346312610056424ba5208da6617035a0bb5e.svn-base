@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.EmpMapper">
+<resultMap type="com.p2p.pojo.Employe" id="BaseResultMap">
+	      <id column="e_id" property="eid"/>
+ 		  <result column="re_id" property="reid"/>
+ 		  <result column="e_enum" property="eenum"/>
+ 		  <result column="e_sex" property="esex"/>
+ 		  <result column="e_idcard" property="eidcard"/>
+ 		  <result column="e_phone" property="ephone"/>
+ 		  <result column="e_position" property="eposition"/>
+ 		  <result column="e_email" property="eemail"/>
+ 		  <result column="e_name" property="ename"/>
+ 		  <result column="e_password" property="epassword"/>
+ 		  <result column="e_status" property="estatus"/>
+ 		  <result column="e_retime" property="eretime"/>
+ 		  <result column="e_remark" property="eremark"/>
+</resultMap>
+	<!-- 员工表查询 -->
+ 	<select id="getByemployname"  parameterType="java.lang.String" resultMap="BaseResultMap">
+ 		select * from employee where e_name=#{ename}
+ 	</select>
+	<select id="getModel"  resultMap="BaseResultMap">
+ 		select * from employe 
+ 	</select>
+ 	
+ 	<!-- 员工添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="reid">
+ 		 insert into employe(e_enum,e_sex,e_idcard,e_phone,e_position,e_email,e_name,e_password,e_status,e_retime,e_remark) 
+ 		 values(#{eenum},#{esex},#{eidcard},#{ephone},#{eposition},#{eemail},#{ename},#{epassword},#{estatus},#{eretime},#{eremark})
+ 	</insert>
+ 	
+ 	<!-- 员工删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Employe">
+		delete from employe where re_id = #{reid};
+	</delete>
+	
+	<!-- 修改角色 -->
+    <update id="update" parameterType="com.p2p.pojo.Employe" >
+        UPDATE role SET 
+			e_enum=#{eenum},
+			e_sex=#{esex},
+			e_idcard=#{eidcard},
+			e_phone=#{ephone},
+			e_position=#{eposition},
+			e_email=#{eemail},
+			e_name=#{ename},
+			e_password=#{epassword},
+			e_status=#{estatus},
+			e_retime=#{eretime},
+			e_remar=#{eremark}
+		WHERE re_id=#{reid}
+    </update>
+	
+	<!-- 查询角色的总记录数 -->
+    <select id="employeCount" resultType="java.lang.Integer">
+        select count(*) from employe;
+    </select>
+    
+   	<!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from employe;        
+    </select>
+</mapper>

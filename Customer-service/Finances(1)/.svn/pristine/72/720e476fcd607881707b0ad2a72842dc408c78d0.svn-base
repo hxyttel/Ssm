@@ -1,0 +1,19 @@
+package com.p2p.util;
+
+/**
+ * 此工具类是可从数据库分别获取各运行商的短信接口账号，密码
+ * 现在先固定为移动的接口
+ * 开发人:汪栋才
+ * 2017-11-15
+ * */
+public class SendMsgUtil {
+	//假设现在从数据库取得三个值
+	 String username = "acgn";
+	 String password = "ec99f5e2905b462cf9e13aa35988a582";
+	 String method = "http://api.sms.cn/sms/";
+
+	public void Send(String phone,String msg) throws Exception{
+		SendMsg smg = new SendMsg(username, password, method);
+			smg.send(phone, msg);
+	}
+}

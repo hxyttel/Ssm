@@ -1,0 +1,16 @@
+.mod-loan { }
+.mod-loan h2 {}
+.mod-loan .box {width:50%;}
+.mod-loan .box .ibox {border-right:1px solid #e8e8e8;}
+.mod-loan .box h1 { margin:10px 0 40px 0; font-size:22px; text-align:center;}
+.mod-loan .box .m { margin-bottom:30px;}
+.mod-loan .box .m img { float:left; margin-right:20px;}
+.mod-loan .box .m p { float:left; width:290px; color:#1e1e1e; font-size:14px; line-height:160%;}
+.mod-loan .box h4 { margin-bottom:5px; color:#666; font-size:12px;}
+.mod-loan .box p.intro { line-height:160%; padding:0 40px 0 0;}
+.mod-loan .box p.pbtn { text-align:center;}
+.mod-loan .fl {  }
+.mod-loan .fr {}
+.mod-loan .fr .ibox { border:none;}
+.mod-loan .fr .m , .mod-loan .fr h4 , .mod-loan .fr p.intro { margin-left:30px;}
+

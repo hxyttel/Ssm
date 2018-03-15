@@ -1,0 +1,59 @@
+package com.p2p.service.impl.back;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.p2p.mapper.ActivityMapper;
+import com.p2p.pojo.Activity;
+import com.p2p.service.back.ActivityService;
+/**
+ * 操作人:吴光海
+ * 创建时间:2017-12-19
+ * 操作后台员工的mapper
+ * */
+@Transactional
+@Service
+public class ActivityServiceImpl implements ActivityService{
+	@Resource
+	private ActivityMapper activityMapper;
+	@Override
+	public int addModel(Activity model) {
+		return activityMapper.addModel(model);
+	}
+
+	@Override
+	public Activity getModel(Activity model) {
+		return activityMapper.getModel(model);
+	}
+
+	@Override
+	public List<Activity> getAllModel() {
+		return activityMapper.getAllModel();
+	}
+
+	@Override
+	public int update(Activity model) {
+		return activityMapper.update(model);
+	}
+
+	@Override
+	public int delete(Activity model) {
+		return activityMapper.delete(model);
+	}
+
+	@Override
+	public Activity findModel(Integer id) {
+		return activityMapper.findModel(id);
+	}
+
+	@Override
+	public List<Activity> listActivity() {
+		// TODO Auto-generated method stub
+		return activityMapper.listActivity();
+	}
+
+}

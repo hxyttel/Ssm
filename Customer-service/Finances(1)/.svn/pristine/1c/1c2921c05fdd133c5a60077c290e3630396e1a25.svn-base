@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		
+     <!-- 加载db.properties文件的内容 -->
+     <context:property-placeholder location="classpath:jdbc.properties"/>
+     
+     <!-- 配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>	
+	</bean>
+	 
+	<!-- 扫描sericeImpl层 -->
+	<context:component-scan base-package="com.p2p.service.impl.back"></context:component-scan>
+	<context:component-scan base-package="com.p2p.service.impl.front"></context:component-scan>
+	
+	 <!-- 配置SqlSessionFactory -->
+	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sqlMapConfig.xml"></property>
+	</bean>
+	
+	 <!-- 配置mapper代理 -->
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <property name="basePackage" value="com.p2p.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	 </bean>
+	 
+	 <!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	 <!-- 开启注解 -->
+	 <tx:annotation-driven transaction-manager="transactionManager" />
+	 
+	 <!-- 配置ehcache缓存 -->
+	 <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml"></property>
+	 </bean>
+	 
+	  <!-- 引入shiro配置文件 -->
+     <import resource="classpath:applicationContext-shiro.xml"/>
+	 
+	 
+	 <!-- 定时器 -->
+	 <!-- <bean id="repaymentController" class="com.p2p.controller.front.RepaymentController"></bean>
+		 任务配置列表  
+	    <bean id="jobtask1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+	        调用的类  
+	        <property name="targetObject">  
+	            <ref bean="repaymentController" />  
+	        </property>  
+	        调用类中的方法  
+	        <property name="targetMethod"> 
+	            <value>addRepay</value>
+	        </property>  
+	         是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程  
+	         <property name="concurrent" value="false"/>  
+	    </bean>
+		触发器配置  时间指定  
+	    <bean id="cronTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="jobtask1"></property>  
+	        cron表达式  
+	        <property name="cronExpression">  
+	            每隔10秒执行一次 <value>0/10 * * * * ?</value>  
+	            每天每隔5分钟执行一次 <value>0 0/5 * * * ?</value>  
+	             <value>0 0 6 * * ?</value>  
+	             <value>0/10 * * * * ?</value>
+	            每天上午8点执行一次 <value>0 0 8 * * ?</value>  
+	            在每天下午16点到下午16:59期间的每1分钟触发 <value>0 * 16 * * ?</value>  
+	        </property>  
+	    </bean>
+	    启动触发器的配置开始
+	    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    	<property name="triggers">
+		    	<list>
+		    		<ref bean="cronTrigger1" />
+		    	</list>
+	    	</property>
+	    </bean> -->
+</beans>

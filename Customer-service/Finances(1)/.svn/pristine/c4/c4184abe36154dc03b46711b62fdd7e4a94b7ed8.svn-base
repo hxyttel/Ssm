@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.UservouchMapper">
+  <resultMap id="BaseResultMap" type="com.p2p.pojo.Uservouch">
+		<id column="uv_id" property="uvid"/>
+		<result column="uv_day" property="uvday"/>   
+		<result column="uv_money" property="uvmoney"/>  
+		<result column="uv_image" property="uvimage"/>  
+		<result column="uv_startDate" property="uvstartDate"/> 
+		<result column="uv_endDate" property="uvendDate"/>  
+		<result column="u_id" property="uid"/>  
+    </resultMap>
+	 <!-- 代金券查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from user_vouch;
+ 	</select>
+ 	  <!-- 查询代金券 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from  user_vouch;        
+    </select>
+    <!-- 查询代金券的总记录数 -->
+    <select id="UservouchyCount" resultType="java.lang.Integer">
+        select count(*) from user_vouch;
+    </select>
+     <!-- 代金券添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="uvid">
+ 		 insert into user_vouch(uv_day,uv_money,uv_image,uv_startDate,uv_endDate,u_id) 
+ 		 values(#{uvday},#{uvmoney},#{uvimage},#{uvstartDate},#{uvendDate},#{uid})
+ 	</insert>
+ 	 <!-- 修改代金券-->
+    <update id="update" parameterType="com.p2p.pojo.Uservouch" >
+        UPDATE user_vouch SET
+        	uv_day = #{uvday},
+			uv_money=#{uvmoney},
+			uv_image=#{uvimage},
+			uv_startDate =#{uvstartDate},
+			uv_endDate =#{uvendDate},
+			u_id =#{uid}
+		WHERE uv_id=#{uvid}
+    </update>
+    <!-- 删除代金券 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Uservouch">
+        DELETE FROM user_vouch WHERE uv_id=#{uvid}
+    </delete>
+</mapper>

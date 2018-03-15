@@ -1,0 +1,71 @@
+package com.p2p.service.impl.back;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.p2p.mapper.LoanMapper;
+import com.p2p.pojo.Loan;
+import com.p2p.service.back.LoanService;
+
+/**
+ * 借款ServiceImpl实现类
+ * 
+ * @author lxj
+ * */
+@Transactional
+@Service
+public class LoanServiceImpl implements LoanService {
+	
+	@Resource
+	private LoanMapper loanMapper;
+
+	@Override
+	public int addModel(Loan model) {
+		return loanMapper.addModel(model);
+	}
+
+	@Override
+	public Loan getModel(Loan model) {
+		return loanMapper.getModel(model);
+	}
+
+	@Override
+	public List<Loan> getAllModel() {
+		return loanMapper.getAllModel();
+	}
+
+	@Override
+	public int update(Loan model) {
+		return loanMapper.update(model);
+	}
+
+	@Override
+	public int delete(Loan model) {
+		return loanMapper.delete(model);
+	}
+
+	@Override
+	public Loan findModel(Integer id) {
+		return loanMapper.findModel(id);
+	}
+
+	@Override
+	public String getMaxStartTime() {
+		return loanMapper.getMaxStartTime();
+	}
+
+	@Override
+	public String getMinStartTime() {
+		return loanMapper.getMinStartTime();
+	}
+
+	@Override
+	public List<String> getMoneyByTime(String time) {
+		return loanMapper.getMoneyByTime(time);
+	}
+
+}

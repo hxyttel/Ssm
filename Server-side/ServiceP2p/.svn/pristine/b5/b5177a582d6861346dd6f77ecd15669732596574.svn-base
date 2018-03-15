@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.DetailMapper">
+		<resultMap type="com.p2p.pojo.Detail" id="detail">
+			<result column="d_id" property="did"/>
+			<result column="d_suid" property="dsuid"/>
+			<result column="d_money" property="dmoney"/>
+			<result column="d_time" property="dtime"/>
+			<result column="d_order" property="dorder"/>
+			<result column="d_type" property="dtype"/>
+			<result column="d_state" property="dstate"/>
+			<result column="d_ip" property="dip"/>
+			<association property="user" javaType="com.p2p.pojo.Users">
+				<result column="su_name" property="suname"/>
+			</association>
+		</resultMap>
+		
+		<!-- 查询所有 -->
+		<select id="list" resultMap="detail">
+			SELECT d.*,u.su_name from detail d,users u where d.d_suid=u.id
+		</select>
+		<!-- 模糊查询 -->
+		<select id="listLike" parameterType="com.p2p.pojo.Detail" resultMap="detail">
+			SELECT d.*,u.su_name from detail d,users u
+			<where> 
+				d.d_suid=u.id
+				<if test="user.suname!=null">
+					and su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')
+				</if>
+				<if test="dstate!=null">
+					and d_state LIKE CONCAT(CONCAT('%', #{dstate}), '%')
+				</if>
+			</where>
+		</select>
+		
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.Detail">
+			insert into detail(d_suid,d_money,d_time,d_ip,d_type,d_order,d_state) 
+			values(#{dsuid},#{dmoney},#{dtime},#{dip},#{dtype},#{dorder},#{dstate})
+		</select>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from detail where d_id = #{d_id}
+		</delete>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.Detail">
+			update detail 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="dsuid!=null">d_suid = #{dsuid},</if>
+				<if test="dtime!=null">d_time = #{dtime},</if>
+				<if test="dmoney!=null">d_money = #{dmoney},</if>
+				<if test="dip!=null">d_ip = #{dip},</if>
+				<if test="dtype!=null">d_type = #{dtype},</if>
+				<if test="dorder!=null">d_order = #{dorder},</if>
+				<if test="dstate!=null">d_state = #{dstate},</if>
+			</trim>
+			<where>
+				d_id = #{did}
+			</where>
+		</update>
+		
+		<!-- 根据id查用户 -->
+		<select id="getById" resultMap="detail" parameterType="com.p2p.pojo.Detail">
+			select * from detail where d_id = #{d_id}
+		</select>
+		<!-- 多功能查询对象 -->
+		<select id="getDetail" parameterType="com.p2p.pojo.Detail" resultMap="detail">
+			select * from detail 
+			<where>
+				1=1
+				<if test="dorder!=null">and d_order = #{dorder}</if>
+			</where>
+		</select>
+	</mapper>

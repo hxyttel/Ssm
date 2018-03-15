@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.VipdetailMapper">
+	<resultMap type="com.p2p.pojo.Vipdetail" id="BaseResultMap">
+		  <id column="vd_id" property="vdid"/>
+ 		  <result column="vp_value" property="vpvalue"/>
+ 		  <result column="vp_name" property="vpname"/>
+ 		  <result column="u_id" property="uid"/>
+	</resultMap>
+	
+	<!--查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select v.vd_id,v.vp_value,v.vp_name,v.u_id,ui.ui_name as uiname,u.u_id  from  vip_detail v ,user u ,user_info ui 
+		<where>
+			 v.u_id = u.u_id and ui.u_id = u.u_id
+		</where>  
+ 	</select>
+ 	<!-- 添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="vdid">
+ 		 insert into vip_detail(vp_value,vp_name,u_id) 
+ 		 values(#{vpvalue},#{vpname},#{uid})
+ 	</insert>
+ 	<!-- 删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Vipdetail">
+		delete from vip_detail where vd_id = #{vdid};
+	</delete>
+	 <!-- 查询总记录数 -->
+    <select id="vipdetailCount" resultType="java.lang.Integer">
+        select count(*) from vip_detail;
+    </select>
+      <!-- 查询所有 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select v.vd_id,v.vp_value,v.vp_name,v.u_id,ui.ui_name as uiname,u.u_id  from  vip_detail v ,user u ,user_info ui 
+		<where>
+			 v.u_id = u.u_id and ui.u_id = u.u_id
+		</where>       
+    </select>
+     <!-- 修改 -->
+    <update id="update" parameterType="com.p2p.pojo.Vipdetail" >
+        UPDATE vip_detail SET 
+			vp_value=#{vpvalue},
+			vp_name=#{vpname},
+			u_id =#{uid}
+		WHERE vd_id=#{vdid}
+    </update>
+      <!-- 前台font -->
+    <select id="getModel" parameterType="Vipdetail" resultType="com.p2p.pojo.Vipdetail" resultMap="BaseResultMap" >
+        select * from vip_detail where vd_id = #{vdid}
+    </select>
+</mapper>

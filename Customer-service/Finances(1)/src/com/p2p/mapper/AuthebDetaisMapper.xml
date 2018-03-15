@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.AuthebDetaisMapper">
+	<resultMap type="com.p2p.pojo.AuthebDetais" id="AuthebDetaisResultMap">
+    	<id column="ad_id" property="adid"/>
+		<result column="ad_introduct" property="adintroduct"/>
+		<result column="ad_time" property="adtime"/>
+		<result column="ui_id" property="uiid"/>
+		<result column="ad_status" property="adstatus"/>
+		<result column="ad_stype" property="adstype"/>
+	</resultMap>
+	<select id="getModel" parameterType="com.p2p.pojo.AuthebDetais" resultMap="AuthebDetaisResultMap">
+		select * from authebDetais ad 
+		<where>
+ 		     1=1
+ 			    <if test="adid!=null">and ad.ad_id=#{adid}</if>
+		  		<if test="adintroduct!=null">and ad.ad_introduct=#{adintroduct}</if>
+		  		<if test="adtime!=null">and ad.ad_time=#{adtime}</if>
+		  		<if test="uiid!=null">and ad.ui_id=#{uiid}</if>
+ 		</where>
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.AuthebDetais" useGeneratedKeys="true" keyProperty="id">
+		insert into authebDetais(ad_introduct,ad_time,ui_id,ad_status,ad_stype) values(#{adintroduct},#{adtime},#{uiid},#{adstatus},#{adstype})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.AuthebDetais">
+		delete from authebDetais where ad_id = #{adid}
+	</delete>
+	<select id="getAllModel" resultMap="AuthebDetaisResultMap">
+		select a.* ,ui.ui_name as uiname  from authebDetais a ,user_info ui <where>
+			a.ui_id = ui.ui_id and a.ad_stype !=0 and a.ad_status = 0
+		</where>
+	</select>
+	<update id="update" parameterType="com.p2p.pojo.AuthebDetais">
+		 UPDATE authebDetais  ad
+        	<trim prefix="set" suffixOverrides=",">
+        		<if test="adintroduct!=null">ad.ad_introduct = #{adintroduct},</if>
+        		<if test="adtime!=null">ad.ad_time = #{adtime},</if>
+        		<if test="uiid!=null">ad.ui_id = #{uiid},</if>
+        		<if test="adstatus!=null">ad.ad_status = #{adstatus},</if>
+        		<if test="adstype!=null">ad.ad_stype = #{adstype},</if>
+        	</trim>
+        	<where>
+        		ad.ad_id =#{adid}
+        	</where>
+	</update>
+</mapper>

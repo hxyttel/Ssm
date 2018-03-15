@@ -1,0 +1,119 @@
+package com.p2p.controller.front;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.p2p.pojo.Indexpic;
+import com.p2p.pojo.User;
+import com.p2p.service.back.IndexpicService;
+import com.p2p.service.front.IUserService;
+import com.p2p.service.front.SetupnaticeService;
+/**
+ * 开发人:汪栋才
+ * 2017-11-13
+ * 此conteroller是访问前台页面的
+ * */
+@Controller
+public class BeansController {
+	
+	@Resource(name="indexpicServiceImpl")
+	private IndexpicService indexpicService;
+	
+	@Resource(name="IUserServiceImpl")
+	private IUserService iUserService;
+
+	
+	/**
+	 * 进入首界面(index.jsp)
+	 * */
+	@RequestMapping(value="/toindex")
+	public String toFrontIndex(Model model,HttpServletRequest request,HttpSession session){
+		List<Indexpic> lists = indexpicService.getAllModel();
+		model.addAttribute("indexpicList", lists);
+		model.addAttribute("pageName","index");
+		
+		
+		/**
+		 * 在访问index界面时获取客户端是否有cookies
+		 * */
+		User user = new User();
+		//获取站点的所有cookie
+		Cookie[] cookies = request.getCookies();
+		if(cookies!=null){
+			for(int i=0;i<cookies.length;i++){
+				Cookie c=cookies[i];
+				//根据cookie的name匹配我们自己保存的cookie
+				if(c.getName().equals("yxjruser")){//保存在cookie中的用户名
+					user.setUphone(c.getValue());
+				}
+				if(c.getName().equals("yxjrpassword")){//保存在cookie中的密码
+					user.setUpassword(c.getValue());
+				}
+			}
+		}  
+		if(user.getUpassword()!=null && user.getUphone()!=null) {
+			
+			if(!user.getUpassword().equals("") && !user.getUphone().equals("")) {
+				
+				User user2 =  iUserService.userLoing(user.getUphone(),user.getUpassword());
+				if(user2!=null) {
+					User user3 = iUserService.getModel(user2);
+					session.setAttribute("user",user3);
+				}
+			}
+		}
+		
+		return "views/front/index";
+	}	
+	/**
+	 * 访问注册界面(register.jsp)
+	 * */
+	@RequestMapping(value="/toregirset")
+	public String toRegirset(){
+		return "views/front/register";
+	}
+	
+	/**
+	 * 访问登入界面(login.jsp)
+	 * */
+	@RequestMapping(value="/tologin")
+	public String toLogin(){
+		
+		return "views/front/login";
+	}
+	
+	/**
+	 * 访问登入界面(login.jsp)
+	 * */
+	@RequestMapping(value="/toLoginHaveYQ")
+	public ModelAndView toLoginHaveYQ(String code){
+		ModelAndView mo = new ModelAndView();
+		mo.setViewName("views/front/register");
+		mo.addObject("qycode",code);
+		return mo;
+	}
+	
+	
+	
+	/**
+	 * 进入 会员商城界面(membermall.jsp)
+	 * */
+	@RequestMapping(value="/tomembermall")
+	public ModelAndView toFrontMember(Model model){
+		ModelAndView mo = new ModelAndView();
+		
+		model.addAttribute("pageName","business");
+		mo.setViewName("views/front/membermall");
+		return mo;
+	}
+
+}

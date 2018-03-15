@@ -1,0 +1,9 @@
+.mod-binding {}
+.mod-binding h3 { margin:20px 0 20px 0;}
+.mod-binding .item {}
+.mod-binding .item .ipt {}
+.mod-binding .item .ipt .flag { color:#999;}
+.mod-binding label {}
+.mod-binding label .name {}
+.mod-binding input {}
+textarea { padding:0.5em; border:1px solid #cbcbcb; border-radius:2px; height:200px; line-height:24px; margin-right:0.5em; width:400px;}

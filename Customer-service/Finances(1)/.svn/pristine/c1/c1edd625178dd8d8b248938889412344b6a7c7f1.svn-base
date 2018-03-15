@@ -1,0 +1,116 @@
+package com.p2p.pojo;
+
+import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+
+/**
+ * 银行表
+ * 2017年11月14日09:29:51
+ * 操作人：朱勇峰
+ * 
+ * */
+
+public class Userbackcard implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@TableField("ub_id")
+	private Integer ubid; //主键
+	
+	@TableField("u_id")
+	private Integer uid; //用户id
+	
+	@TableField("ub_backcardnum")
+	private String ubbackcardnum; //银行卡号
+	
+	@TableField("ub_placeback")
+	private String ubplaceback; //所属银行
+	
+	@TableField("ub_bindtime")
+	private double ubbindtime; //绑卡时间
+	
+	@TableField("ub_status")
+	private Integer ubstatus; //状态
+
+	public Userbackcard(Integer ubid, Integer uid, String ubbackcardnum, String ubplaceback, double ubbindtime,
+			Integer ubstatus) {
+		super();
+		this.ubid = ubid;
+		this.uid = uid;
+		this.ubbackcardnum = ubbackcardnum;
+		this.ubplaceback = ubplaceback;
+		this.ubbindtime = ubbindtime;
+		this.ubstatus = ubstatus;
+	}
+
+	public Userbackcard() {
+		super();
+	}
+
+	public Integer getUbid() {
+		return ubid;
+	}
+
+	public void setUbid(Integer ubid) {
+		this.ubid = ubid;
+	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+
+	public String getUbbackcardnum() {
+		return ubbackcardnum;
+	}
+
+	public void setUbbackcardnum(String ubbackcardnum) {
+		this.ubbackcardnum = ubbackcardnum;
+	}
+
+	public String getUbplaceback() {
+		return ubplaceback;
+	}
+
+	public void setUbplaceback(String ubplaceback) {
+		this.ubplaceback = ubplaceback;
+	}
+
+	public double getUbbindtime() {
+		return ubbindtime;
+	}
+
+	public void setUbbindtime(double ubbindtime) {
+		this.ubbindtime = ubbindtime;
+	}
+
+	public Integer getUbstatus() {
+		return ubstatus;
+	}
+
+	public void setUbstatus(Integer ubstatus) {
+		this.ubstatus = ubstatus;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "User_backcard [ubid=" + ubid + ", uid=" + uid + ", ubbackcardnum=" + ubbackcardnum + ", ubplaceback="
+				+ ubplaceback + ", ubbindtime=" + ubbindtime + ", ubstatus=" + ubstatus + "]";
+	}
+	
+	
+	
+	
+	
+}

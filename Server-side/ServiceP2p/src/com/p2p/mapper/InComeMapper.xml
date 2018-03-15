@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.InComeMapper">
+		<resultMap type="com.p2p.pojo.Income" id="incomemapp">
+			<result column="i_id" property="iid"/>
+			<result column="i_suid" property="isuid"/>
+			<result column="i_moeny" property="imoeny"/>
+			<result column="i_time" property="itime"/>
+			<result column="i_type" property="itype"/>
+			<result column="i_ip" property="iip"/>
+			<association property="user" javaType="com.p2p.pojo.Users">
+				<result property="suname" column="su_name"/>
+			</association>
+		</resultMap>
+		
+		<!-- 查询所有 -->
+		<select id="list" resultMap="incomemapp">
+			select i.*,u.su_name from income i,users u where i.i_suid=u.id
+		</select>
+		<!-- 模糊查询 -->
+		<select id="likeIncome" resultMap="incomemapp" parameterType="com.p2p.pojo.Income">
+					select i.*,u.su_name from income i,users u
+						<where>
+							i.i_suid=u.id
+							<if test="user.suname!=null">
+								and u.su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')
+							</if>
+						</where>
+		</select>
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.Income">
+			insert into income(i_suid,i_moeny,i_time,i_ip,i_type) values(#{isuid},#{imoeny},#{itime},#{iip},#{itype})
+		</select>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from income where i_id = #{i_id}
+		</delete>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.Income">
+			update income set i_suid = #{isuid}, i_moeny = #{imoeny}, i_time = #{itime}, i_ip = #{iip}, i_type = #{itype}
+				where i_id = #{iid}
+		</update>
+		
+		<!-- 根据id查用户 -->
+		<select id="getById" resultMap="incomemapp" parameterType="java.lang.Integer">
+			select * from income where i_id = #{i_id}
+		</select>
+	</mapper>

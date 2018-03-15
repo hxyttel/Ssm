@@ -1,0 +1,13 @@
+package com.p2p.mapper;
+
+import com.p2p.base.IBaseDao;
+import com.p2p.pojo.SendMsg;
+
+/**
+ * 操作人:汪栋才
+ * 操作时间 :2017-12-25
+ * 操作短信第三接口的mapper
+ * */
+public interface SendMsgMapper extends IBaseDao<Integer,SendMsg>{
+	SendMsg findUserMsg(Integer isuser);
+}

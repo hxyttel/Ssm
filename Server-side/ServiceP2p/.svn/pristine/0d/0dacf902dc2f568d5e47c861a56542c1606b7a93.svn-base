@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.StopmoneyMapper">
+	<resultMap type="com.p2p.pojo.Stopmoney" id="stopMap">
+		<id column="sm_id" property="smid"/>
+		<result column="sm_suid" property="smsuid"/>
+		<result column="sm_type" property="smtype"/>
+		<result column="sm_order" property="smorder"/>
+		<result column="sm_money" property="smmoney"/>
+	</resultMap>
+	<select id="list" resultMap="stopMap">
+		select s.* u.su_name as smsuname from stopmoney s,users u where s.sm_suid=u.id
+	</select>
+	<update id="update" parameterType="com.p2p.pojo.Stopmoney">
+		update stopmoney
+		<trim prefix="set" suffixOverrides=",">
+			<if test="smtype!=null">sm_type=#{smtype},</if>
+			<if test="smsuid!=null">sm_suid=#{smsuid}</if>
+			<if test="smorder!=null">sm_order=#{smorder}</if>
+			<if test="smmoney!=null">sm_money=#{smmoney}</if>
+			<if test="smstate!=null">sm_state=#{smstate}</if>
+		</trim>
+	</update>
+	<select id="getById" parameterType="java.lang.Integer" resultMap="stopMap">
+		select * from stopmoney where sm_id=#{smid}
+	</select>
+	<insert id="add" parameterType="com.p2p.pojo.Stopmoney">
+		insert into stopmoney(sm_suid,sm_type,sm_order,sm_money,sm_state)
+		values(#{smsuid},#{smtype},#{smorder},#{smmoney},#{smstate})
+	</insert>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from stopmoney where  sm_id=#{smid}
+	</delete>
+	<select id="getOrder" parameterType="java.lang.String" resultMap="stopMap">
+		select * from stopmoney where sm_order=#{smorder}
+	</select>
+</mapper>

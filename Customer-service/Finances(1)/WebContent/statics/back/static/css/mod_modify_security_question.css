@@ -1,0 +1,6 @@
+.mod-modify-security-question { }
+.mod-modify-security-question h3 {margin:20px 0;}
+.mod-modify-security-question .mod-form { padding:0;}
+.mod-modify-security-question .mod-form select { width:200px;}
+.mod-modify-security-question .item input[type="text"] { width:200px;}
+.mod-modify-security-question .mod-form button { margin-top:30px;}

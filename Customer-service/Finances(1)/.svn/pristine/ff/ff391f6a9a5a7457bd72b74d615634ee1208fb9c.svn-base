@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <title></title>
+        
+        <meta property="og:type" content="image" />
+		<meta property="og:image" content="https://www.iqianbang.com/statics/home/images/logo_brief.jpg" />
+        
+       <!--[if lt IE 9]>
+        <script src="https://www.iqianbang.com/statics/newcommon/js/html5shiv.js"></script>
+        <![endif]-->
+        <link  rel="Shortcut  Icon"  href="https://www.iqianbang.com/statics/home/images/minilogo.png">
+        <link rel="stylesheet" href="https://www.iqianbang.com/statics/newcommon/css/m2-commonNew.css?">
+		<link rel="stylesheet" href="https://www.iqianbang.com/statics/home2/css/m2-main.css?">
+        <link rel="stylesheet" href="https://www.iqianbang.com/statics/newcommon/css/m2-common.css?">
+        <link rel="stylesheet" href="https://www.iqianbang.com/statics/home2/styles/newreg.css?20170926">
+        <script type="text/javascript" src="https://www.iqianbang.com/statics/home/js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.iqianbang.com/statics/newcommon/js/common.js?t=20171026"></script>
+        <script type="text/javascript">
+			var _hmt = _hmt || [];
+			(function() {
+			  var hm = document.createElement("script");
+			  hm.src = "//hm.baidu.com/hm.js?af9f08105d675ef9febc0bc1ac781258";
+			  var s = document.getElementsByTagName("script")[0]; 
+			  s.parentNode.insertBefore(hm, s);
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+			document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1259164158'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1259164158%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+			    var bp = document.createElement('script');
+			    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+			    var s = document.getElementsByTagName("script")[0];
+			    s.parentNode.insertBefore(bp, s);
+			})();
+		</script>
+<title>爱钱帮投资理财平台-出错啦！</title>
+<style type="text/css">
+  html,body,head,div,p,a{margin: 0;padding: 0;}
+ .body_bg{background-color:#f4f5f5;}
+    .main{
+        width: 700px;
+        overflow: hidden;
+        height: 542px;
+        margin: 0 auto;
+        padding-top:60px;
+    }
+    .title{font-size: 16px;font-weight: bold;color:#4b4b4e;line-height: 35px;}
+    .btn{
+        display:block;
+        background: url('https://www.iqianbang.com/statics/home/images/er-btn.png') no-repeat 0 0;
+        width: 145px;
+        height: 45px;
+        font-size: 14px;
+        margin: 95px 0 0 270px;
+        line-height: 43px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;}
+    .er_img{position: absolute;}
+    #message{
+        position:absolute;
+        width:700px;
+        text-align: center;
+        margin-top:170px;
+        line-height: 40px;
+        font-weight:bold;
+
+    }
+    .jump{font-size:14px;}
+</style>
+<!--header -->
+<div class="m2-commonTop-con-new">
+	<div class="m2-commonTop-new clearfix">
+		<div class="m2-commonTop-left-new">
+			<div class="m2-commonTop-tel-new">客服热线：4006-777-518</div>
+		</div>
+		<div class="m2-commonTop-right-new">
+			<ul class="m2-commonTop-link-new">
+									<li class="m2-commonTop-btn-new"><a href="/register" target="_blank"  rel="nofollow">注册</a></li>
+					<li class="spacer"></li>
+					<li class="m2-commonTop-btn-new"><a href="/login?login_callback=" target="_blank"  rel="nofollow">登录</a></li>
+					<li class="spacer"></li>				<li class="m2-commonTop-btn-new">
+                    <a href="http://q.url.cn/s/Fo8frRm?_type=wpa&qidian=true" target="_blank">在线客服</a>
+				</li>
+				<li class="spacer"></li>
+				<li class="m2-commonTop-btn-new"><a class="light-color" href="/guide" target="_blank">帮助中心</a></li>
+				<li class="spacer"></li>
+				<li class="m2-commonTop-btn-new"><a class="light-color" href="/licaiwang_zhuantihuodong" target="_blank">活动专区</a></li>
+				<li class="spacer"></li>
+				<li class="m2-commonTop-btn-new"><a class="light-color" href="company_finance.html" id="cfpage">企业理财</a></li>
+				<li class="spacer"></li>
+				<li class="m2-commonTop-btn-new"><a href="/appdownload.html" target="_blank" rel="nofollow">手机App</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+<div class="m2-commonNav-con-new">
+    <div class="m2-commonNav-box-new clearfix">
+        <div class="m2-commonLogo-new clearfix">
+            <a class="m2-comImg-logo-new" href="/">
+				<img src="https://www.iqianbang.com/statics/newcommon/images/m2-logo.png" title="爱钱帮投资理财平台logo" alt="爱钱帮标识">
+				<!--<img src="https://www.iqianbang.com/statics/newcommon/images/sdj.gif" class="ml13" alt="">-->
+                <img src="https://www.iqianbang.com/statics/newcommon/images/yuandan.png" class="ml13" alt="">
+			</a>
+			<div class="m2-conImg-slogan-new">
+				<h3>获盛大资本投资</h3>
+				<h3>银行存管</h3>
+			</div>
+        </div>
+        <div class="m2-commonNav-new">
+                            <ul class="myacc_unlog">
+                    <li>
+                        <a href="/usercenter" class="myacc_a">
+                            <i class="myacc-icon"></i>
+                            <span class="myacc-txt" rel="nofollow">我的账户</span>
+                        </a>
+                    </li>
+                </ul>             <ul class="m2-commonNavul-fir-new" data_page=''>
+                <li class="m2-commonNav-fir-new li-hover"><a href="/" id="onepage">首页</a></li>
+                 <li class="m2-commonNav-fir-new li-hover"><a href="/touzi_licai_iplans.html" id="twopage">我要投资</a></li>
+                                     <li class="m2-commonNav-fir-new li-hover"><a href="/membermall.html" id="sevenpage">会员商城</a></li>
+                <li class="m2-commonNav-fir-new li-hover"><a href="/anquanlicai_baozhang.html" id="fourpage">安全保障</a></li>
+                <li class="m2-commonNav-fir-new li-hover"><a href="/aboutus.html" id="fivepage">信息披露</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<!-- headerEnd -->
+
+
+
+    <!--中部开始-->
+    <div class='body_bg'>
+       <div class="main">
+	    <img src="https://www.iqianbang.com/statics/home/images/er-bg.png" class="er_img">
+		 <div id='message'>
+    <p class="title">非常抱歉，您要查看的页面没有办法找到!<br/>
+   
+                页面自动 <a id="href" href="/">跳转</a>  <b id="wait">3</b>秒后返回首页
+                </p>
+    <a href="https://www.iqianbang.com" class="btn">返回网站首页</a>
+	</div>
+</div>
+    </div>
+        <script type="text/javascript">
+        (function(){
+        var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                location.href = href;
+                clearInterval(interval);
+            };
+        }, 1000);
+        })();
+        </script>
+      
+    <!--中部结束-->
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?af9f08105d675ef9febc0bc1ac781258";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script type="text/javascript">
+	var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1259164158'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1259164158%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+    <span class="corner left_top"></span><span class="corner right_top"></span>
+    <span class="corner left_bottom"></span><span class="corner right_bottom"></span>
+    </div><!--borderbox-->
+<div id="mainNewfoot" class="footer">
+    <div class="mainNewfocus">
+        <div class="footer-content clearfix">
+            <div class="footer-sec clearfix">
+                <div class="footer-about">
+                    <span class="footer-circle">关于我们</span>
+                    <ul class="footer-list">
+                        <li><a href="/market-DataShow-aboutus" rel="nofollow">公司介绍</a></li>
+                        <li><a href="/market-DataShow-aboutus2" rel="nofollow">团队介绍</a></li>
+                        <li><a href="/market-DataShow-aboutus9" rel="nofollow">媒体报道</a></li>
+                        <li><a href="/market-DataShow-aboutus11" rel="nofollow">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-help">
+                    <span class="footer-circle">帮助中心</span>
+                    <ul class="footer-list">
+                        <li><a href="/market-DataShow-index" rel="nofollow">平台数据</a></li>
+                        <li><a href="/market-DataShow-aboutus14" rel="nofollow">平台公告</a></li>
+                        <li><a href="/anquanlicai_baozhang.html" rel="nofollow">安全保障</a></li>
+                        <li><a href="/guide" rel="nofollow">常见问题</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-spacer"></div>
+            <div class="footer-sec">
+                <div class="qrcode weixinwrap">
+                    <span class="weixin-txt">微信订阅号</span>
+                    <div class="footer-icon footer-weixin"></div>
+                </div>
+                <div class="qrcode">
+                    <span class="appdown-txt">App下载</span>
+                    <div class="footer-icon footer-down"></div>
+                </div>
+            </div>
+            <div class="footer-spacer"></div>
+            <div class="footer-sec footer-hotline">
+                <span>全国服务热线</span>
+                <span class="footer-hotline-title">4006-777-518</span>
+                <span class="footer-service-time">服务时间：9:00-21:00</span>
+                <a class="footer-serviceOL" target="_blank" href="http://q.url.cn/s/Fo8frRm?_type=wpa&qidian=true">在线客服</a>
+            </div>
+        </div>
+        <div class="copy-content">
+            <p class="footer-copyright footer-copyright1">
+                <a href="/SiteMap" class="spispan">网站地图</a>
+                <span class="spispan spispan1">页面版权所有：北京爱钱帮财富科技有限公司&nbsp;</span>
+                <span class="spispan">市场有风险&nbsp;投资需谨慎</span>
+            </p>
+            <p class="footer-copyright footer-copyright2">
+                <a class="icoText spispan" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010102001194">京公网安备 11010102001194号</a>
+                <span class="spispan spispan3">京ICP备13045153号-2 京ICP证150216号</span>
+            </p>
+            <style>
+                .spispan{ display:inline-block; margin: 0 0 0 20px;}
+                .spispan3{ margin: 0px;}
+                a.spispan:hover{
+                    color: #ff7832; text-decoration: none;}
+                .icoText{
+                    background: url("https://www.iqianbang.com/statics/home2/images/newreg/gaba.png") no-repeat;
+                    padding-left: 18px;
+                    background-size: 17px;
+                }
+                .icoText:hover{
+                    color: #ff7832; text-decoration: none;}
+                .footer-cooperation .two{
+                    border: 1px solid #cacaca;
+                    overflow: hidden;
+                    border-radius: 7px;
+                }
+                .footer-cooperation .two:hover{
+                    border: 1px solid #ff7832;
+                    overflow: hidden;
+                    border-radius: 7px;
+                }
+                .footer-cooperation .two img{
+                    width: 90px !important;
+                    height:37px !important;
+                    margin: -2px;
+                }
+            </style>
+            <ul class="footer-cooperation clearfix">
+                <li class="footer-icon f-icon-1"><a href="https://trustsealinfo.websecurity.norton.com/splash?form_file=fdf/splash.fdf&dn=www.iqianbang.com&lang=zh_cn" target="_blank" rel="nofollow"></a></li>
+                <li class="footer-icon f-icon-1 two"><a  key ="5a0cf74312c3d52f9b15913e"  logo_size="83x30"  logo_type="common"  href="http://www.anquan.org" ><script src="//static.anquan.org/static/outer/js/aq_auth.js"></script></a></li>
+                <li class="footer-icon f-icon-2"><a href="https://ss.knet.cn/verifyseal.dll?sn=e14032111010847492vg0o000000&ct=df&a=1&pa=0.8090716653969139" target="_blank" rel="nofollow"></a></li>
+                <li class="footer-icon f-icon-3" style="width: 91px;"><a href="http://www.itrust.org.cn/yz/pjwx.asp?wm=1076572005" target="_blank" rel="nofollow"></a></li>
+                <li class="footer-icon f-icon-4"><a href="/anquanlicai_icp.html" target="_blank" rel="nofollow"></a></li>
+                <li class="footer-icon f-icon-5"><a href="http://www.itrust.org.cn/home/index/satification_certificate/wm/1076572005" target="_blank" rel="nofollow"></a></li>
+                <li class="footer-icon f-icon-6" style="margin-right: 0;"><a target="_blank" href="https://credit.cecdc.com/query/search?code=xVBKmEvO4raWlQ1siczQW9MtT2QrC4S4eoY5Bggpxh71bXz7bfKUz41L2D%2FhG9UAS%2FZfviAB0b8802j%2FRPvD%2B8MTPwBe5Sif6Gx%2BMfK78FQzm4fer1D2Tzc9PjiaDvliPTC9bbRfyVzIat8Yz5ZNFfy8vhwzpOYv3%2BhS2vC5XyZc9ewgIC%2FyY21dV9%2BpcW5xsMXEnmv5acpnmgtKjN6jVQMM4Q%3D%3D&isExpires=2" rel="nofollow"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--底部[end]-->
+<script src="https://www.iqianbang.com/statics/common/js/common.js?"></script>
+<link type="text/css" rel="stylesheet" href="https://www.iqianbang.com/statics/common/tipBox/colorbox-master/css/colorbox.css?">
+<script src="https://www.iqianbang.com/statics/common/tipBox/layer-v1.5.1/layer/layer.js?"></script>
+<script src="https://www.iqianbang.com/statics/common/tipBox/common.js?"></script>
+<!--tipBOx-->
+<script language=JavaScript type="text/javascript" src="https://www.iqianbang.com/statics/home/js/tab.js?"></script>
+<script type="text/javascript">
+    var GV = {
+        DIMAUB: "",
+        JS_ROOT: "https://www.iqianbang.com/statics/home/js/",
+        TOKEN: "de5292a8b2f102ec233955f20d6a0878_93102aa329de17b7255878b4c6b1ad55",
+        THIS_URL: "Notfound-",
+        TINVEST_URL: "/invest-shownewinvest.shtml"
+    };
+    $(function () {
+        if ($.browser && $.browser.msie && ($.browser.version == "6.0") && !$.support.style) {
+            $('#fixed-services').css('display', 'none');
+        }
+    })
+</script>
+</body>
+</html>

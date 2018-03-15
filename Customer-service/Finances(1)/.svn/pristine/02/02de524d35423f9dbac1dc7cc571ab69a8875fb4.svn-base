@@ -1,0 +1,64 @@
+package com.p2p.pojo;
+
+import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+
+/**
+ * 认证详情表
+ * 操作人:胡孝玉
+ * **/
+@SuppressWarnings("serial")
+public class AuthebDetais implements Serializable{
+	@TableField("ad_id")
+	private Integer adid;
+	
+	@TableField("ad_introduct")
+	private String adintroduct; //认证介绍
+	
+	@TableField("ad_time")
+	private String adtime; //认证详情时间
+	
+	public AuthebDetais() {
+	}
+	
+	public AuthebDetais(Integer adid, String adintroduct, String adtime) {
+		super();
+		this.adid = adid;
+		this.adintroduct = adintroduct;
+		this.adtime = adtime;
+	}
+
+	@Override
+	public String toString() {
+		return "AuthebDetais [adid=" + adid + ", adintroduct=" + adintroduct + ", adtime=" + adtime + "]";
+	}
+
+	public Integer getAdid() {
+		return adid;
+	}
+
+	public void setAdid(Integer adid) {
+		this.adid = adid;
+	}
+
+	public String getAdintroduct() {
+		return adintroduct;
+	}
+
+	public void setAdintroduct(String adintroduct) {
+		this.adintroduct = adintroduct;
+	}
+
+	public String getAdtime() {
+		return adtime;
+	}
+
+	public void setAdtime(String adtime) {
+		this.adtime = adtime;
+	}
+	
+	
+	
+
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.SingMapper">
+	<resultMap type="com.p2p.pojo.Sing" id="BaseResultMap">
+		   <id column="sigid" property="sigid"/>
+	 		  <result column="siguser" property="siguser"/>
+	 		   <result column="siglevel" property="siglevel"/>
+	 		  <result column="siggrowth" property="siggrowth"/>
+	 		  <result column="lasttime" property="lasttime"/>
+	 		  <result column="countday" property="countday"/>
+	</resultMap>
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from sing
+ 	</select>
+ 	<select id="checkusersing" resultMap="BaseResultMap">
+ 		select * from sign where siguser=#{uid} and lasttime =#{day}
+ 	</select>
+ 	<select id="getModel" parameterType="com.p2p.pojo.Sing" resultMap="BaseResultMap">
+ 		select * from sign
+ 		<where>
+ 		1=1
+ 			 <if test="sigid!=null">and sigid=#{sigid}</if>
+ 			 <if test="siguser!=null">and siguser=#{siguser}</if>
+ 			 <if test="siglevel!=null">and siglevel=#{siglevel}</if>
+ 			 <if test="siggrowth!=null">and siggrowth=#{siggrowth}</if>
+ 			 <if test="lasttime!=null">and lasttime=#{lasttime}</if>
+ 			 <if test="countday!=null">and countday=#{countday}</if>
+ 		</where>
+ 	</select>
+ 	<insert id="addModel" parameterType="com.p2p.pojo.Sing" useGeneratedKeys="true" keyProperty="sigid">
+ 		insert into sign(siguser,siglevel,countday,siggrowth,lasttime) values(#{siguser},#{siglevel},#{countday},#{siggrowth},#{lasttime});
+ 	</insert>
+ 	<update id="update" parameterType="com.p2p.pojo.Sing">
+ 		update sign
+ 		<trim prefix="set" suffixOverrides=",">
+ 		 <if test="siguser!=null">siguser=#{siguser},</if>
+ 			 <if test="siglevel!=null">siglevel=#{siglevel},</if>
+ 			 <if test="countday!=null">countday=#{countday},</if>
+ 			 <if test="siggrowth!=null">siggrowth=#{siggrowth},</if>
+ 			 <if test="lasttime!=null">lasttime=#{lasttime},</if>
+ 		</trim>
+ 		<where>
+ 		   sigid=#{sigid}
+ 		</where>
+ 	</update>
+ 	<delete id="delete" parameterType="com.p2p.pojo.Sing">
+ 		delete from sign
+ 		<where>
+ 		1=1
+ 			 <if test="sigid!=null">and sigid=#{sigid}</if>
+ 			 <if test="siguser!=null">and siguser=#{siguser}</if>
+ 			 <if test="siglevel!=null">and siglevel=#{siglevel}</if>
+ 			 <if test="siggrowth!=null">and siggrowth=#{siggrowth}</if>
+ 			 <if test="lasttime!=null">and lasttime=#{lasttime}</if>
+ 			 <if test="countday!=null">and countday=#{countday}</if>
+ 		</where>
+ 	</delete>
+</mapper>

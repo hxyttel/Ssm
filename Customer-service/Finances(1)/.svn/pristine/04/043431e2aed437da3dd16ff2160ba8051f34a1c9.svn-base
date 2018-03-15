@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.EmpMapper">
+<resultMap type="com.p2p.pojo.Employe" id="BaseResultMap">
+	      <id column="e_id" property="eid"/>
+ 		  <result column="re_id" property="reid"/>
+ 		  <result column="e_enum" property="eenum"/>
+ 		  <result column="e_sex" property="esex"/>
+ 		  <result column="e_sex" property="esex"/>
+ 		  <result column="e_phone" property="ephone"/>
+ 		  <result column="e_position" property="eposition"/>
+ 		  <result column="e_email" property="eemail"/>
+ 		  <result column="e_name" property="ename"/>
+ 		  <result column="e_password" property="epassword"/>
+ 		  <result column="e_status" property="estatus"/>
+ 		  <result column="e_retime" property="eretime"/>
+ 		  <result column="e_remark" property="eremark"/>
+</resultMap>
+ 	<select id="getByemployname"  parameterType="java.lang.String" resultMap="BaseResultMap">
+ 		select * from employee where e_name=#{ename}
+ 	</select>
+</mapper>

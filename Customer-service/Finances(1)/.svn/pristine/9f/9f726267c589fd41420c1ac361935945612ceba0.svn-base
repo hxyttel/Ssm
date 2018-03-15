@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.IdCardMapper">
+	<resultMap type="com.p2p.pojo.IdCard" id="IdCardResultMap">
+    	<id column="ic_id" property="icid"/>
+		<result column="ic_frontUrl" property="icfrontUrl"/>
+		<result column="ic_backUrl" property="icbackUrl"/>
+		<result column="ic_status" property="icstatus"/>
+		<result column="ic_starttime" property="icstarttime"/>
+		<result column="ic_number" property="icnumber"/>
+		<result column="ui_id" property="uiid"/>
+		<result column="ic_name" property="icname"/>
+	</resultMap>
+	<sql id="myidcardsql">
+		ic_frontUrl,ic_backUrl,ic_status,ic_starttime,ic_number,ui_id,ic_name
+	</sql>
+	<select id="getModel" parameterType="com.p2p.pojo.IdCard" resultMap="IdCardResultMap">
+		select * from idCard ic 
+		<where>
+ 		     1=1
+ 			    <if test="icid!=null">and ic.ic_id=#{icid}</if>
+		  		<if test="icfrontUrl!=null">and ic.ic_frontUrl=#{icfrontUrl}</if>
+		  		<if test="icbackUrl!=null">and ic.ic_backUrl=#{icbackUrl}</if>
+		  		<if test="icstatus!=null">and ic.ic_status=#{icstatus}</if>
+		  		<if test="icstarttime!=null">and ic.ic_starttime=#{icstarttime}</if>
+		  		<if test="icnumber!=null">and ic.ic_number=#{icnumber}</if>
+		  		<if test="uiid!=null">and ic.ui_id=#{uiid}</if>
+		  		<if test="icname!=null">and ic.ic_name=#{icname}</if>
+ 		</where>
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.IdCard" useGeneratedKeys="true" keyProperty="id">
+		insert into idCard(<include refid="myidcardsql" />) values(#{icfrontUrl},#{icbackUrl},#{icstatus},#{icstarttime},#{icnumber},#{uiid},#{icname})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.IdCard">
+		delete from idCard where ic_id = #{icid}
+	</delete>
+	<select id="getAllModel" resultMap="IdCardResultMap">
+		select * from idCard
+	</select>
+	<update id="update" parameterType="com.p2p.pojo.IdCard">
+		update idCard ic
+		<trim prefix="set" suffixOverrides=",">
+		  <if test="icfrontUrl!=null">ic.ic_frontUrl=#{icfrontUrl},</if>
+		  <if test="icbackUrl!=null">ic.ic_backUrl=#{icbackUrl},</if>
+		  <if test="icstatus!=null">ic.ic_status=#{icstatus},</if>
+		  <if test="icstarttime!=null">ic.ic_starttime=#{icstarttime},</if>
+		  <if test="icnumber!=null">ic.ic_number=#{icnumber},</if>
+		  <if test="uiid!=null">ic.ui_id=#{uiid},</if>
+		  <if test="icname!=null">ic.ic_name=#{icname},</if>
+ 		</trim>
+ 		<where>
+ 		    ic.ic_id=#{icid}
+ 		</where>
+	</update>
+</mapper>

@@ -1,0 +1,5 @@
+.user-list {}
+.user-list li { float:left; margin:26px 26px 0 26px; text-align:center; width:128px;}
+.user-list li img {}
+.user-list li p { font-size:16px; margin:4px 0 4px 0;}
+.user-list li a { font-size:14px; color:#3180bf;}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.SendMsgMapper">
+	<resultMap type="com.p2p.pojo.SendMsg" id="BaseResultMap">
+		      <id column="msgid" property="msgid"/>
+	 		  <result column="username" property="username"/>
+	 		  <result column="password" property="password"/>
+	 		  <result column="method" property="method"/>
+	 		  <result column="isuser" property="isuser"/>
+	</resultMap>
+	<select id="getModel" parameterType="com.p2p.pojo.SendMsg" resultType="com.p2p.pojo.SendMsg">
+		select * from send_msg s where s.msgid=#{msgid}
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.SendMsg" useGeneratedKeys="true" keyProperty="id">
+		insert into send_msg(username,password,method,isuser) values(#{username},#{password},#{method},#{isuser})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.SendMsg">
+		delete from send_msg where msgid = #{msgid}
+	</delete>
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from send_msg
+	</select>
+	<select id="findUserMsg" resultType="com.p2p.pojo.SendMsg">
+		select * from send_msg where isuser =#{isuser}
+	</select>
+</mapper>

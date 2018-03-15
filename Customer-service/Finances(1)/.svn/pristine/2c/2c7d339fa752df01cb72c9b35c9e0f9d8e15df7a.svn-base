@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.ActivityMapper">
+	<resultMap type="com.p2p.pojo.Activity" id="BaseResultMap">
+		<id column="at_id" property="atid"></id>
+		<result column="at_title" property="attitle"/>
+		<result column="at_intgard" property="atintgard"/>
+		<result column="at_content" property="atcontent"/>
+		<result column="at_image" property="atimag"/>
+		<result column="at_starttime" property="atstarttime"/>
+		<result column="at_endtime" property="atendtime"/>
+		<result column="at_status" property="atstatus"/>
+	</resultMap>
+	<!-- 查询所有数据 -->
+	<select id="listActivity" resultMap="BaseResultMap">
+		select * from activity
+	</select>
+	<!-- 增加数据 -->
+	<insert id="insertActivity" parameterType="com.p2p.pojo.Activity">
+		insert into activity(at_title,at_intgard,at_content,at_imag,at_starttime,at_endtime,at_status)
+			values(#{attitle},#{atintgard},#{atcontent},${atimag},#{atstarttime},
+				#{atendtime},#{atstatus})
+	</insert>
+	<!-- 根据id查询数据 -->
+	<select id="findById" parameterType="java.lang.Integer" resultType="com.p2p.pojo.Activity">
+		select * from activity a where a.at_id=#{id} 
+	</select>
+	<!-- 修改 -->
+	<update id="updateActivity" parameterType="com.p2p.pojo.Activity">
+		update activity set at_title=#{attitle},at_intgard=#{atintgard},
+			at_content=#{atcontent},at_imag=#{atimag},at_starttime=#{atimag},
+				at_endtime=#{atendtime},at_status=#{atstatus} where a.at_id=#{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="deleteActivity" parameterType="java.lang.Integer">
+		delete from activity a where a.at_id=#{id}
+	</delete>
+</mapper>

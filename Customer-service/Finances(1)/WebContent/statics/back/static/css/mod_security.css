@@ -1,0 +1,10 @@
+.mod-security { padding-top:0;}
+.mod-security .security {}
+.mod-security .security .warp-1000 { background:#fff; padding: 60px;}
+.mod-security .security .adv { margin-bottom:25px; text-align:center;}
+.mod-security .item { margin-bottom:40px;}
+.mod-security .item .main { float:left; width:580px;}
+.mod-security .item .main h1 { margin-bottom:30px; font-size:30px; color:#1e1e1e;}
+.mod-security .item .main h3 { margin-bottom:4px; font-size:16px; color:#1e1e1e;}
+.mod-security .item .main p { margin-bottom:20px; font-size:16px; line-height:180%; color:#8d8d8d;}
+.mod-security .item .pic { float:right;}

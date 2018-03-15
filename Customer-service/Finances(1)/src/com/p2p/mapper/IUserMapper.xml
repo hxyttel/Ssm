@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.IUserMapper">
+<resultMap type="com.p2p.pojo.User" id="BaseResultMap">
+		  <id column="u_id" property="uid"/>
+ 		  <result column="u_password" property="upassword"/>
+ 		  <result column="u_phone" property="uphone"/>
+ 		  <result column="u_loginTime" property="uloginTime"/>
+ 		   <result column="order_invite" property="orderinvite"/>
+ 		  <result column="u_invite" property="uinvite"/>
+ 		  <result column="u_enable" property="uenable"/>
+ 		  <result column="u_isAccountSum" property="uisAccountSum"/>
+ 		  <result column="qr_code" property="qrcode"/>
+ 		   <result column="u_address" property="uaddress"/>
+ 		  <result column="u_ip" property="uip"/>
+ 		  <result column="u_regTime" property="uregTime"/>
+ 		  <result column="u_credit" property="ucredit"/>
+ 		  <result column="u_balance" property="ubalance"/>
+ 		  <result column="ul_id" property="ulid"/>
+ 		  <result column="vd_id" property="vdid"/>
+ 		 
+ 		<!-- 一对一对应用户基本信息表 -->
+ 		<association property="userinfo" javaType="com.p2p.pojo.Userinfo">
+ 			<id column="ui_id" property="uiid"/>
+ 			<result column="u_id" property="uid"/>
+ 			<result column="ui_headImg" property="uiheadImg"/>
+ 			<result column="ui_name" property="uiname"/>
+ 			<result column="ui_sex" property="uisex"/>
+ 			<result column="ui_birthday" property="uibirthday"/>
+ 			<result column="pv_id" property="pvid"/>
+ 			<result column="cy_id" property="cyid"/>
+ 			<result column="ae_id" property="aeid"/>
+ 			<result column="ui_dealpwd" property="uidealpwd"/>
+ 			<result column="ui_email" property="uiemail"/>
+ 			<result column="ui_emailstatus" property="uiemailstatus"/>
+ 			<result column="ui_openstatus" property="uiopenstatus"/>
+ 		</association>
+</resultMap>
+	
+	<sql id="myusersql">
+		u_password,u_phone,u_loginTime,order_invite,u_invite,
+		u_enable,u_isAccountSum,qr_code,u_address,u_ip,u_regTime,u_credit,u_balance,ul_id,vd_id
+	</sql>
+	<!-- 增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.User" useGeneratedKeys="true" keyProperty="uid">
+ 		 insert into user(<include refid="myusersql" />)
+ 		 values(#{upassword},#{uphone},#{uloginTime},#{orderinvite},#{uinvite},#{uenable},#{uisAccountSum},#{qrcode},#{uaddress},#{uip},#{uregTime},#{ucredit},#{ubalance},#{ulid},#{vdid})
+ 	</insert>
+ 	
+ 	<!-- 查询总的用户 -->
+ 	<select id="getAllModel" resultMap="BaseResultMap">
+ 		select * from user;
+ 	</select>
+ 	<select id="getModel" parameterType="com.p2p.pojo.User" resultMap="BaseResultMap">
+ 		select * from user u,user_info ui 
+ 		 <where>
+ 		     1=1
+ 			    <if test="uid!=null">and u.u_id=#{uid}</if>
+		  		<if test="upassword!=null">and u.u_password=#{upassword}</if>
+		  		<if test="uphone!=null">and u.u_phone=#{uphone}</if>
+		  		<if test="uregTime!=null">and u.u_regTime=#{uregTime}</if>
+		  		<if test="uloginTime!=null">and u.u_loginTime=#{uloginTime}</if>
+		  		<if test="orderinvite!=null">and u.order_invite=#{orderinvite}</if>
+		  		<if test="uinvite!=null">and u.u_invite=#{uinvite}</if>
+		  		<if test="uenable!=null">and u.u_enable=#{uenable}</if>
+		  		<if test="uisAccountSum!=null">and u.u_isAccountSum=#{uisAccountSum}</if>
+		  		<if test="qrcode!=null">and u.qr_code=#{qrcode}</if>
+		  		<if test="uaddress!=null">and u.u_address=#{uaddress}</if>
+		  		<if test="uip!=null">and u.u_ip=#{uip}</if>
+		  		<if test="ucredit!=null">and u.u_credit=#{ucredit}</if>
+		  		<if test="ubalance!=null">and u.u_balance=#{ubalance}</if>
+		  		<if test="ulid!=null">and u.ul_id=#{ulid}</if>
+		  		<if test="vdid!=null">and u.vd_id=#{vdid}</if>
+		  		<!-- 下面多表二级查询user_info表 -->
+ 				<if test="uid!=null">and ui.u_id=#{uid}</if>
+ 				<!-- 关键 -->
+ 				and  u.u_id = ui.u_id;
+ 		</where>
+ 	</select>
+ 	<select id="userLoing" parameterType="java.lang.String" resultMap="BaseResultMap">
+ 			select * from user u where u.u_phone=#{username} and u.u_password=#{password};
+ 	</select>
+ 	
+ 	<!-- 根据别人邀请码去查询用户 -->
+ 	<select id="sletUserOinvite" resultMap="BaseResultMap" parameterType="java.lang.String">
+ 		select * from user u <where> u.u_invite = #{orderinvite}</where>
+ 	</select>
+ 	
+ 	<select id="seleUserByUinvite" resultMap="BaseResultMap" parameterType="java.lang.String">
+ 		select * from user u <where> u.order_invite = #{uinvite}</where>
+ 	</select>
+ 	<update id="update" parameterType="com.p2p.pojo.User">
+ 		update user u
+ 		<trim prefix="set" suffixOverrides=",">
+ 		  <if test="ubalance!=null">u.u_balance=#{ubalance},</if>
+		  <if test="upassword!=null">u.u_password=#{upassword},</if>
+		  <if test="uphone!=null">u.u_phone=#{uphone},</if>
+		  <if test="uloginTime!=null">u.u_loginTime=#{uloginTime},</if>
+ 		</trim>
+ 		<where>
+ 		    u.u_id=#{uid}
+ 		</where>
+ 	</update>
+ 	
+ 	<!-- 根据手机号修改密码 -->
+ 	<update id="updatePwd" parameterType="java.lang.String">
+ 		update user u
+ 		<trim prefix="set" suffixOverrides=",">
+		  <if test="upassword!=null">u.u_password=#{upassword},</if>
+ 		</trim>
+ 		<where>
+ 		    u.u_phone=#{uphone}
+ 		</where>
+ 	</update>
+ 	
+ 	<!-- 查询提现的总记录数 -->
+    <select id="userCount" resultType="java.lang.Integer">
+        select count(*) from user;
+    </select>
+    <!-- 查询提现的总记录数 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+        select * from user;
+    </select>
+</mapper>

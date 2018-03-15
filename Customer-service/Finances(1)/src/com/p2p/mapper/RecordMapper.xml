@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RecordMapper">
+	<resultMap id="BaseResultMap" type="com.p2p.pojo.Record">
+		<id column="rd_id" property="rdid"></id>
+		<result column="rd_name" property="rdname"></result>
+		<result column="e_id" property="reid"></result>
+		<result column="rd_status" property="rdstatus"></result>
+		<result column="rd_time" property="rdtime"></result>
+		<result column="rd_remark" property="rdremark"></result>
+		<!-- 配置管理员记录表和员工表一对一 -->
+		<association property="employe" javaType="com.p2p.pojo.Employe">
+			<id property="eid" column="e_id"></id>
+			<result property="reid" column="re_id"></result>
+			<result property="eenum" column="e_enum"></result>
+			<result property="esex" column="e_sex"></result>
+			<result property="eidcard" column="e_idcard"></result>
+			<result property="ephone" column="e_phone"></result>
+			<result property="eposition" column="e_position"></result>
+			<result property="eemail" column="e_email"></result>
+			<result property="ename" column="e_name"></result>
+			<result property="epassword" column="e_password"></result>
+			<result property="estatus" column="e_status"></result>
+			<result property="eretime" column="e_retime"></result>
+			<result property="eremark" column="e_remark"></result>
+			<result property="eimage" column="e_image"></result>
+		</association>
+	</resultMap>	
+	<!-- 后台管理员操作记录表查询 -->
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from record
+	</select>
+	<!-- 后台管理员操作记录表分页查询 -->
+	<select id="pageRecord" resultMap="BaseResultMap">
+		select r.*,e.e_name from record r ,employee e 
+			<where>
+				r.e_id = e.e_id
+				<if test="record.rdname!=null and record.rdname!=''">
+					and rd_name like CONCAT(CONCAT('%', #{record.rdname}), '%')
+				</if>
+				
+			</where> 
+	</select>
+	<!-- 后台管理员操作记录根据id查询员工查询名字 -->
+	<select id="getEmpIdName" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select r.*,e.ename from record r ,employee e 
+			<where>
+				r.e_id = e.e_id
+			</where>
+	</select>
+	<!-- 后台管理员操作记录表总记录数查询 -->
+	<select id="countRecord" resultType="java.lang.Integer">
+		select count(*) from record
+	</select>
+	<!-- 后台管理员操作记录表增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Record" useGeneratedKeys="true" keyColumn="rdid">
+		insert into record(rd_id,rd_name,e_id,rd_status,rd_time,rd_remark) 
+			values(#{rdid},#{rdname},#{reid},#{rdstatus},#{rdtime},#{rdremark})
+	</insert>
+	<!-- 后台管理员操作记录表修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Record">
+		update record set 
+		<if test="rdname!=null">rd_name=#{rdname},</if>
+		<if test="reid!=null">e_id=#{reid},</if>
+		<if test="rdstatus!=null">rd_status=#{rdstatus},</if>
+		<if test="rdtime!=null">rd_time=#{rdtime},</if>
+		<if test="rdremark!=null">rd_remark=#{rdremark}</if>
+		<where>
+			rd_id =#{rdid}
+		</where>
+	</update>
+	<!-- 后台管理员操作记录表删除 -->
+	<delete id="delete"  parameterType="java.lang.Integer">
+		delete from record where rd_id=#{rdid} 
+	</delete>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.LoanMapper">
+	<resultMap type="com.p2p.pojo.Loan" id="BaseResultMap">
+		  <id column="l_id" property="lid"/>
+		   <result column="u_id" property="uid"/>
+ 		  <result column="l_money" property="lmoney"/>
+ 		  <result column="l_time" property="ltime"/>
+ 		  <result column="l_endtime" property="lendtime"/>
+ 		   <result column="l_status" property="lstatus"/>
+ 		  <result column="l_way" property="lway"/>
+ 		   <result column="l_interest" property="linterest"/>
+ 		   <!--配置一对一 -->
+ 		  <!--  <association property="user" javaType="com.p2p.pojo.User">
+ 		   <id column="u_id" property="uid"/>
+			<result column="u_password" property="upassword"/>   
+			<result column="u_headImg" property="uheadImg"/>  
+			<result column="u_phone" property="uphone"/>  
+			<result column="u_regTime" property="uregTime"/> 
+			<result column="u_loginTime" property="uloginTime"/>
+			<result column="order_invite" property="orderinvite"/>
+			<result column="u_invite" property="uinvite"/>
+			<result column="u_enable" property="uenable"/>
+			<result column="u_isAccountSum" property="uisAccountSum"/>
+			<result column="qr_code" property="qrcode"/> 
+			<result column="u_ip" property="uip"/> 
+			<result column="u_credit" property="ucredit"/> 
+			<result column="ul_id" property="ulid"/> 
+			<result column="u_regTime" property="uregTime"/> 
+			<result column="vd_id" property="ulid"/> 
+ 		   </association> -->
+	</resultMap>
+	<resultMap type="java.lang.String" id="ListString">
+		<result column="l_money"/>
+	</resultMap>
+	
+	<!-- 联系人查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from loan
+ 		<where>
+		    1=1
+			<if test="loan.uid != null and loan.uid !='' ">
+			    and u_id like CONCAT(CONCAT('%', #{loan.uid}), '%')
+			</if>
+			<if test="loan.lmoney != null and loan.lmoney !=''">
+			     and l_money like CONCAT(CONCAT('%', #{loan.lmoney}), '%')
+			</if>
+			<if test="loan.ltime != null and loan.ltime != -1">
+			    and l_time  like CONCAT(CONCAT('%', #{loan.ltime}), '%')
+			</if>
+			<if test="loan.lendtime != null and loan.lendtime != -1">
+			    and l_endtime  like CONCAT(CONCAT('%', #{loan.lendtime}), '%')
+			</if>
+			<if test="loan.lstatus != null and loan.lstatus != -1">
+			    and l_status  like CONCAT(CONCAT('%', #{loan.lstatus}), '%')
+			</if>
+			<if test="loan.lway != null and loan.lway != -1">
+			    and l_way  like CONCAT(CONCAT('%', #{loan.lway}), '%')
+			</if>
+			<if test="loan.linterest != null and loan.linterest != -1">
+			    and l_interest  like CONCAT(CONCAT('%', #{loan.linterest}), '%')
+			</if>
+		</where>
+ 	</select>
+ 	<!-- 联系人添加 -->
+ 	
+	<insert id="addModel" parameterType="com.p2p.pojo.Loan" useGeneratedKeys="true" keyProperty="cid">
+ 		 insert into contact(u_id,l_money,l_time,l_endtime,l_status,l_way,l_interest) 
+ 		 values(#{uid},#{lmoney},#{ltime},#{lendtime},#{lstatus},#{lway},#{linterest})
+ 	</insert>
+ 	<!-- 联系人删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Loan">
+		delete from loan where l_id = #{lid};
+	</delete>
+	<update id="update" parameterType="com.p2p.pojo.Loan" >
+        UPDATE loan
+        <trim prefix="set" suffixOverrides=",">
+        	<if test="uid!=null">u_id=#{uid},</if>
+			<if test="lmoney!=null">l_money=#{lmoney},</if>
+			<if test="ltime!=null">l_time =#{ltime},</if>
+			<if test="lendtime!=null">l_endtime=#{lendtime},</if>
+			<if test="lstatus!=null">l_status =#{lstatus},</if>
+			<if test="lway!=null">l_way=#{lway},</if>
+			<if test="linterest!=null">l_interest=#{linterest},</if>
+		</trim>
+			WHERE l_id=#{lid}
+    </update>
+    <!-- 借款表查询 -->
+    <select id="getByemployname"  parameterType="java.lang.String" resultMap="BaseResultMap">
+ 		 select * from loan e ,user r 
+		<where>
+		    e.l_id = r.u_id and  u_phone=#{uphone}
+		</where>
+ 	</select>
+	 <!-- 查询角色的总记录数 -->
+    <select id="indexCount" resultType="java.lang.Integer">
+        select count(*) from loan
+    </select>
+      <!-- 查询所有角色 --> 
+    <select id="selectPage" resultMap="BaseResultMap">
+		select l.l_id,l.u_id,l.l_money,l.l_time,l.l_endtime,l.l_status,l.l_way,l.l_interest,ui.ui_name as uiname from loan l,user u,user_info ui 
+		<where>
+			1=1
+			<if test="loan.ltime!= null and loan.ltime!=''">
+			and l.l_time like CONCAT(CONCAT('%',#{loan.ltime}), '%')
+			</if>
+			<if test="loan.lendtime!= null and loan.lendtime!=''">
+			and l.l_endtime like CONCAT(CONCAT('%',#{loan.lendtime}), '%')
+			</if>	
+			<if test="loan.lstatus!= null and loan.lstatus!=-1">
+			and l.l_status like CONCAT(CONCAT('%',#{loan.lstatus}), '%')
+			</if>
+			 and l.u_id = u.u_id and ui.u_id = u.u_id
+		</where>		
+    </select>
+      <select id="loancount" resultType="java.lang.Integer">
+        select count(*) from loan l
+        <where>
+            1=1
+        	<if test="loan.ltime!= null and loan.ltime!=''">
+			and l.l_time like CONCAT(CONCAT('%',#{loan.ltime}), '%')
+			</if>
+			<if test="loan.lendtime!= null and loan.lendtime!=''">
+			and l.l_endtime like CONCAT(CONCAT('%',#{loan.lendtime}), '%')
+			</if>	
+			<if test="loan.lstatus!= null and loan.lstatus!=-1">
+			and l.l_status like CONCAT(CONCAT('%',#{loan.lstatus}), '%')
+			</if>
+        </where>
+    </select>
+    
+    <select id="getModel" parameterType="com.p2p.pojo.Loan" resultMap="BaseResultMap">
+		select * from loan
+		<where>
+			1=1
+			<if test="lid!=null">and l_id=#{lid}</if>
+			<if test="uid!=null">and u_id=#{uid}</if>
+			<if test="lmoney!=null">and l_money=#{lmoney}</if>
+			<if test="ltime!=null">and l_time=#{ltime}</if>
+			<if test="lendtime!=null">and l_endtime=#{lendtime}</if>
+			<if test="lstatus!=null">and l_status=#{lstatus}</if>
+			<if test="lway!=null">and l_way l_endtime=#{lway}</if>
+			<if test="linterest!=null">and l_interest=#{linterest}</if>
+		</where>
+	</select>
+	
+	<select id="getMaxStartTime" resultType="java.lang.String">
+		select l_time from loan ORDER BY l_time DESC limit 1
+	</select>
+	
+	<select id="getMinStartTime" resultType="java.lang.String">
+		select l_time from loan ORDER BY l_time ASC limit 1
+	</select>
+	
+	<select id="getMoneyByTime" parameterType="java.lang.String" resultMap="ListString">
+		select l.l_money from loan l where 1=1
+		<![CDATA[
+			and l.l_time like CONCAT(CONCAT('%', #{time}), '%')
+		]]>
+	</select>
+	
+	<select id="seleByLoan" resultMap="BaseResultMap">
+		select * from loan 
+			<where>
+			1 = 1
+			<if test="ltime!=null">
+				and l_time like CONCAT(CONCAT('%', #{ltime}), '%')
+			</if>
+			</where>
+	</select>
+</mapper>

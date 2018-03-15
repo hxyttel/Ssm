@@ -1,0 +1,19 @@
+.mod-loan-company { }
+.mod-loan-company h3 {margin:20px 0;}
+.mod-loan-company .mod-form { padding:0;}
+.mod-loan-company .mod-form select , .mod-loan-company .item input[type="password"] ,  .mod-loan-company .item input[type="text"]{ width:260px;}
+.mod-loan-company .item input.mini { width:106px;}
+.mod-loan-company .mod-form button { margin:10px 0 0 0;}
+.mod-loan-company .mod-form .box {}
+.mod-loan-company .mod-form .box ul .fl { border:none;}
+.mod-loan-company .mod-form .box ul .item {}
+.mod-loan-company .mod-form .box ul .item select , .mod-loan-company .mod-form .box ul .item input[type="password"] , .mod-loan-company .mod-form .box ul .item input[type="text"]{ width:106px;}
+.mod-loan-company .mod-form .btn-outline { color:#3180bf; border:1px solid #3180bf; border-radius:3px; margin-left:8px; background:#FFF;}
+.mod-loan-company .info { margin-top:60px;}
+.mod-loan-company .info h3 { font-size:14px; color:#666;}
+.mod-loan-company .info p { font-size:14px; color:#999; line-height:200%;}
+.mod-loan-company .info p span { padding:0 40px 0 0;}
+.mod-loan-company .info p span b { color:#1e1e1e;}
+.mod-loan-company .item-center { margin:20px auto; text-align:center;}
+.mod-loan-company .item-center .btn-outline { margin:auto;}
+.mod-loan-company .mod-form .fr .info { margin-left:40px;}

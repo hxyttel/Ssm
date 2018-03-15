@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.AddressMapper">
+    <resultMap type="com.p2p.pojo.Provice" id="provinceResultMap">
+        <result column="pv_id" property="pvid"></result>
+        <result column="pv_name" property="pvname"></result>
+    </resultMap>
+    <resultMap type="com.p2p.pojo.City" id="cityResultMap">
+        <result column="cy_id" property="cyid"></result>
+        <result column="cy_name" property="cyname"></result>
+        <result column="pv_id" property="pvid"></result>
+    </resultMap>
+    <resultMap type="com.p2p.pojo.Area" id="areaResultMap">
+        <result column="ae_id" property="aeid"></result>
+        <result column="ae_name" property="aename"></result>
+        <result column="cy_id" property="cyid"></result>
+    </resultMap>
+    
+    <select id="getProvinceList" resultMap="provinceResultMap">
+        select *from provice
+    </select>
+    
+    <select id="getCityList" resultMap="cityResultMap">
+        select *from city
+    </select>
+    
+    <select id="getAreaList" resultMap="areaResultMap">
+        select *from area
+    </select>
+    
+    <select id="getCityByPvId" parameterType="java.lang.String" resultMap="cityResultMap">
+        select *from city where pv_id=#{pvid}
+    </select>
+    
+    <select id="getAreaByCyid" parameterType="java.lang.String" resultMap="areaResultMap">
+        select *from area where cy_id=#{cyid}
+    </select>
+</mapper>

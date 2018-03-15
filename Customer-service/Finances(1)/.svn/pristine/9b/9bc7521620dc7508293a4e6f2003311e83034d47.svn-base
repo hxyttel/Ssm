@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.SendMailMapper">
+	<resultMap type="com.p2p.pojo.SendMail" id="BaseResultMap">
+		      <id column="mailid" property="mailid"/>
+	 		  <result column="host" property="host"/>
+	 		  <result column="formName" property="formName"/>
+	 		  <result column="password" property="password"/>
+	 		  <result column="isuser" property="isuser"/>
+	</resultMap>
+	<select id="getModel" parameterType="com.p2p.pojo.SendMail" resultType="com.p2p.pojo.SendMail">
+		select * from send_mail s where s.mailid=#{mailid}
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.SendMail" useGeneratedKeys="true" keyProperty="mailid">
+		insert into send_mail(host,formName,password,isuser) values(#{host},#{formName},#{password},#{isuser})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.SendMail">
+		delete from send_mail where mailid = #{mailid}
+	</delete>
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from send_mail
+	</select>
+	<select id="findUserMail" resultType="com.p2p.pojo.SendMail">
+		select * from send_mail where isuser =#{isuser}
+	</select>
+</mapper>

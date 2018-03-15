@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.ActivityMapper">
+  <resultMap type="com.p2p.pojo.Activity" id="BaseResultMap">
+  	<id column="at_id" property="atid"></id>
+		<result column="at_title" property="attitle"/>
+		<result column="at_intgard" property="atintgard"/>
+		<result column="at_content" property="atcontent"/>
+		<result column="at_image" property="atimag"/>
+		<result column="at_starttime" property="atstarttime"/>
+		<result column="at_endtime" property="atendtime"/>
+		<result column="at_status" property="atstatus"/>
+  </resultMap>
+  <!-- 查询所有数据 -->
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from activity
+		<!-- <where>
+			1=1
+			<if test="activity.attitle != null and activity.attitle !='' ">
+			    and at_title like CONCAT(CONCAT('%', #{activity.attitle}), '%')
+			</if>
+		</where> -->
+	</select>
+	<!-- 分页查询 -->
+	<select id="pageActivity" resultMap="BaseResultMap">
+		select * from activity 
+		<!-- <where>
+			 2 = 2
+			<if test="activity.attitle != null and activity.attitle !='' ">
+			    and at_title like CONCAT(CONCAT('%', #{activity.attitle}), '%')
+			</if>
+		</where> -->
+	</select>
+	<!-- 增加数据 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Activity" useGeneratedKeys="true" keyProperty="atid">
+		insert into activity(at_title,at_intgard,at_content,at_image,at_starttime,at_endtime,at_status)
+			values(#{attitle},#{atintgard},#{atcontent},#{atimag},#{atstarttime},#{atendtime},#{atstatus})
+	</insert>
+	<!-- 根据id查询数据 -->
+	<select id="findById" parameterType="java.lang.Integer" resultType="com.p2p.pojo.Activity">
+		select * from activity a where a.at_id=#{id} 
+	</select>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Activity">
+		update activity set at_title=#{attitle},at_intgard=#{atintgard},
+			at_content=#{atcontent},at_starttime=#{atstarttime},
+				at_endtime=#{atendtime},at_status=#{atstatus} where at_id=#{atid}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from activity where at_id=#{atid}
+	</delete>
+	<!-- 查询总记录数 -->
+	<select id="countActivity" resultType="java.lang.Integer">
+		select count(*) from activity
+	</select>
+</mapper>

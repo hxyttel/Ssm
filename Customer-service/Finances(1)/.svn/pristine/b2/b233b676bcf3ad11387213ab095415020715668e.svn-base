@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.NewsfocusMapper">
+		<resultMap type="com.p2p.pojo.Newsfocus" id="NfresultMap">
+			<id column="nf_id" property="nfid"/>
+			<result column="nf_title" property="nftitle"/>
+			<result column="nf_content" property="nfcontent"/>
+			<result column="nf_image" property="nfimage"/>
+			<result column="nf_time" property="nftime"/>
+		</resultMap>
+		
+		<!-- 查询所有 -->
+		<select id="getAllModel" parameterType="com.p2p.pojo.Newsfocus" resultMap="NfresultMap">
+			select * from newsfocus
+		</select>
+		
+		<!-- 新增 -->
+		<insert id="addModel" parameterType="com.p2p.pojo.Newsfocus">
+			insert into newsfocus(nf_title,nf_content,nf_image,nf_time)
+			values(#{nftitle},#{nfcontent},#{nfimage},#{nftime})
+		</insert>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.Newsfocus">
+			update newsfocus set
+			<if test="nftitle!=null">nf_title=#{nftitle},</if>
+			<if test="nfcontent!=null">nf_content=#{nfcontent},</if>
+			<if test="nfimage!=null">nf_image=#{nfimage},</if>
+			<if test="nftime!=null">nf_time=#{nftime}</if>
+			<where>
+				nf_id=#{nfid}
+			</where>
+		</update>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from newsfocus where nf_id=#{nfid} 
+		</delete>
+		
+		<!-- 根据id查 -->
+		<select id="findById" resultMap="NfresultMap">
+			select * from newsfocus where nf_id=#{nfid} 
+		</select>
+		
+		  <select id="selectProductsByPage" resultMap="NfresultMap">
+    		 select * from newsfocus 
+    	   	order by nf_id limit #{startPos},#{pageSize}
+		    </select>
+		    <select id="getProductsCount" resultType="long">
+		    	 SELECT COUNT(*) FROM newsfocus
+		    </select>
+		    
+		    <select id="selectPage" resultMap="NfresultMap">
+		    	select * from newsfocus 
+		    	<where>
+		    		1=1 
+		    		<if test="newsfocus.nftitle!=null and newsfocus.nftitle !='' "> and nf_title like CONCAT(CONCAT('%', #{newsfocus.nftitle}), '%')</if>
+					<if test="newsfocus.nfcontent!=null and newsfocus.nftitle !=''"> and  nf_content like CONCAT(CONCAT('%', #{newsfocus.nfcontent}), '%')</if>
+					<if test="newsfocus.nfimage!=null and newsfocus.nftitle !=''">and nf_image like CONCAT(CONCAT('%', #{newsfocus.nfimage}), '%') </if>
+					<if test="newsfocus.nftime!=null and newsfocus.nftitle !=''">and  nf_time like CONCAT(CONCAT('%', #{newsfocus.nftime}), '%')</if>
+		    	</where>
+		    </select>
+		    
+		    <select id="newsfocusCount" resultType="java.lang.Integer">
+		    	select count(*) from newsfocus <where>
+		    		1=1 
+		    		<if test="newsfocus.nftitle!=null and newsfocus.nftitle !='' "> and nf_title like CONCAT(CONCAT('%', #{newsfocus.nftitle}), '%')</if>
+					<if test="newsfocus.nfcontent!=null and newsfocus.nftitle !=''"> and  nf_content like CONCAT(CONCAT('%', #{newsfocus.nfcontent}), '%')</if>
+					<if test="newsfocus.nfimage!=null and newsfocus.nftitle !=''">and nf_image like CONCAT(CONCAT('%', #{newsfocus.nfimage}), '%') </if>
+					<if test="newsfocus.nftime!=null and newsfocus.nftitle !=''">and  nf_time like CONCAT(CONCAT('%', #{newsfocus.nftime}), '%')</if>
+		    	</where>
+		    </select>
+			
+			
+			<select id="selectNewsfocus" resultMap="NfresultMap">
+				select * from newsfocus where nf_id=#{nfid} 
+			</select>
+	</mapper>

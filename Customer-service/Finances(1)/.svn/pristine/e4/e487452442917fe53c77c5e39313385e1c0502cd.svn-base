@@ -1,0 +1,77 @@
+package com.p2p.pojo;
+
+import java.io.Serializable;
+
+/**
+ * 服务端银行卡虚拟表
+ * 
+ * @author  lxj
+ * */
+@SuppressWarnings("serial")
+public class Bank implements Serializable{
+	private Integer bsuid;  //用户
+	private String bcode;  //银行卡号
+	private String btype;  //银行卡类型
+	private Double bmoney;  //银行卡余额
+	private Integer bstate;  //银行卡状态
+	
+	public Bank() {
+		super();
+	}
+
+	public Bank(Integer bsuid, String bcode, String btype, Double bmoney, Integer bstate) {
+		super();
+		this.bsuid = bsuid;
+		this.bcode = bcode;
+		this.btype = btype;
+		this.bmoney = bmoney;
+		this.bstate = bstate;
+	}
+
+	@Override
+	public String toString() {
+		return "Bank [bsuid=" + bsuid + ", bcode=" + bcode + ", btype=" + btype + ", bmoney=" + bmoney + ", bstate="
+				+ bstate + "]";
+	}
+
+	public Integer getBsuid() {
+		return bsuid;
+	}
+
+	public void setBsuid(Integer bsuid) {
+		this.bsuid = bsuid;
+	}
+
+	public String getBcode() {
+		return bcode;
+	}
+
+	public void setBcode(String bcode) {
+		this.bcode = bcode;
+	}
+
+	public String getBtype() {
+		return btype;
+	}
+
+	public void setBtype(String btype) {
+		this.btype = btype;
+	}
+
+	public Double getBmoney() {
+		return bmoney;
+	}
+
+	public void setBmoney(Double bmoney) {
+		this.bmoney = bmoney;
+	}
+
+	public Integer getBstate() {
+		return bstate;
+	}
+
+	public void setBstate(Integer bstate) {
+		this.bstate = bstate;
+	}
+
+}

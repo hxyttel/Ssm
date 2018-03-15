@@ -1,0 +1,130 @@
+package com.p2p.pojo;
+
+import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+
+/**
+ * 提现表
+ * 2017年11月14日09:37:12
+ * 操作人：朱勇峰
+ * 
+ * */
+
+public class Withdrawals implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@TableField("w_id")
+	private Integer wid; //主键
+	
+	@TableField("u_id")
+	private Integer uid; //用户id
+	
+	@TableField("w_money")
+	private double w_money; //提现金额
+	
+	@TableField("w_time")
+	private String wtime; //提现时间
+	
+	@TableField("w_moneytowhere")
+	private String wmoneytowhere; //金额去向
+
+	@TableField("w_status")
+	private Integer wstatus; //状态
+	
+	@TableField("w_fee")
+	private double wfee; //手续费
+
+	public Withdrawals(Integer wid, Integer uid, double w_money, String wtime, String wmoneytowhere, Integer wstatus,
+			double wfee) {
+		super();
+		this.wid = wid;
+		this.uid = uid;
+		this.w_money = w_money;
+		this.wtime = wtime;
+		this.wmoneytowhere = wmoneytowhere;
+		this.wstatus = wstatus;
+		this.wfee = wfee;
+	}
+
+	public Withdrawals() {
+		super();
+	}
+
+	public Integer getWid() {
+		return wid;
+	}
+
+	public void setWid(Integer wid) {
+		this.wid = wid;
+	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+
+	public double getW_money() {
+		return w_money;
+	}
+
+	public void setW_money(double w_money) {
+		this.w_money = w_money;
+	}
+
+	public String getWtime() {
+		return wtime;
+	}
+
+	public void setWtime(String wtime) {
+		this.wtime = wtime;
+	}
+
+	public String getWmoneytowhere() {
+		return wmoneytowhere;
+	}
+
+	public void setWmoneytowhere(String wmoneytowhere) {
+		this.wmoneytowhere = wmoneytowhere;
+	}
+
+	public Integer getWstatus() {
+		return wstatus;
+	}
+
+	public void setWstatus(Integer wstatus) {
+		this.wstatus = wstatus;
+	}
+
+	public double getWfee() {
+		return wfee;
+	}
+
+	public void setWfee(double wfee) {
+		this.wfee = wfee;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Withdrawals [wid=" + wid + ", uid=" + uid + ", w_money=" + w_money + ", wtime=" + wtime
+				+ ", wmoneytowhere=" + wmoneytowhere + ", wstatus=" + wstatus + ", wfee=" + wfee + ", getWid()="
+				+ getWid() + ", getUid()=" + getUid() + ", getW_money()=" + getW_money() + ", getWtime()=" + getWtime()
+				+ ", getWmoneytowhere()=" + getWmoneytowhere() + ", getWstatus()=" + getWstatus() + ", getWfee()="
+				+ getWfee() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+	
+	
+	
+}

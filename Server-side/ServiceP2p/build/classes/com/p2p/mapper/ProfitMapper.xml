@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.ProfitMapper">
+	<resultMap type="com.p2p.pojo.Profit" id="profitMap">
+		<id column="pf_id" property="pfid"/>
+		<result column="u_id" property="uid"/>
+		<result column="pf_money" property="pfmoney"/>
+		<result column="pf_moneywhere" property="pfmoneywhere"/>
+		<result column="pf_time" property="pftime"/>
+		<association property="user" javaType="com.p2p.pojo.Users">
+			<result column="su_name" property="suname"/>
+		</association>
+	</resultMap>
+	<select id="list" resultMap="profitMap">
+		select * from profit p,users u where u.id=p.u_id
+	</select>
+	<select id="getById" parameterType="java.lang.Integer" resultMap="profitMap">
+		select * from profit where pf_id=#{pfid}
+	</select>
+	<insert id="add" parameterType="com.p2p.pojo.Profit">
+		insert into profit(u_id,pf_money,pf_moneywhere,pf_time)
+		values(#{uid},#{pfmoney},#{pfmoneywhere},#{pftime})
+	</insert>
+	<update id="update" parameterType="com.p2p.pojo.Profit">
+		update profit
+		<trim prefix="set" suffixOverrides=",">
+			<if test="uid!=null">u_id=#{uid},</if>
+			<if test="pfmoney!=null">pf_money=#{pfmoney},</if>
+			<if test="pfmoneywhere!=null">pf_moneywhere=#{pfmoneywhere},</if>
+			<if test="pftime!=null">pf_time=#{pftime}</if>
+		</trim>
+		<where>
+			pf_id=#{pfid}
+		</where>
+	</update>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from profit where pf_id=#{pfid}
+	</delete>
+</mapper>

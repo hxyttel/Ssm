@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.UserBindCardMapper">
+		<resultMap type="com.p2p.pojo.UserBindCard" id="ubcard">
+			<result column="u_id" property="uid"/>
+			<result column="u_suid" property="usuid"/>
+			<result column="u_bankcode" property="ubankcode"/>
+			<result column="u_type" property="utype"/>
+			<result column="u_time" property="utime"/>
+			<result column="u_state" property="ustate"/>
+			<result column="u_ip" property="uip"/>
+		</resultMap>
+		
+		<!-- 查所有 -->
+		<select id="list" resultMap="ubcard">
+			select * from userbindcard
+		</select>
+		
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.UserBindCard">
+			insert into userbindcard(u_id,u_suid,u_bankcode,u_type,u_time,u_state,u_ip) values(#{uid},#{usuid},#{ubankcode},#{utype},#{utime},#{ustate},#{uip})
+		</select>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.UserBindCard">
+			update userbindcard set u_suid = #{usuid}, u_bankcode = #{ubankcode}, u_type = #{utype}, u_state = #{ustate}, u_ip = #{uip},u_time = #{utime}
+				where u_id = #{uid}
+		</update>
+		
+		<!-- 根据id查用户 -->
+		<select id="getById" resultMap="ubcard" parameterType="java.lang.Integer">
+			select * from userbindcard where u_id = #{u_id}
+		</select>
+		
+	</mapper>

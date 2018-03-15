@@ -1,0 +1,9 @@
+.trans-bg { width:1000px; height:1000px; background:#000; opacity:0.5;}
+.mod-lightbox { position:absolute; left:50%; top:50%; width:400px; height:430px; border-radius:4px; background:#ffffff; overflow:hidden;}
+.mod-lightbox .title { height:48px; line-height:48px; padding:0 20px; position:relative; border-bottom:1px solid #cbcbcb;}
+.mod-lightbox .title h1 {}
+.mod-lightbox .title a.close { display:block; width:44px; height:44px; position:absolute; right:2px; top:2px; background:url(../shImages/lightbox_close.png) center center no-repeat;}
+.mod-lightbox .box { margin:20px; height:342px; overflow:hidden;}
+.mod-lightbox .img { text-align:center;}
+.mod-lightbox .img img { width:100%;}
+.mod-lightbox .box p {}

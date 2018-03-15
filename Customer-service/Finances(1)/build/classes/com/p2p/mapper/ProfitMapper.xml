@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.ProfitMapper">
+	<resultMap type="com.p2p.pojo.Profit" id="BaseResultMap">
+		<id column="pf_id" property="pfid"/>
+		<result column="u_id" property="uid"/>
+		<result column="pf_money" property="pfmoney"/>
+		<result column="pf_moneywhere" property="pfmoneywhere"/>
+		<result column="pf_time" property="pftime"/>
+	</resultMap>
+	
+	<insert id="addModel" parameterType="com.p2p.pojo.Profit">
+		insert into profit(u_id,pf_money,pf_moneywhere,pf_time) values(#{uid},#{pfmoney},#{pfmoneywhere},#{pftime})
+	</insert>
+	
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from profit 
+    </select>
+    
+    <select id="seleByProfit" resultMap="BaseResultMap">
+    	select * from profit <where>
+    	    1=1
+    		<if test="uid != null">
+			    and u_id like CONCAT(CONCAT('%', #{uid}), '%')
+			</if>
+			<if test="pfmoney != null">
+			     and pf_money like CONCAT(CONCAT('%', #{pfmoney}), '%')
+			</if>
+			<if test="pfmoneywhere != null and pfmoneywhere != ''">
+			    and pf_moneywhere like CONCAT(CONCAT('%', #{pfmoneywhere}), '%')
+			</if>
+			<if test="pftime != null and pftime != ''">
+				<![CDATA[ and pf_time like CONCAT(CONCAT('%', #{pftime}), '%')    ]]>
+			</if>
+    	</where>
+    </select>
+    <!-- 查找最近的一天时间 -->
+    <select id="seleProfitBytimeMax" resultType="java.lang.String">
+    	select pf_time from profit ORDER BY pf_time DESC limit 1
+    </select>
+    <!-- 查找最远的一天时间	 -->
+     <select id="seleProfitBytimemin" resultType="java.lang.String">
+     	select pf_time from profit ORDER BY pf_time ASC limit 1
+     </select>
+</mapper>

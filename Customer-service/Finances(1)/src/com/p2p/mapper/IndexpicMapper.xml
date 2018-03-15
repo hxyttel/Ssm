@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.IndexpicMapper">
+	<resultMap type="com.p2p.pojo.Indexpic" id="BaseResultMap">
+		  <id column="ip_id" property="ipid"/>
+ 		  <result column="ip_name" property="ipname"/>
+ 		  <result column="ip_image" property="ipimage"/>
+ 		  <result column="ip_url" property="ipurl"/>
+	</resultMap>
+	
+	<!-- 轮播图查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from indexpic 
+ 	</select>
+ 	<!-- 轮播图添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="ipid">
+ 		 insert into indexpic(ip_name,ip_image,ip_url) 
+ 		 values(#{ipname},#{ipimage},#{ipurl})
+ 	</insert>
+ 	<!-- 轮播图删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Indexpic">
+		delete from indexpic where ip_id = #{ipid};
+	</delete>
+	 <!-- 查询角色的总记录数 -->
+    <select id="indexCount" resultType="java.lang.Integer">
+        select count(*) from indexpic;
+    </select>
+      <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from indexpic;        
+    </select>
+     <!-- 修改角色 -->
+    <update id="update" parameterType="com.p2p.pojo.Indexpic" >
+        UPDATE indexpic SET 
+			ip_name=#{ipname},
+			ip_image=#{ipimage},
+			ip_url =#{ipurl}
+		WHERE ip_id=#{ipid}
+    </update>
+</mapper>

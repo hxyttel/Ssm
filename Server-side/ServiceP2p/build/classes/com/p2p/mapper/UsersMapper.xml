@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.UsersMapper">
+	<resultMap type="com.p2p.pojo.Users" id="userssm">
+			<result column="su_id" property="suid"/>
+			<result column="id" property="id"/>
+			<result column="su_username" property="suusername"/>
+			<result column="su_name" property="suname"/>
+			<result column="su_phone" property="suphone"/>
+			<result column="su_card" property="sucard"/>
+			<result column="su_email" property="suemail"/>
+			<result column="su_money" property="sumoney"/>
+			<result column="su_canmoney" property="sucanmoney"/>
+			<result column="su_stopmoney" property="sustopmoney"/>
+			<result column="su_credit" property="sucredit"/>
+			<result column="su_ip" property="suip"/>
+	</resultMap>
+	<select id="list" resultMap="userssm">
+		select * from users
+	</select>
+		<!-- 查所有模糊查询 -->
+	<select id="listLike" resultMap="userssm" parameterType="com.p2p.pojo.Users">
+		select * from users 
+		<where>
+			1=1
+			<if test="suusername!=null">and su_username LIKE CONCAT(CONCAT('%', #{suusername}), '%')</if>
+			<if test="suname!=null">and su_name LIKE CONCAT(CONCAT('%', #{suname}), '%')</if>
+			<if test="suphone!=null">and su_phone LIKE CONCAT(CONCAT('%', #{suphone}), '%')</if>
+			<if test="sucard!=null">and su_card LIKE CONCAT(CONCAT('%', #{sucard}), '%')</if>
+			<if test="suemail!=null">and su_email LIKE CONCAT(CONCAT('%', #{suemali}), '%')</if>
+			<if test="sumoney!=null">and su_money LIKE CONCAT(CONCAT('%', #{sumoney}), '%')</if>
+			<if test="sucredit!=null">and su_credit LIKE CONCAT(CONCAT('%', #{sucredit}), '%')</if>
+			<if test="suip!=null">and su_ip LIKE CONCAT(CONCAT('%', #{suip}), '%')</if>
+		</where>
+	</select>
+	<!-- 增加 -->
+	<insert id="add" parameterType="com.p2p.pojo.Users">
+		insert into users(id,su_username,su_name,su_phone,su_card,su_email,
+		su_money,su_canmoney,su_stopmoney,su_credit,su_ip) 
+		values(#{id},#{suusername},#{suname},#{suphone},#{sucard},#{suemail},
+		#{sumoney},#{sucanmoney},#{sustopmoney},#{sucredit},#{suip})
+	</insert>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from users where su_id = #{suid}
+	</delete>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Users">
+		update users 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="suusername!=null">su_username=#{suusername},</if>
+			<if test="suname!=null">su_name=#{suname},</if>
+			<if test="suphone!=null">su_phone=#{suphone},</if>
+			<if test="sucard!=null">su_card=#{sucard},</if>
+			<if test="suemail!=null">su_email=#{suemail},</if>
+			<if test="sumoney!=null">su_money=#{sumoney},</if>
+			<if test="sumoney!=null">su_canmoney=#{sucanmoney},</if>
+			<if test="sumoney!=null">su_stopmoney=#{sustopmoney},</if>
+			<if test="sucredit!=null">su_credit=#{sucredit},</if>
+			<if test="suip!=null">su_ip=#{suip},</if>
+		</trim>
+		<where>
+			su_id = #{suid}
+		</where>
+	</update>
+	<!-- 根据id查用户 -->
+	<select id="getById" resultMap="userssm" parameterType="java.lang.Integer">
+		select * from users where id = #{id}
+	</select>
+</mapper>

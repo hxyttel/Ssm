@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.EmpMapper">
+<resultMap type="com.p2p.pojo.Employe" id="BaseResultMap">
+	      <id column="e_id" property="eid"/>
+ 		  <result column="re_id" property="reid"/>
+ 		  <result column="e_enum" property="eenum"/>
+ 		  <result column="e_sex" property="esex"/>
+ 		  <result column="e_idcard" property="eidcard"/>
+ 		  <result column="e_phone" property="ephone"/>
+ 		  <result column="e_position" property="eposition"/>
+ 		  <result column="e_email" property="eemail"/>
+ 		  <result column="e_name" property="ename"/>
+ 		  <result column="e_password" property="epassword"/>
+ 		  <result column="e_status" property="estatus"/>
+ 		  <result column="e_retime" property="eretime"/>
+ 		  <result column="e_remark" property="eremark"/>
+ 		  <result column="e_image" property="eimage"/>
+ 		  <!--配置一对一 -->
+		  <association property="role" javaType="com.p2p.pojo.Role">
+		  	<id column="re_id" property="reid"/>
+			<result column="pt_id" property="ptid"/>   
+			<result column="re_name" property="rename"/>  
+			<result column="re_remark" property="reremark"/>  
+			<result column="re_status" property="restatus"/>  
+		  </association>
+</resultMap>
+	<!-- 员工表查询 -->
+ 	<select id="getByemployname"  parameterType="java.lang.String" resultMap="BaseResultMap">
+ 		 select * from employee e ,role r 
+		<where>
+		    e.re_id = r.re_id and  e_name=#{ename}
+		</where>
+ 	</select>
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from employee 
+ 	</select>
+ 	
+ 	<select id="getModel"  resultMap="BaseResultMap">
+ 		select * from employee 
+ 		<!-- <if test="e_id!=null">e_id=#{eid}</if> -->
+ 		<where>
+ 			e_id=#{eid}
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 根据id查询对象 -->
+ 	<select id="findModel" resultMap="BaseResultMap">
+ 		select * from employee <where>
+ 			e_id=#{eid}
+ 		</where>;
+ 	</select>
+ 	<!-- 员工添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="eid">
+ 		 insert into employee(re_id,e_enum,e_sex,e_idcard,e_phone,e_position,e_email,e_name,e_password,e_status,e_retime,e_remark,e_image) 
+ 		 values(#{reid},#{eenum},#{esex},#{eidcard},#{ephone},#{eposition},#{eemail},#{ename},#{epassword},#{estatus},#{eretime},#{eremark},#{eimage})
+ 	</insert>
+ 	
+ 	<!-- 员工删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Employe">
+		delete from employee where re_id = #{reid};
+	</delete>
+	
+	<!-- 修改员工 -->
+    <update id="update" parameterType="com.p2p.pojo.Employe" >
+        UPDATE employee  
+        	<trim prefix="set" suffixOverrides=",">
+        	<if test="reid!=null">re_id =#{reid},</if>
+			<if test="eenum!=null">e_enum=#{eenum},</if>
+			<if test="esex!=null">e_sex=#{esex},</if>
+			<if test="eidcard!=null">e_idcard=#{eidcard},</if>
+			<if test="ephone!=null">e_phone=#{ephone},</if>
+			<if test="eposition!=null">e_position=#{eposition},</if>
+			<if test="eemail!=null">e_email=#{eemail},</if>
+			<if test="ename!=null">e_name=#{ename},</if>
+			<if test="epassword!=null">e_password=#{epassword},</if>
+			<if test="estatus!=null">e_status=#{estatus},</if>
+			<if test="eretime!=null">e_retime=#{eretime},</if>
+			<if test="eremark!=null">e_remark=#{eremark},</if>
+			<if test="eimage!=null">e_image=#{eimage},</if>
+		</trim>
+		<where>
+			e_id=#{eid}
+		</where>
+		
+    </update>
+	
+	<!-- 查询员工的总记录数 -->
+    <select id="employeCount" resultType="java.lang.Integer">
+        select count(*) from employee 
+        	<where>
+        	    1=1
+        		<if test="emp.ename != null and emp.ename !='' ">
+			    and e_name like CONCAT(CONCAT('%', #{emp.ename}), '%')
+				</if>
+				<if test="emp.esex != null and emp.esex !=''">
+				     and e_sex like CONCAT(CONCAT('%', #{emp.esex}), '%')
+				</if>
+				<if test="emp.eenum != null and emp.eenum != ''">
+				    and e_enum like CONCAT(CONCAT('%', #{emp.eenum}), '%')
+				</if>
+        	</where>
+    </select>
+    
+   	<!-- 查询所有员工 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from employee e ,role r 
+		<where>
+		    e.re_id = r.re_id
+			<if test="emp.ename != null and emp.ename !='' ">
+			    and e_name like CONCAT(CONCAT('%', #{emp.ename}), '%')
+			</if>
+			<if test="emp.esex != null and emp.esex !=''">
+			     and e_sex like CONCAT(CONCAT('%', #{emp.esex}), '%')
+			</if>
+			<if test="emp.eenum != null and emp.eenum != ''">
+			    and e_enum like CONCAT(CONCAT('%', #{emp.eenum}), '%')
+			</if>
+		</where>       
+    </select>
+</mapper>

@@ -1,0 +1,122 @@
+package com.p2p.controller.front;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.p2p.pojo.IdCard;
+import com.p2p.pojo.User;
+import com.p2p.pojo.Userbackcard;
+import com.p2p.pojo.Userinfo;
+import com.p2p.pojo.Users;
+import com.p2p.service.front.IdCardService;
+import com.p2p.service.front.UserbackcardService;
+import com.p2p.util.BankUtil;
+import com.p2p.util.DateUtils;
+import com.p2p.util.SendServiceUtil;
+
+/**
+ * 操作身份证  以及  银行卡Controller
+ * 
+ * @author  lxj
+ * */
+@Controller
+@RequestMapping("idcard")
+public class IdCardController {
+	
+	@Resource(name="idCardServiceImpl")
+	private IdCardService idCardService;
+	
+	@Resource(name="userbackcardServiceImpl") 
+	private UserbackcardService userbackcardService;
+	
+	/**
+	 * 添加(修改)身份证信息
+	 * */
+	@RequestMapping("/addinfo")
+	@ResponseBody
+	public int addInfo(IdCard idCard,HttpSession session) {
+		int count = 0;
+		try {
+			if(idCard.getIcid()==null) {
+				idCard.setIcstarttime(DateUtils.getDateTimeFormat(new Date()));
+				idCard.setIcstatus(1);
+				count = idCardService.addModel(idCard);
+				count = 1;
+			}else {
+				idCard.setIcstatus(1);
+				count = idCardService.update(idCard);
+				count = 2;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	/**
+	 * 获取银行卡所属类型
+	 * @throws JsonProcessingException 
+	 * */
+	@RequestMapping("/getCardType")
+	@ResponseBody
+	public String getCardType(@RequestParam String ubbackcardnum) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper(); 
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String type = BankUtil.getNameOfBank(ubbackcardnum);
+		if(type!="") {
+			map.put("status",1);
+			map.put("type",type);
+		}
+		String result = mapper.writeValueAsString(map);
+		return result;
+	}
+	
+	/**
+	 * 添加银行卡
+	 * */
+	@RequestMapping("/addbackcard")
+	@ResponseBody
+	public int addBankCard(Userbackcard userback) {
+		int addCard = 0;
+		Integer uiid = userback.getUiid();
+		try {
+			if(uiid!=null) {
+				IdCard idCards = new IdCard();
+				idCards.setUiid(uiid);
+				IdCard ic = idCardService.getModel(idCards);
+				
+				
+				Users users = new Users();
+				
+				
+				int counts = SendServiceUtil.list(users, "192.168.90.47/ServiceP2p/user/add");
+				if(counts==1) {
+					Userbackcard back = new Userbackcard();
+					back.setUiid(uiid);
+					back.setUbbackcardnum(userback.getUbbackcardnum());
+					back.setUbplaceback(userback.getUbplaceback());
+					back.setUbbindtime(DateUtils.getDateTimeFormat(new Date()));
+					back.setUbstatus(1);
+					back.setUbmoney(1000.00);
+					addCard = userbackcardService.addModel(back);
+					addCard = 1;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return addCard;
+	}
+}

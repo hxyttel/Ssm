@@ -1,0 +1,494 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+%> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="keywords" content="高收益理财产品,理财投资,网络投资理财平台,网贷理财,互联网金融,投资理财平台,投资理财,赚钱,小额投资理财,如何投资理财,投资理财知识,投资理财,北京p2p理财">
+	    <meta name="description" content="亿信金融可以为您赚钱的网络投资理财平台，为投资理财用户和贷款用户两端提供公平、透明、安全、高效的网贷理财服务，爱钱帮互联网金融中网贷投资理财平台的最好的选择。">
+	    <title>开通托管账户 | 亿信金融</title>
+	    <!--[if lt IE 9]>
+	    	<script src="<%=path%>/statics/front/statics/newcommon/js/html5shiv.js"></script>
+	    <![endif]-->
+	    <link  rel="Shortcut  Icon"  href="/Finances/statics/other/lco/6.png">
+	    <link rel="stylesheet" href="/Finances/statics/front/statics/newcommon/css/m2-commonNew.css">
+	    <link rel="stylesheet" href="/Finances/statics/front/statics/home2/css/m2-main.css">
+	    <link rel="stylesheet" href="/Finances/statics/front/statics/newcommon/css/m2-common.css">
+	    <script type="text/javascript" src="/Finances/statics/front/statics/home/js/jquery.min.js"></script>
+	    <script type="text/javascript" src="/Finances/statics/front/statics/newcommon/js/common.js"></script>
+	   
+	    <link rel="stylesheet" href="/Finances/statics/front/statics/home2/css/login.css">
+	    <link rel="stylesheet" href="/Finances/statics/front/statics/home2/css/m2-login.css">
+	    <style type="text/css">
+       	 	.myloginmask {position:fixed;top: 0;left: 0;right: 0;bottom: 0;background-color: black;display: none;opacity: 0.7;z-index: 800;filter:alpha(opacity=70)}
+        	.mylogin {position:   fixed;top: 50%;left: 50%;margin-top: -346px;margin-left: -260px;width: 520px;height: 496px;background-image: url("/Finances/statics/front/statics/home2/images/login/login_info.png");background-repeat: no-repeat;z-index: 1000;display: none;}
+        	.mylogin .topcontent {font-weight:bold;text-align: center;color: #666666;font-size: 18px;padding-top: 284px;line-height: 36px;}
+        	.mylogin .topcontent span {color: #883535;}
+        	.mylogin .bottomcontent {font-weight:bold;font-size:20px;line-height: 30px;width:384px;margin: 50px auto;}
+        	.mylogin .bottomcontent a{color: #333333;text-decoration: none;}
+        	.mylogin .closeimg {position: absolute;top: 220px;right: 14px;width: 43px;height: 43px;background-image: url("Finances/statics/front/statics/home2/images/login/cha.png");}
+    	</style>
+    	
+    	<script type="text/javascript">
+	        $(function(){
+	            $('.m2-pwdConfirm-auto b').click(function(){
+	                $('.m2-pwdConfirm-auto,.m2-pwdBg').hide();
+	            })
+	        })
+	    </script>
+	    <script type="text/javascript">
+	        $(function(){
+	            $.post("mydatetime.html",{mytime:''},function(t){
+	                $("#mytime").html(t);
+	            });
+	        })
+	    </script>
+	    <script type="text/javascript">
+	        function infoDialogClose(){
+	            $('.m2-pwdConfirm-close').click(function(){
+	                $('.m2-pwdBg').hide();
+	                $('.m2-pwdConfirm').hide();
+	                $('.m2-pwdConfirm-con').text('');
+	                $('#dialog-status').removeClass('m2-pwdConfirm-ture');
+	                $('#dialog-status').removeClass('m2-pwdConfirm-false');
+	                $(this).unbind();
+	            });
+	        }
+	        function showInfoDialog(text,status,func,callback){
+	            $('.m2-pwdConfirm-con').text(text);
+	            if(status){
+	                $('#dialog-status').addClass('m2-pwdConfirm-ture');
+	            }else{
+	                $('#dialog-status').addClass('m2-pwdConfirm-false');
+	            }
+	            $('.m2-pwdBg').show();
+	            $('.m2-pwdConfirm').show();
+	            if(typeof(callback)=='function'){
+	                $('.m2-pwdConfirm-close').click(callback);
+	            }
+	            infoDialogClose();
+	            if(typeof(func)=='function'){
+	                func();
+	            }
+	//			$(".mylogin").show();
+	        }
+	        function showLoginInfoDialog(text,status,func,callback){
+	            $('.m2-pwdConfirm-con').text(text);
+	            if(status){
+	                $('#dialog-status').addClass('m2-pwdConfirm-ture');
+	            }else{
+	                $('#dialog-status').addClass('m2-pwdConfirm-false');
+	            }
+	            $('.m2-pwdBg').show();
+	            $('.m2-pwdConfirm').show();
+	            if(status){
+	                $('.m2-pwdConfirm').hide();
+	                $('.m2-pwdConfirm-auto').show();
+	            }
+	            if(typeof(callback)=='function'){
+	                $('.m2-pwdConfirm-close').click(callback);
+	            }
+	            infoDialogClose();
+	            if(typeof(func)=='function'){
+	                func();
+	            }
+	        }
+	        function showLoginDialog(text,status){
+	            $("#nowcoin").html(text.allcoin);
+	            $("#overcoin").html(text.overcoin);
+	            $("#user").html(text.userName);
+	            $(".mylogin").show();
+	            $(".myloginmask").show();
+	        }
+	        $(".mylogin .closeimg").click(function(){
+	            $(".mylogin").hide();
+	            $(".myloginmask").hide();
+	            window.location.href="#";
+	        })
+	    </script>
+	</head>
+	<body>
+	    <div class="m2-loginBg" style="display:none;"></div>
+	    <div class="m2-loginReg-box" style="display:none;">
+	    	<i class="m2-loginReg-boxClose"></i>
+	    </div>
+		<div class="m2-login-voice" style="display:none;">
+	        <i class="m2-loginVoi-boxClose"></i>
+	        <div class="m2-logVoi-psg">您的注册手机号即将接到由，4006-777-518拨打的语音电话并播报验证码，请准确记录</div>
+	        <div class="m2-logVoi-btn">
+	            <span class="m2-logVoi-sur">确&nbsp;&nbsp;&nbsp;定</span>
+	            <span class="m2-logVoi-can">取&nbsp;&nbsp;&nbsp;消</span>
+	        </div>
+	    </div>
+	    <!--公共提示框start-->
+    	<div class="m2-pwdBg" style='display:none;z-index:9000'></div>
+    		<div class="m2-pwdConfirm" style='display:none;z-index:9001'>
+        	<i class="m2-pwdConfirm-close"></i>
+       	 	<i class="m2-pwdConfirm-ture" id='dialog-status'></i>
+        	<div class="m2-pwdConfirm-con">
+        	</div>
+    	</div>
+    	 
+    	<div class="mylogin">
+        	<div class="closeimg"></div>
+        	<div class="topcontent">
+            <p><span id="user"></span>，欢迎回来！</p>
+            <p>钱帮币<span id="nowcoin"></span>个，<span id="mytime"></span>即将到期<span id="overcoin"></span>个</p>
+        	</div>
+        	<div class="bottomcontent">
+            <a href="#"> 查看规则>></a>
+            <a href="#" style="float:right">钱帮币兑换宝物>></a>
+        	</div>
+    	</div>
+    	
+	    <!--公共提示框end-->
+	    <div class="m2-regist-main">
+	        <div class="m2-regist-center">
+	            <div class="m2-regist-logo" style="height:46px">
+	                <a href='/'><img src="/Finances/statics/front/statics/home2/images/new-logo.png"></a>
+	            </div>
+	            <div class="m2-regist-left">
+	                <ul style='height:50px;'>
+	                    <!--                <li><i class="m2-regist-step"></i>注册</li>
+	                                    <li><i class="m2-regist-step"></i>托管</li>
+	                                    <li><i></i>注册成功</li>-->
+	                </ul>
+	                <div class="m2-regist-inputarea m2-regist-sucess">
+	
+	                    <h4><b>开通存管账户</b></h4>
+	                    
+	                    <input type="hidden" id="ui_id" value="${sessionScope.userinfo.uiid }"/>
+	                    <input type="hidden" id="id_name" value="${sessionScope.userinfo.idCard.icname }"/>
+	                    <input type="hidden" id="id_number" value="${sessionScope.userinfo.idCard.icnumber }"/>
+	                    
+	                    <table cellpadding="0" cellspacing="0" border="0">
+	                        <tr>
+	                            <td><i class="m2-regist-usericon"></i>真实姓名</td>
+	                            <td class="m2-regist-tdInput">
+	                            	<input type="text" class="m2-regist-username" id="realname" value="" placeholder="真实姓名（必填）"/>
+	                            	<span class="m2-regist-errMsg m2-openbank-card"></span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td><i class="m2-regist-idnumber"></i>身份证号</td>
+	                            <td class="m2-regist-tdInput">
+	                            	<input type="text" class="m2-regist-username" id="idcard" value="" placeholder="身份证号（必填）"/>
+	                            	<span class="m2-regist-errMsg m2-openbank-card"></span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td><i class="m2-regist-cardnumber"></i>手机号</td>
+	                            <td class="m2-regist-tdInput">
+	                                <span class="m2-reg-telSpan" style="">
+	                                	<span>${sessionScope.user.uphone }</span><a target="_blank" href="/Finances/userverify?uiid=${sessionScope.userinfo.uiid }&phone=1">修改</a>
+	                                </span>
+	                                <span class="m2-regist-errMsg " style="color:#aaa;top:45px;">您的手机号需与开卡时手机号一致</span>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td><i class="m2-regist-cardnumber"></i>借记卡</td>
+	                            <td class="m2-regist-tdInput">
+	                            	<input type="hidden" id="placeback"/>
+	                            	<input type="text" class="m2-regist-username" onkeydown="onlyNum();" style="ime-mode:Disabled" id="bankcardid" value="" placeholder="借记卡卡号（必填）"/>
+	                            	<span class="m2-regist-errMsgcard"></span>
+	                            	<span class="m2-regist-errsMsgcard" style="font-size: 12px;position: absolute;left: 65px;top: 30px"></span>
+	                            	<input type="hidden" id="staticNumber"/>
+	                            	<a href="#" target="_blank" style="color:#57b4f8;font-size: 12px;position: absolute;left: 260px;top: 0px">查看支持银行</a>
+	                            </td>
+	                        </tr>
+	                    </table>
+	                    <div class="m2-trust-btn">
+	                       	<input type="checkbox" id="service"  checked="checked" />我同意<b>《徽商银行网络交易资金账户服务三方协议》</b>
+	                    </div>
+	                    
+	                    <div class="m2-regist-btn m2-regist-quit" >
+	                        <a class="openbank openAble" id="openbank" onclick="">立即开通</a>
+	                        <a class="m2-regist-look" href="/Finances/toinvestzt" target="_blank">我先看看</a>
+	                    </div>
+	
+	                </div>
+	                <p>为了您的数据安全，我们采用了SSL传输方式，256位SGC加密保护!</p>
+	            </div>
+	            <div class="m2-login-right2">
+	                <img src="/Finances/statics/front/statics/home2/images/depos.png" />            
+	                <p class="m2-sucsess-join">了解爱钱帮安全体系请进 <a href="/safeinv-231.shtml" target="_blank" >安全保障>></a></p>
+	            </div>
+	        </div>
+	    </div> 
+	    
+	    <script type="text/javascript">
+	        function checkUserName() {
+	            if ($('#realname').val() == '') {
+	                $('#realname').next('.m2-regist-errMsg').html('真实姓名不能为空!');
+	                return false;
+	            }
+	            if($('#realname').val() != $('#id_name').val()){
+	            	$('#realname').next('.m2-regist-errMsg').html('真实姓名有误!');
+	                return false;
+	            }
+	            $('#realname').next('.m2-regist-errMsg').html('');
+	            return true;
+	        }
+	        function checkIdNo() {
+	        	var regu = /(^[0-9]{15}$)|([0-9]{17}([0-9]|X|x)$)/;
+	        	var re = new RegExp(regu);
+	            if ($('#idcard').val() == '') {
+	                $('#idcard').next('.m2-regist-errMsg').html('身份证号不能为空!');
+	                return false;
+	            }
+	            if (!re.test($('#idcard').val())) {
+	            	$('#idcard').next('.m2-regist-errMsg').html('身份证格式不合法!');
+	                return false;
+	            }
+	            /* if (!checkCard($('#idcard').val())) {
+	                $('#idcarde').next('.m2-regist-errMsg').html('身份证格式不合法!');
+	                return false;
+	            } */
+	            if($('#idcard').val() != $('#id_number').val()){
+	            	$('#idcard').next('.m2-regist-errMsg').html('身份证号不存在!');
+	                return false;
+	            }
+	            $('#idcard').next('.m2-regist-errMsg').html('');
+	            return true;
+	        }
+	        function checkBankCard() {
+	            var bankcard = $('#bankcardid').val();
+	            var pattern = /^([1-9]{1})(\d{14}|\d{18})$/;
+	            if (bankcard == '') {
+	            	$('.m2-regist-errMsgcard').next('.m2-regist-errsMsgcard').html("");
+	                $('#bankcardid').next('.m2-regist-errMsgcard').html('银行卡不能为空!');
+	                return false;
+	            }else if(!pattern.test(bankcard)){
+	            	$('.m2-regist-errMsgcard').next('.m2-regist-errsMsgcard').html("");
+	            	$('#bankcardid').next('.m2-regist-errMsgcard').html("银行卡号输入有误,请输入正确的银行卡号!");
+                    return false;
+	            }else{
+	            	$.ajax({
+                        url: "/Finances/idcard/getCardType",
+                        data:{
+                        	ubbackcardnum:bankcard
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.status == 1) {
+                            	$('#bankcardid').next('.m2-regist-errMsgcard').html('');
+                            	$('.m2-regist-errMsgcard').next('.m2-regist-errsMsgcard').css('color','#33cc00').html(data.type);
+                            	$("#placeback").val(data.type);
+                            	$("#staticNumber").val("1");
+            		            return true;
+                            }else if(data.status == 0){
+                            	$('.m2-regist-errMsgcard').next('.m2-regist-errsMsgcard').css('color','red').html("已存在此银行卡,请重新绑卡开户!");
+                            	$("#staticNumber").val("2");
+                            	return false;
+                            } else {
+                            	$('.m2-regist-errMsgcard').next('.m2-regist-errsMsgcard').css('color','red').html("银行卡号输入有误,请输入正确的银行卡号!");
+                            	$("#staticNumber").val("2");
+                            	return false;
+                            }
+                        }
+                    });
+	            }
+	        }
+	        $(function () {
+	            $('#realname').blur(function () {
+	                checkUserName();
+	            });
+	            $('#idcard').blur(function () {
+	                //var bankNum = $('#idcard').val();
+	                //checkCard(bankNum);
+	                checkIdNo();
+	            });
+	            $('#bankcardid').blur(function () {
+	                checkBankCard();
+	                //getCardInfo();
+	            });
+	            $(".openbank").click(function () {
+	                if($(this).hasClass('openAble')){
+	                    btnGrey();
+	                    var ifUserName= checkUserName();
+	                    var ifIdNo = checkIdNo();
+	                    var canSubmit = true;
+	                    
+	                    var uiid = $("#ui_id").val();
+	                    var ubbackcardnum = $("#bankcardid").val();
+	                    var ubplaceback = $("#placeback").val();
+	                    var oppenstaus = 1; //设置开户
+	                    
+	                    if (($('#realname').val() == '') || ($('#bankcardid').val() == '') || ($('#idcard').val() == '')) {
+	                        showInfoDialog("请将必填信息填写完整!", 0);
+	                        canSubmit = false;
+	                    }
+	
+	                   $(".m2-openbank-card").each(function () {
+	                        if ($(this).html().length > 0) {
+	                        	showInfoDialog("请输入正确的必填信息!", 0);
+	 	                        canSubmit = false;
+	                        }
+	                    });
+	                   
+	                   $(".m2-regist-errMsgcard").each(function () {
+	                        if (($(this).html().length > 0) || ($(this).next(".m2-regist-errsMsgcard").next("#staticNumber").val()==2)) {
+	 	                        canSubmit = false;
+	                        }
+	                    });
+	                    
+	                    if (!$("#service").is(":checked")) {
+	                        showInfoDialog("必须先同意服务协议!", 0);
+	                        canSubmit = false;
+	                    }
+	                   	if (canSubmit != true){
+	                    	return false;
+	                    } 
+	                    if(ifUserName && ifIdNo && canSubmit){
+	                      	$.ajax({
+	                            url: "/Finances/idcard/addbackcard",
+	                            data:{
+	                            	uiid:uiid,
+	                            	ubbackcardnum:ubbackcardnum,
+	                            	ubplaceback:ubplaceback,
+	                            	oppenstaus :oppenstaus
+	                            },
+	                            type: "POST",
+	                            dataType: 'json',
+	                            success: function (data) {
+	                                if (data == 1) {
+	                                	window.location.href="/Finances/idcard/opensuccess";
+	                                } else {
+	                                    $('.m2-regist-errMsgcard').next('.m2-regist-errsMsgcard').css('color','red').html("很遗憾，微商存管账户开户失败");
+	                                }
+	                            }
+	                        }); 
+	                    }
+	                }
+	            });
+	            $('.m2-reg-voice').click(function () {
+	                $('.m2-loginBg').show();
+	                $('.m2-login-voice').show();
+	                $('.m2-regTel-det').html('秒后重新获取');
+	                tim_Down();
+	            });
+	            $('.m2-logVoi-sur,.m2-logVoi-can').click(function () {
+	                $('.m2-loginBg').hide();
+	                $('.m2-login-voice').hide();
+	            });
+	            $('.m2-regTeltips').click(function () {
+	                if ($(this).hasClass('m2-regTel-step1')) {
+	                    $(this).addClass('m2-regTel-step2').removeClass('m2-regTel-step1');
+	                    $('.m2-regTel-det').html('秒后重新获取');
+	                    $('.m2-regTel-sec').show().html('60');
+	                    tim_Down();
+	                }
+	
+	            });
+	            //显示弹窗
+	            $('.m2-trust-btn b').click(function () {
+	                // $('.m2-loginBg').show();
+	                // $('.m2-loginReg-box').show();
+	                window.open('/Finances/views/front/invest-c1.jsp');
+	            });
+	
+				//隐藏弹窗
+	            $(".m2-loginReg-boxClose").click(function () {
+	                $('.m2-loginBg').hide();
+	                $('.m2-loginReg-box').hide();
+	            });
+	        })
+	    </script>
+	   
+	    <script type="text/javascript">
+	        //倒计时
+	        var tim = 60; //剩余时间
+	        function tim_Down() {
+	            if (tim > 0) {
+	                $('.m2-regTel-sec').show().html(tim);
+	                tim--;
+	                setTimeout("tim_Down()", 1000);
+	            }
+	            else if (tim <= 0) {
+	                $('.m2-regTel-sec').hide();
+	                $('.m2-regTel-det').html('重新获取');
+	                $('.m2-regTeltips').addClass('m2-regTel-step1').removeClass('m2-regTel-step2');
+	                tim = 60;
+	            }
+	        }
+	    </script>
+	    <script>
+	        var send_flag = true;
+	        var show_flag = true;
+	        var card_no;
+	        $('#bankcardid').keyup(function () {
+	            var tcard_no = $('#bankcardid').val();
+	            if (tcard_no.length < 6) {
+	                $('#bankcardid').next('.m2-regist-errMsgcard').html('');
+	                show_flag = false;
+	                return;
+	            } else if (card_no) {
+	                if (tcard_no.substr(0, 6) == card_no.substr(0, 6)) {
+	                    return;
+	                } else {
+	                    show_flag = false;
+	                }
+	            }
+	            //getCardInfo();
+	        });
+	
+	        /* function getCardInfo() {
+	            if (send_flag) {
+	                card_no = $('#bankcardid').val();
+	                if(!card_no){
+	                    $('#bankcardid').next('.m2-regist-errMsgcard').html('银行卡不能为空');
+	                    return false;
+	                }
+	                send_flag = false;
+	                show_flag = true;
+	                $.ajax({
+	                    url: '/cupdata-card-getCardInfo',
+	                    data: {
+	                        card: card_no
+	                    },
+	                    success: function (data) {
+	                        send_flag = true;
+	                        if (show_flag) {
+	                            var obj = eval('(' + data + ')');
+	
+	                            if (obj['day_limit'] >= 500000 && obj['single_limit'] >= 500000) {
+	                                $('#bankcardid').next('.m2-regist-errMsgcard').children('span').html('');
+	                            } else if (obj['day_limit'] > 0 && obj['single_limit'] >= 0) {
+	                                $('#bankcardid').next('.m2-regist-errMsgcard').children('span').html(obj['inst_name'] + '充值限额：单笔'
+	                                + (obj['single_limit'] / 10000) + '万，单日' + (obj['day_limit'] / 10000) + '万'+',单月' + (obj['month_limit'] / 10000) + '万');
+	                            } else {
+	                                $('#bankcardid').next('.m2-regist-errMsgcard').children('span').html('您的银行卡不支持充值，但可用于提现操作。');
+	                            }
+	                        }
+	                    }
+	                });
+	            }
+	        } */
+	    </script>
+	    <script>
+	        $(function(){
+	            //btnGrey();
+	            keyInput();
+	        })
+	        //键盘输入按钮变色
+	        function keyInput(){
+	            $('.m2-regist-tdInput input').keyup(function(){
+	                $(this).addClass('openAble');
+	                $('#openbank').css('background-color','#f5944f');
+	                $('#openbank').css('cursor','pointer');
+	            })
+	        }
+	
+	        //按钮置灰
+	        function btnGrey(){
+	            $('#openbank').css('background-color','#ccc');
+	            $('#openbank').css('cursor','default');
+	            $(this).removeClass('openAble');
+	        }
+	    </script>
+	</body>
+</html>

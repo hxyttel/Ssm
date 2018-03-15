@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.BankMapper">
+	<resultMap type="com.p2p.pojo.Bank" id="bankssm">
+		<id column="b_id" property="bid"/>
+		<result column="b_suid" property="bsuid"/>
+		<result column="b_code" property="bcode"/>
+		<result column="b_type" property="btype"/>
+		<result column="b_money" property="bmoney"/>
+		<result column="b_state" property="bstate"/>
+		<result column="b_card" property="bcard"/>
+		<result column="b_name" property="bname"/>
+		<result column="b_phone" property="bphone"/>
+		<result column="b_time" property="btime"/>
+	</resultMap>
+	<!-- 查所有 -->
+	<select id="list" resultMap="bankssm">
+		select * from bank
+	</select>
+	<select id="listLike" resultMap="bankssm" parameterType="com.p2p.pojo.Bank">
+		select * from bank
+		<where>
+		 	1=1
+		 	<if test="bname!=null">and b_name LIKE CONCAT(CONCAT('%', #{bname}), '%')</if>
+		 	<if test="bphone!=null">and b_phone LIKE CONCAT(CONCAT('%', #{bphone}), '%')</if>
+		 	<if test="bcode!=null">and b_code LIKE CONCAT(CONCAT('%', #{bcode}), '%')</if>
+		 	<if test="bsuid!=null">and b_suid=#{bsuid} and b_state=1</if>
+		</where>
+	</select>
+	<!-- 增加 -->
+	<select id="add" parameterType="com.p2p.pojo.Bank">
+		insert into bank(b_suid,b_code,b_type,b_money,b_state,b_card,b_name,b_phone,b_time) 
+		values(#{bsuid},#{bcode},#{btype},#{bmoney},#{bstate},#{bcard},#{bname},#{bphone},#{btime})
+	</select>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from bank where b_id = #{b_id}
+	</delete>
+	<!-- 解绑 -->
+	<delete id="delbank" parameterType="java.lang.String">
+		delete from bank where b_id = #{b_id}
+	</delete>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Bank">
+		update bank set b_suid = #{bsuid}, b_code = #{bcode}, b_type = #{btype}, b_money = #{bmoney}, b_state = #{bstate},
+			b_card = #{bcard},b_name = #{bname},b_phone = #{bphone},b_time = #{btime}
+			where b_id = #{bid}
+	</update>
+	<!-- 根据id查用户 -->
+	<select id="getById" resultMap="bankssm" parameterType="java.lang.Integer">
+		select * from bank where b_id = #{b_id}
+	</select>
+	<!-- 根据卡号查询对象 -->
+	<select id="selectBankCard" parameterType="String" resultMap="bankssm">
+		select * from bank where b_code=#{bcode}
+	</select>
+</mapper>

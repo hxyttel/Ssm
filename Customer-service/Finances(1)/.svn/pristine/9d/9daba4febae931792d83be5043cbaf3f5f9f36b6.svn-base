@@ -1,0 +1,33 @@
+package com.p2p.controller.back;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.p2p.service.back.RoleService;
+import com.p2p.util.PageInfo;
+
+@Controller
+@RequestMapping(value="/back/admin")
+public class RoleController {
+	@Resource(name="roleServiceImpl")
+	private RoleService roleService;
+	
+	@RequestMapping(value="seleRolelist")
+	@ResponseBody
+	public PageInfo  selectRoleList(Integer page, Integer rows) {
+		PageInfo pageInfo = new PageInfo(page+1,rows);
+		//得到总的页数
+		Integer count = roleService.roleCount();
+		Map<String,Object> map = new HashMap<String,Object>();
+		pageInfo.setCondition(map);
+		roleService.selectPage(pageInfo);
+		pageInfo.setTotal(count);
+		return pageInfo;
+	}
+}

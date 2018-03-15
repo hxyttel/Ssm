@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.AboutMapper">
+	<resultMap type="com.p2p.pojo.About" id="BaseResultMap">
+		  <id column="ab_id" property="abid"/>
+ 		  <result column="ab_name" property="abname"/>
+ 		  <result column="ab_image" property="abimage"/>
+ 		  <result column="ab_introduce" property="abintroduce"/>
+ 		  <result column="ab_remark" property="abremark"/>
+	</resultMap>
+	
+	<!--查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from about 
+ 	</select>
+ 	<!-- 添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="abid">
+ 		 insert into about(ab_name,ab_image,ab_introduce,ab_remark) 
+ 		 values(#{abname},#{abimage},#{abintroduce},#{abremark})
+ 	</insert>
+ 	<!-- 删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.About">
+		delete from about where ab_id = #{abid};
+	</delete>
+	 <!-- 查询总记录数 -->
+    <select id="aboutCount" resultType="java.lang.Integer">
+        select count(*) from about;
+    </select>
+      <!-- 查询所有 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from about;        
+    </select>
+     <!-- 修改 -->
+    <update id="update" parameterType="com.p2p.pojo.About" >
+        UPDATE about SET 
+			ab_name=#{abname},
+			ab_image=#{abimage},
+			ab_introduce =#{abintroduce},
+			ab_remark =#{abremark}
+		WHERE ab_id=#{abid}
+    </update>
+</mapper>

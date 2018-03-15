@@ -1,0 +1,138 @@
+package com.p2p.pojo;
+
+import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+
+/**
+ * 投标
+ * 2017年11月14日09:49:41
+ * 操作人：朱勇峰
+ * 
+ * */
+
+public class Bid implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
+	@TableField("b_id")
+	private Integer bid; //主键
+	
+	@TableField("u_id")
+	private Integer uid; //用户id
+	
+	@TableField("b_fid")
+	private Integer bfid; //投标id
+	
+	@TableField("b_money")
+	private double bmoney; //投标金额
+	
+	@TableField("b_time")
+	private String btime; //投标时间
+	
+	@TableField("b_endtime")
+	private String bendtime; //还标时间
+	
+	@TableField("b_maxmoney")
+	private double bmaxmoney; //最大金额
+	
+	@TableField("b_getallmoney")
+	private double bgetallmoney; //总金额
+
+	public Bid(Integer bid, Integer uid, Integer bfid, double b_money, String btime, String bendtime, double bmaxmoney,
+			double bgetallmoney) {
+		super();
+		this.bid = bid;
+		this.uid = uid;
+		this.bfid = bfid;
+		this.bmoney = b_money;
+		this.btime = btime;
+		this.bendtime = bendtime;
+		this.bmaxmoney = bmaxmoney;
+		this.bgetallmoney = bgetallmoney;
+	}
+
+	public Bid() {
+		super();
+	}
+
+	public Integer getBid() {
+		return bid;
+	}
+
+	public void setBid(Integer bid) {
+		this.bid = bid;
+	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+
+	public Integer getBfid() {
+		return bfid;
+	}
+
+	public void setBfid(Integer bfid) {
+		this.bfid = bfid;
+	}
+
+	public double getB_money() {
+		return bmoney;
+	}
+
+	public void setB_money(double b_money) {
+		this.bmoney = b_money;
+	}
+
+	public String getBtime() {
+		return btime;
+	}
+
+	public void setBtime(String btime) {
+		this.btime = btime;
+	}
+
+	public String getBendtime() {
+		return bendtime;
+	}
+
+	public void setBendtime(String bendtime) {
+		this.bendtime = bendtime;
+	}
+
+	public double getBmaxmoney() {
+		return bmaxmoney;
+	}
+
+	public void setBmaxmoney(double bmaxmoney) {
+		this.bmaxmoney = bmaxmoney;
+	}
+
+	public double getBgetallmoney() {
+		return bgetallmoney;
+	}
+
+	public void setBgetallmoney(double bgetallmoney) {
+		this.bgetallmoney = bgetallmoney;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Bid [bid=" + bid + ", uid=" + uid + ", bfid=" + bfid + ", b_money=" + bmoney + ", btime=" + btime
+				+ ", bendtime=" + bendtime + ", bmaxmoney=" + bmaxmoney + ", bgetallmoney=" + bgetallmoney + "]";
+	}
+	
+	
+}

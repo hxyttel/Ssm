@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.InitiativeMapper">
+	<resultMap type="com.p2p.pojo.Initiative" id="inMap">
+		<id property="itid" column="it_id"/>
+		<result property="ittitle" column="it_title"/>
+		<result property="itsuid" column="it_suid"/>
+		<result property="itmoney" column="it_money"/>
+		<result property="ittime" column="it_time"/>
+		<result property="itorder" column="it_order"></result>
+		<result property="itstate" column="it_state"/>
+		<result property="itip" column="it_ip"/>
+		<association property="user" javaType="com.p2p.pojo.Users">
+			<result property="suname" column="su_name"/>
+		</association>
+	</resultMap>
+	<select id="list" resultMap="inMap">
+		select i.*,u.su_name from initiative i,users u WHERE i.it_suid =u.id
+	</select>
+	<select id="likeList" resultMap="inMap">
+		select i.*,u.su_name from initiative i,users u 
+		<where>
+			i.it_suid =u.id
+			<if test="user.suname!=null">and u.su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')</if>
+			<if test="itorder!=null">and it_order=#{itorder}</if>
+			<if test="itstate!=null">and it_state LIKE CONCAT(CONCAT('%', #{itstate}), '%')</if>
+		</where>
+	</select>
+	<insert id="add" parameterType="com.p2p.pojo.Initiative">
+		insert into initiative(it_title,it_suid,it_money,it_time,it_order,it_state,it_ip)
+		values(#{ittitle},#{itsuid},#{itmoney},#{ittime},#{itorder},#{itstate},#{itip})
+	</insert>
+	<update id="update" parameterType="com.p2p.pojo.Initiative">
+		update initiative
+		<trim prefix="set" suffixOverrides=",">
+			<if test="ittitle!=null">it_title=#{ittitle},</if>
+			<if test="itsuid!=null">it_suid=#{itsuid},</if>
+			<if test="itmoney!=null">it_money=#{itmoney},</if>
+			<if test="ittime!=null">it_time=#{ittime},</if>
+			<if test="itstate!=null">it_state=#{itstate},</if>
+			<if test="itip!=null">it_ip=#{itip},</if>
+		</trim>
+		<where>
+			it_id=#{itid}
+		</where>
+	</update>
+	<select id="getById" parameterType="java.lang.Integer" resultMap="inMap">
+		select * from initiative where it_id=#{itid}
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from initiative where it_id=#{itid}
+	</delete>
+</mapper>

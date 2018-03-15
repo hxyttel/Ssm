@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.ContactMapper">
+	<resultMap type="com.p2p.pojo.Contact" id="BaseResultMap">
+		  <id column="c_id" property="cid"/>
+		   <result column="c_ephone" property="cephone"/>
+ 		  <result column="c_sphone" property="csphone"/>
+ 		  <result column="c_wechartimgurl" property="cwechartimgurl"/>
+ 		  <result column="c_weboimgurl" property="cweboimgurl"/>
+ 		   <result column="c_qqnum" property="cqqnum"/>
+ 		  <result column="c_address" property="caddress"/>
+ 		   <result column="c_xs" property="cxs"/>
+ 		  
+	</resultMap>
+	
+	<!-- 联系人查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from contact 
+ 		<where>
+		    1=1
+			<if test="contact.cephone != null and contact.cephone !='' ">
+			    and c_ephone like CONCAT(CONCAT('%', #{contact.cephone}), '%')
+			</if>
+			<if test="contact.csphone != null and contact.csphone !=''">
+			     and c_sphone like CONCAT(CONCAT('%', #{contact.csphone}), '%')
+			</if>
+			<if test="contact.cwechartimgurl != null and contact.cwechartimgurl != -1">
+			    and c_wechartimgurl  like CONCAT(CONCAT('%', #{contact.cwechartimgurl}), '%')
+			</if>
+			<if test="contact.cweboimgurl != null and contact.cweboimgurl != -1">
+			    and c_weboimgurl  like CONCAT(CONCAT('%', #{contact.cweboimgurl}), '%')
+			</if>
+			<if test="contact.cqqnum != null and contact.cqqnum != -1">
+			    and c_qqnum  like CONCAT(CONCAT('%', #{contact.cqqnum}), '%')
+			</if>
+			<if test="contact.caddress != null and contact.caddress != -1">
+			    and c_address  like CONCAT(CONCAT('%', #{contact.caddress}), '%')
+			</if>
+			<if test="contact.cxs != null and contact.cxs != -1">
+			    and c_xs  like CONCAT(CONCAT('%', #{contact.cxs}), '%')
+			</if>
+		</where>
+ 	</select>
+ 	<!-- 联系人添加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Contact" useGeneratedKeys="true" keyProperty="cid">
+ 		 insert into contact(c_ephone,c_sphone,c_wechartimgurl,c_weboimgurl,c_qqnum,c_address,c_xs) 
+ 		 values(#{cephone},#{csphone},#{cwechartimgurl},#{cweboimgurl},#{cqqnum},#{caddress},#{cxs})
+ 	</insert>
+ 	<!-- 联系人删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Contact">
+		delete from contact where c_id = #{cid};
+	</delete>
+	<update id="update" parameterType="com.p2p.pojo.Contact" >
+        UPDATE contact
+        <trim prefix="set" suffixOverrides=",">
+        	<if test="cephone!=null">c_ephone=#{cephone},</if>
+			<if test="csphone!=null">c_sphone=#{csphone},</if>
+			<if test="cwechartimgurl!=null">c_wechartimgurl =#{cwechartimgurl},</if>
+			<if test="cweboimgurl!=null">c_weboimgurl=#{cweboimgurl},</if>
+			<if test="cqqnum!=null">c_qqnum =#{cqqnum},</if>
+			<if test="caddress!=null">c_address=#{caddress},</if>
+			<if test="cxs!=null">c_xs=#{cxs},</if>
+		</trim>
+			WHERE c_id=#{cid}
+    </update>
+	 <!-- 查询角色的总记录数 -->
+    <select id="indexCount" resultType="java.lang.Integer">
+        select count(*) from contact
+    </select>
+    <!-- 前台font -->
+    <select id="getModel" parameterType="Contact" resultType="com.p2p.pojo.Contact" resultMap="BaseResultMap" >
+        select *from contact where c_xs=#{cxs} limit 1;
+    </select>
+      <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from contact
+    </select>
+      <select id="contactCount" resultType="java.lang.Integer">
+        select count(*) from contact;
+    </select>
+</mapper>

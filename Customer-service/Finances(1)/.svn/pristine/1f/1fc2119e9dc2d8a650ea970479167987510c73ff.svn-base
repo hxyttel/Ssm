@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.NoticeMapper">
+	<resultMap id="BaseResultMap" type="com.p2p.pojo.Notice">
+		<id property="nid" column="n_id"></id>
+		<result property="ntitle" column="n_title"/>
+		<result property="ncontent" column="n_content"/>
+		<result property="nstype" column="n_stype"/>
+		<result property="ntime" column="n_time"/>
+		<result property="ntype" column="n_type"/>
+	</resultMap>
+	<!-- 公告表查询 -->
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from notice 
+	</select>
+	<!-- 公告表后台分页查询 -->
+	<select id="pageNotice" resultMap="BaseResultMap">
+		select * from notice 
+			<where>
+			1=1
+				<if test="notice.ntitle!=null and notice.ntitle!=''">
+					and n_title like CONCAT(CONCAT('%', #{notice.ntitle}), '%')
+				</if>
+				
+			</where>
+	</select>
+	<!-- 后台总记录数查询 -->
+	<select id="countNotice" resultType="java.lang.Integer">
+		select count(*) from notice
+	</select>
+	<!-- 根据id查询数据 -->
+	<select id="findById" parameterType="java.lang.Integer" resultType="com.p2p.pojo.Notice">
+		select * from notice n where n.n_id=#{id} 
+	</select>
+	<!-- 后台新增 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Notice">
+		insert into notice(n_title,n_content,n_stype,n_time,n_type)
+			values(#{ntitle},#{ncontent},#{nstype},#{ntime},#{ntype})
+	</insert>
+	<!-- 后台公告表修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Notice">
+		update notice set 
+		<if test="ntitle!=null">n_title=#{ntitle},</if>
+		<if test="ncontent!=null">n_content=#{ncontent},</if>
+		<if test="nstype!=null">n_stype=#{nstype},</if>
+		<if test="ntime!=null">n_time=#{ntime},</if>
+		<if test="ntype!=null">n_type=#{ntype}</if> 
+		<where> 
+			n_id = #{nid}
+		</where>
+	</update>
+	<!-- 后台公告表删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from notice where n_id=#{nid} 
+	</delete>
+	<!-- 根据id查询名字 -->
+	<select id="selectName" resultMap="BaseResultMap">
+		select n.n_title,n.n_content from notice n where n_id = #{nid}
+	</select>
+	<select id="selectByType" resultMap="BaseResultMap">
+		select * from notice
+		<where>
+			<if test="ntype!=null">n_stype=#{ntype}</if> 
+		</where>
+		
+	</select>
+</mapper>

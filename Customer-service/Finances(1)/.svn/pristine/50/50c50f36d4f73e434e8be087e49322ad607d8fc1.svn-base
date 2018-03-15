@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.WithdrawalsMapper">
+	<resultMap id="BaseResultMap" type="com.p2p.pojo.Withdrawals">
+		<id column="w_id" property="wid"/>
+		<result column="u_id" property="uid"/>   
+		<result column="w_money" property="wmoney"/>  
+		<result column="w_time" property="wtime"/>  
+		<result column="w_moneytowhere" property="wmoneytowhere"/> 
+		<result column="w_status" property="wstatus"/>  
+		<result column="w_fee" property="wfee"/>  
+    </resultMap>
+	 <!-- 提现查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from withdrawals;
+ 	</select>
+ 	  <!-- 查询 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from  withdrawals;        
+    </select>
+    <!-- 查询提现的总记录数 -->
+    <select id="withdrawalsCount" resultType="java.lang.Integer">
+        select count(*) from withdrawals;
+    </select>
+     <!-- 提现添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="wid">
+ 		 insert into withdrawals(u_id,w_money,w_time,w_moneytowhere,w_status,w_fee) 
+ 		 values(#{uid},#{wmoney},#{wtime},#{wmoneytowhere},#{wstatus},#{wfee})
+ 	</insert>
+ 	 <!-- 删除提现 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Withdrawals">
+        DELETE FROM withdrawals WHERE w_id=#{wid}
+    </delete>
+</mapper>

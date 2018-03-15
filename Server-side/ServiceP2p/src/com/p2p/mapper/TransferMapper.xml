@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.TransferMapper">
+		<resultMap type="com.p2p.pojo.Transfer" id="transff">
+			<result column="t_id" property="tid"/>
+			<result column="t_suid" property="tsuid"/>
+			<result column="t_suids" property="tsuids"/>
+			<result column="t_money" property="tmoney"/>
+			<result column="t_time" property="ttime"/>
+			<result column="t_state" property="tstate"/>
+			<result column="t_order" property="torder"/>
+			<result column="t_ip" property="tip"/>
+			<result column="t_charge" property="tcharge"/>
+		</resultMap>
+		
+		<!-- 查所有 -->
+		<select id="list" resultMap="transff">
+			select * from transfer
+		</select>
+		
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.Transfer">
+			insert into transfer(t_suid,t_suids,t_money,t_time,t_state,t_order,t_ip,t_charge)
+			values(#{tsuid},#{tsuids},#{tmoney},#{ttime},#{tstate},#{torder},#{tip},#{tcharge})		
+		</select>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from transfer where t_id = #{t_id}
+		</delete>
+		
+		<!-- 修改  -->
+		<update id="update" parameterType="com.p2p.pojo.Transfer">
+			update transfer set t_suid = #{tsuid},t_suids = #{tsuids},t_money = #{tmoney},
+			t_time = #{ttime},t_state = #{tstate},t_order = #{torder},t_ip = #{tip},t_charge = #{tcharge} where 
+			t_id = #{tid}
+		</update>
+		
+		<!-- 根据id查 -->
+		<select id="getById" resultMap="transff" parameterType="java.lang.Integer" >
+			select * from transfer where t_id = #{t_id}
+		</select>
+	</mapper>

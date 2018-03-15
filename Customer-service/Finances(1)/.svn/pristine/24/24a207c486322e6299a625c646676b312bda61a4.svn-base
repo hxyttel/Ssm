@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.EmpTaskMapper">
+	<resultMap type="com.p2p.pojo.EmpTask" id="BaseResultMap">
+		<id column="et_id" property="etid"/>
+		<result column="et_name" property="etname"/>
+		<result column="et_content" property="etcontent"/>
+		<result column="et_starttime" property="etstarttime"/>
+		<result column="et_status" property="etstatus"/>
+		<result column="et_endtime" property="etendtime"/>
+	</resultMap>
+	
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from emp_task;
+	</select>
+	<select id="seleByEmpTask" resultMap="BaseResultMap">
+		select * from emp_task 
+			<where> 1 =1 
+				<if test="etname!=null and etname !=''">
+					and et_name = #{etname}
+				</if>
+				<if test="etcontent!=null and etcontent !=''">
+					and et_content = #{etcontent}
+				</if>
+				<if test="etstarttime !=null and etstarttime != '' and etendtime != null and etendtime != ''">
+            	    and et_starttime between #{etstarttime} and #{etendtime}
+ 				</if>
+				<if test="etstatus!=null">
+					and et_status = #{etstatus}
+				</if>
+			</where>
+	</select>
+	
+	<select id="getModel" resultMap="BaseResultMap">
+		select * from emp_task 
+			<where> 1 =1 
+				<if test="etname!=null and etname !=''">
+					and et_name = #{etname}
+				</if>
+				<if test="etcontent!=null and etcontent !=''">
+					and et_content = #{etcontent}
+				</if>
+				<if test="etstarttime!=null and etstarttime !=''">
+					and et_starttime like CONCAT(CONCAT('%', #{etstarttime}), '%')
+				</if>
+				<if test="etstatus!=null">
+					and et_status = #{etstatus}
+				</if>
+			</where>
+	</select>
+	
+	<select id="addModel" parameterType="com.p2p.pojo.EmpTask">
+		 insert into emp_task(et_name,et_content,et_starttime,et_status,et_endtime) 
+ 		 values(#{etname},#{etcontent},#{etstarttime},#{etstatus},#{etendtime})
+	</select>
+	
+	<update id="update" parameterType="com.p2p.pojo.EmpTask">
+		  UPDATE emp_task  
+        	<trim prefix="set" suffixOverrides=",">
+        	<if test="etname!=null and etname !=''">
+					et_name = #{etname},
+				</if>
+				<if test="etcontent!=null and etcontent !=''">
+					et_content = #{etcontent},
+				</if>
+				<if test="etstarttime!=null and etstarttime !=''">
+					et_starttime = #{etstarttime},
+				</if>
+				<if test="etendtime!=null and etendtime !=''">
+					et_endtime = #{etendtime},
+				</if>
+				<if test="etstatus!=null">
+					 et_status = #{etstatus},
+				</if>
+		</trim>
+		<where>
+			et_id=#{etid}
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="com.p2p.pojo.EmpTask">
+		delete from emp_task where et_id=#{etid};
+	</delete>
+</mapper>

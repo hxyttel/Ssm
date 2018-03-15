@@ -1,0 +1,186 @@
+/*iBanner*/
+.banner {
+  position: relative;
+}
+.iBanner {
+  height: 100%;
+  position: relative;
+  float: left;
+  width: 100%;
+}
+.iBanner .iBanner-box {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+.iBanner .iBanner-box .box {
+  display: none;
+  height: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.iBanner .iBanner-box .box-active {
+  display: block;
+}
+.iBanner .iBanner-box .box a {
+  display: block;
+  height: 100%;
+  position: relative;
+}
+.iBanner .iBanner-box .box-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+/*iBanner custom*/
+.iBanner .iBanner-box .fd-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 10px 0 0 176px;
+}
+.iBanner .iBanner-box .fd-btn .icon {
+  width: 292px;
+  height: 82px;
+  display: block;
+}
+.iBanner .iBanner-box .wdj-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  margin: 0 0 0 -90px;
+}
+.iBanner .iBanner-box .wdj-btn .icon-wdj {
+  width: 180px;
+  height: 40px;
+  display: block;
+}
+.iBanner .iBanner-box .azb-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  margin: 0 0 0 338px;
+}
+.iBanner .iBanner-box .azb-btn .icon-azb {
+  width: 124px;
+  height: 28px;
+  display: block;
+}
+.iBanner .previous,
+.iBanner .next {
+  position: absolute;
+  height: 116px;
+  width: 62px;
+  margin-top: -20px;
+  z-index: 2000;
+  top: 50%;
+  left: 50%;
+  margin-left: -32px;
+  display: none;
+}
+.iBanner .previous {
+  background-position: -3px -30px;
+}
+.iBanner .next {
+  background-position: -56px -30px;
+}
+.prev-mask {
+  position: absolute;
+  left: 0;
+  width: 125px;
+  height: 100%;
+  z-index: 1000;
+  top: 0;
+  display: none;
+}
+.next-mask {
+  position: absolute;
+  right: 0;
+  width: 125px;
+  height: 100%;
+  z-index: 10;
+  top: 0;
+  display: none;
+}
+.prev-mask,
+.next-mask {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.iBanner-prev .prev-mask .previous,
+.iBanner-next .next-mask .next {
+  display: block;
+  cursor: pointer;
+}
+.iBanner .iBanner-box .fd-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 68px 0 0 252px;
+  z-index: 30;
+}
+.iBanner .fd-btn .icon {
+  display: block;
+  width: 216px;
+  height: 62px;
+  text-indent: -99999px;
+}
+.iBanner .fd-btn .icon img {
+  display: block;
+  margin: 0 auto;
+}
+.iBanner .fd-btn .sub-text {
+  margin-top: 6px;
+}
+.iBanner .fd-btn .sub-text p {
+  color: #fff;
+  line-height: 24px;
+}
+.iBanner-nav {
+  height: 40px;
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  _top: 500px;
+  z-index: 2000;
+}
+.iBanner-nav ul {
+  overflow: hidden;
+}
+.iBanner-nav ul li {
+  float: left;
+  padding: 5px 0 0 0;
+  margin-left: 3px;
+}
+.iBanner-nav a:link,
+.iBanner-nav a:visited {
+  font-size: 10px;
+  text-decoration: none;
+  color: #fff;
+  outline: none;
+}
+.iBanner-nav a:hover,
+.iBanner-nav a:focus {
+  color: #ff9933;
+  background: none;
+}
+.iBanner-nav ul li a.active:link,
+.iBanner-nav ul li a.active:visited {
+  cursor: pointer;
+  margin-top: 0;
+}
+.iBanner-nav ul li a:link,
+.iBanner-nav ul li a:visited {
+  display: inline-block;
+  float: left;
+  width: 20px;
+  height: 24px;
+  margin-right: 2px;
+  text-indent: -9999em;
+  overflow: hidden;
+  cursor: pointer;
+  margin-top: 2px;
+}

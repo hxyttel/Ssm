@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.FabiaoMapper">
+	<resultMap id="BaceFabiao" type="com.p2p.pojo.Fabiao">
+		<id column="fs_id" property="fsid"></id>
+		<result column="fs_suid" property="fssuid"></result>
+		<result column="fs_title" property="fstitle"></result>
+		<result column="fs_order" property="fsorder"></result>
+		<result column="fs_money" property="fsmoney"></result>
+		<result column="fs_time" property="fstime"></result>
+		<result column="fs_state" property="fsstate"></result>
+		<result column="fs_ip" property="fsip"></result>
+		<result column="fs_hktime" property="fshktime"></result>
+		<result column="fs_style" property="fsstyle"></result>
+		<result column="fs_roe" property="fsroe"></result>
+		<association property="user" javaType="com.p2p.pojo.Users">
+			<result property="suname" column="su_name"/>
+		</association>
+	</resultMap>
+	<!-- 查询 -->
+	<select id="list" resultMap="BaceFabiao">
+		select f.*,u.su_name from fabiaos f,users u where f.fs_suid=u.id;
+	</select>
+	<!-- 模糊查询 -->
+	<select id="listLike" parameterType="com.p2p.pojo.Fabiao" resultMap="BaceFabiao">
+		select f.*,u.su_name from fabiaos f,users u
+		<where>
+			f.fs_suid=u.id
+			<if test="fsorder!=null">and fs_order LIKE CONCAT(CONCAT('%', #{fsorder}), '%')</if>
+			<if test="user.suname!=null">and u.su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')</if>
+		</where>
+	</select>
+	<update id="update" parameterType="com.p2p.pojo.Fabiao">
+		update fabiaos 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="fssuid!=null">fs_suid=#{fssuid},</if>
+				<if test="fshktime!=null">fs_hktime=#{fshktime},</if>
+				<if test="fsroe!=null">fs_roe=#{fsroe},</if>
+				<if test="fsstyle!=null">fs_style=#{fsstyle},</if>
+				<if test="fstitle!=null">fs_title=#{fstitle},</if>
+				<if test="fsorder!=null">fs_order=#{fsorder},</if>
+				<if test="fsmoney!=null">fs_money=#{fsmoney},</if>
+				<if test="fstime!=null">fs_time=#{fstime},</if>
+				<if test="fsstate!=null">fs_state=#{fsstate},</if>
+				<if test="fsip!=null">fs_ip=#{fsip},</if>
+			</trim> 
+			<where>
+				fs_id = #{fsid}
+			</where>
+	</update>
+	<!-- 增加 -->
+	<insert id="add" parameterType="com.p2p.pojo.Fabiao">
+		insert into fabiaos(fs_suid,fs_title,fs_order,fs_money,fs_time,fs_state,fs_ip,fs_roe,fs_hktime,fs_style)
+			values(#{fssuid},#{fstitle},#{fsorder},#{fsmoney},#{fstime},#{fsstate},#{fsip},#{fsroe},#{fshktime},#{fsstyle})
+	</insert>
+	<!--  删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from fabiaos where fs_id =#{fsid}
+	</delete>
+	<!--  根据id查询 -->
+	<select id="getById" resultMap="BaceFabiao" parameterType="java.lang.Integer">
+		select * from fabiaos where fs_is =#{fsid}
+	</select>
+	<select id="getByOrder" parameterType="java.lang.String" resultMap="BaceFabiao">
+		select * from fabiaos where fs_order=#{fsorder}
+	</select>
+</mapper>

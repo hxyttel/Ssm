@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.SendMailMapper">
+	<resultMap type="com.p2p.pojo.SendMail" id="BaseResultMap">
+		      <id column="mailid" property="mailid"/>
+	 		  <result column="host" property="host"/>
+	 		  <result column="formName" property="formName"/>
+	 		  <result column="password" property="password"/>
+	 		  <result column="isuser" property="isuser"/>
+	</resultMap>
+	<select id="getModel" parameterType="com.p2p.pojo.SendMail" resultType="com.p2p.pojo.SendMail">
+		select * from send_mail s where s.mailid=#{mailid}
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.SendMail" useGeneratedKeys="true" keyProperty="mailid">
+		insert into send_mail(host,formName,password,isuser) values(#{host},#{formName},#{password},#{isuser})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.SendMail">
+		delete from send_mail where mailid = #{mailid}
+	</delete>
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from send_mail
+	</select>
+	<select id="findUserMail" resultType="com.p2p.pojo.SendMail">
+		select * from send_mail where isuser =#{isuser}
+	</select>
+      <select id="sendmailCount" resultType="java.lang.Integer">
+        select count(*) from send_mail;
+    </select>
+     <update id="updateSendMail">
+     update send_mail set isuser =2
+    </update>
+     <!-- 查询总记录数 -->
+    <select id="SendMailcount" resultType="java.lang.Integer">
+        select count(*) from send_mail;
+    </select>
+     <!-- 修改 -->
+    <update id="update" parameterType="com.p2p.pojo.SendMail" >
+        UPDATE send_mail SET 
+			host=#{host},
+			formName =#{formName},
+			password=#{password},
+			isuser =#{isuser}
+		WHERE mailid=#{mailid}
+    </update>
+      <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from send_mail 
+		<where>
+		1=1
+			<if test="sendMail.mailid!= null and sendMail.mailid!=''">
+			and mailid lise CONCAT(CONCAT('%',#{sendMail.mailid}), '%')
+			</if>
+			<if test="sendMail.host!= null and sendMail.host!=''">
+			and host lise CONCAT(CONCAT('%',#{sendMail.host}), '%')
+			</if>
+			<if test="sendMail.formName!= null and sendMail.formName!=''">
+			and formName lise CONCAT(CONCAT('%',#{sendMail.formName}), '%')
+			</if>
+			<if test="sendMail.password!= null and sendMail.password!=''">
+			and password lise CONCAT(CONCAT('%',#{sendMail.password}), '%')
+			</if>
+			<if test="sendMail.isuser!= null and sendMail.isuser!=''">
+			and isuser lise CONCAT(CONCAT('%',#{sendMail.isuser}), '%')
+			</if>
+		</where>
+    </select>
+</mapper>

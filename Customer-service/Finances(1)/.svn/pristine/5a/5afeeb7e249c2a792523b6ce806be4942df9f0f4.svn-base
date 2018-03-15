@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.SetupnaticeMapper">
+	<resultMap type="com.p2p.pojo.Setupnatice" id="BaseResultMap">
+		      <id column="us_id" property="usid"/>
+	 		  <result column="us_id" property="uid"/>
+	 		  <result column="us_insideStatus" property="usinsideStatus"/>
+	 		  <result column="us_emailStatus" property="usemailStatus"/>
+	 		  <result column="us_messageStatus" property="usmessageStatus"/>
+	</resultMap>
+	<select id="getModel" parameterType="com.p2p.pojo.Setupnatice" resultType="com.p2p.pojo.Setupnatice">
+		select * from user_setupnatice u 
+			<where>
+				1=1 
+				<if test="usid!=null">and u.us_id#{usid}</if>
+				<if test="uid!=null">and u.u_id#{uid}</if>
+				<if test="usinsideStatus!=null">and u.us_insideStatus#{usinsideStatus}</if>
+				<if test="us_emailStatus!=null">and u.us_emailStatus#{usemailStatus}</if>
+				<if test="us_messageStatus!=null">and u.us_messageStatus#{usmessageStatus}</if>
+			</where>
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.Setupnatice" useGeneratedKeys="true" keyProperty="usid">
+		insert into user_setupnatice(us_id,us_id,us_insideStatus,us_emailStatus,us_messageStatus) values(#{uid},#{usinsideStatus},#{usemailStatus},#{usmessageStatus})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.SendMsg">
+		delete from user_setupnatice where us_id = #{usid}
+	</delete>
+	<select id="getAllModel" resultMap="BaseResultMap">
+		select * from user_setupnatice
+	</select>
+</mapper>

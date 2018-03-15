@@ -1,0 +1,434 @@
+.warp-1000 {
+  position: relative;
+  width: 1000px;
+  margin: 0 auto;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  *zoom: 1;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.blue {
+  color: #00afeb;
+}
+.blank_30 {
+  height: 30px;
+}
+.btn {
+  display: block;
+}
+.btn.btn-close {
+  background: #000;
+  width: 14px;
+  height: 14px;
+}
+.ico {
+  display: inline-block;
+  position: relative;
+  background-repeat: no-repeat;
+}
+.ico.ico-red-package {
+  top: 2px;
+  margin-right: 2px;
+  width: 11px;
+  height: 12px;
+  background: #ff0000;
+}
+.ico.ico-arr-down-s {
+  margin-right: 2px;
+  width: 6px;
+  height: 5px;
+  background: #ff0000;
+  position: absolute;
+  right: 4px;
+  top: 37px;
+  display: none;
+}
+.ico.ico-arr-down-m {
+  top: -1px;
+  margin-left: 4px;
+  margin-right: 2px;
+  width: 9px;
+  height: 5px;
+  background: #ff0000;
+}
+.ico.ico-piao {
+  width: 12px;
+  height: 12px;
+  top: 1px;
+  background: #ff0000;
+  margin-right: 2px;
+}
+.ico.ico-err {
+  width: 16px;
+  height: 16px;
+  top: 3px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEUAAAD///////////////////////////////////////////////////////////////////////8KOjVvAAAAEnRSTlMAkfktBvz1jTsn5NjOt3I/MAzVXxm0AAAAc0lEQVQY02WP2w7AIAhDAVGnu/f/P3ZINMtcH0x6AtJSU8lbjFsu1HUkuNLhVncIn6onC3Y1wKgXua6KTBSiBDOAPUFisQGmAcxkWrG8YMFKAn2BIn3BjeQrrr4yf8rz2eDBGmm+2sCIbvse/V9u1Ad6/QceZgXRqJXZswAAAABJRU5ErkJggg==");
+  margin-right: 4px;
+}
+.mod-adv {
+  height: 50px;
+}
+.mod-adv a {
+  display: block;
+}
+.mod-adv .btn-close {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  margin-top: -7px;
+}
+.prev-mask {
+  background-image: url('../img/banner_btn_l.png');
+}
+.next-mask {
+  background-image: url('../img/banner_btn_r.png');
+}
+.mod-topbar .bar {
+  height: 40px;
+  line-height: 40px;
+  background: #2e2e2e;
+  font-size: 12px;
+  color: #fff;
+  font-family: arial, sans-serif;
+  padding-right: 0 3px;
+}
+.mod-topbar .bar .fl {
+  height: 40px;
+}
+.mod-topbar .bar .fl span {
+  display: inline-block;
+  margin-right: 20px;
+  padding-right: 20px;
+}
+.mod-topbar .bar .fl span em {
+  font-size: 14px;
+  position: relative;
+  top: 1px;
+  font-family: "microsoft yahei";
+}
+.mod-topbar .bar .fl .line {
+  height: 100%;
+  border-right: 1px solid #585858;
+}
+.mod-topbar .bar .fr li {
+  display: inline-block;
+  margin-left: 31px;
+  height: 39px;
+  float: left;
+}
+.mod-topbar .bar .fr .line {
+  margin-left: 15px;
+  padding-left: 15px;
+  border-left: 1px solid #585858;
+}
+.mod-topbar .bar a {
+  color: #fff;
+}
+.mod-topbar .nav {
+  height: 80px;
+  z-index: 2;
+}
+.mod-topbar .nav .logo {
+  float: left;
+  padding-top: 15px;
+}
+.mod-topbar .nav .back-home {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  color: #1e1e1e;
+  font-size: 16px;
+}
+.mod-topbar .nav .nav-list {
+  padding-left: 200px;
+  z-index: 2;
+  font-size: 0;
+  text-align: left;
+}
+.mod-topbar .nav .nav-list li {
+  display: inline-block;
+  position: relative;
+  float: left;
+  height: 80px;
+  line-height: 80px;
+  font-size: 16px;
+  z-index: 2;
+  text-align: center;
+}
+.mod-topbar .nav .nav-list li a {
+  height: 40px;
+  display: block;
+  margin-top: 20px;
+  padding: 0 20px;
+  color: #1e1e1e;
+  line-height: 40px;
+}
+.mod-topbar .nav .nav-list li .children {
+  position: absolute;
+  top: 60px;
+  display: none;
+  z-index: 3;
+  width: 100%;
+}
+.mod-topbar .nav .nav-list li .children li {
+  float: none;
+  height: 36px;
+  line-height: 36px;
+  display: block;
+}
+.mod-topbar .nav .nav-list li .children li a {
+  margin-top: 0;
+  height: 36px;
+  line-height: 36px;
+}
+.mod-topbar .nav .nav-list li .children li a:hover {
+  background: #00afeb;
+}
+.mod-topbar .nav .nav-list li.hover a {
+  color: #fff;
+  background: #3180bf;
+}
+.mod-topbar .nav .nav-list li.hover .children {
+  display: block;
+}
+.mod-topbar .nav .nav-list li.hover .ico-arr-down-s {
+  display: block;
+}
+.mod-topbar .nav .nav-list li.last a {
+  padding-right: 0;
+}
+.common-data-type {
+  margin-left: -9px;
+  font-size: 12px;
+  color: #999;
+}
+.common-data-type .blue {
+  color: #00afeb;
+}
+.common-data-type .gray {
+  color: #999;
+}
+.common-data-type span {
+  margin-right: 9px;
+  margin-left: 9px;
+}
+.mod-data-list .head {
+  position: relative;
+  height: 54px;
+  line-height: 54px;
+}
+.mod-data-list .head h2 {
+  float: left;
+  font-size: 18px;
+  color: #1e1e1e;
+  padding-left: 6px;
+}
+.mod-data-list .head span {
+  display: inline-block;
+  border-radius: 3px;
+  background: #00afeb;
+  color: #fff;
+  height: 12px;
+  line-height: 12px;
+  font-size: 12px;
+  padding: 4px 8px;
+  margin-left: 4px;
+}
+.mod-data-list .head .more {
+  position: absolute;
+  right: 8px;
+  color: #1e1e1e;
+  font-size: 14px;
+}
+.mod-data-list .list {
+  margin-left: -20px;
+  overflow: hidden;
+}
+.mod-data-list .list li {
+  position: relative;
+  float: left;
+  padding: 20px;
+  width: 195px;
+  height: 260px;
+  margin-left: 20px;
+  background: #fff;
+  border-radius: 3px;
+}
+.mod-data-list .list li h3 {
+  font-size: 16px;
+  color: #1e1e1e;
+  font-weight: bold;
+}
+.mod-data-list .list li h3 .level {
+  color: #3180bf;
+  border: 1px solid #3180bf;
+  font-size: 12px;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 1px;
+  margin-left: 8px;
+}
+.mod-data-list .list li .common-data-type {
+  margin-top: 12px;
+}
+.mod-data-list .list li .info {
+  height: 110px;
+  color: #999;
+}
+.mod-data-list .list li .info p {
+  padding-bottom: 8px;
+  font-size: 12px;
+}
+.mod-data-list .list li .info .lt {
+  float: left;
+  margin: 26px 0 0 14px;
+  font-size: 12px;
+}
+.mod-data-list .list li .info .lt .percent {
+  font-size: 44px;
+  color: #eb4600;
+}
+.mod-data-list .list li .info .lt .percent span {
+  font-size: 12px;
+}
+.mod-data-list .list li .info .rt {
+  float: left;
+  margin: 50px 0 0 19px;
+}
+.mod-data-list .list li .info .rt .month {
+  font-size: 20px;
+  color: #1e1e1e;
+}
+.mod-data-list .list li .info .rt .month span {
+  font-size: 12px;
+  color: #999;
+}
+.mod-data-list .list li .process {
+  padding-top: 14px;
+}
+.mod-data-list .list li .process p {
+  color: #999;
+  height: 12px;
+  font-size: 12px;
+}
+.mod-data-list .list li .process p span.yuan {
+  float: right;
+  color: #1e1e1e;
+}
+.mod-data-list .list li .process .pro {
+  position: relative;
+  top: 10px;
+  height: 16px;
+}
+.mod-data-list .list li .process .pro .num {
+  position: absolute;
+  color: #666;
+  right: 0;
+  font-size: 12px;
+}
+.mod-data-list .list li .process .pro .bar {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 164px;
+  height: 5px;
+  background: #e8e8e8;
+}
+.mod-data-list .list li .process .pro .bar .in {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #00afeb;
+}
+.mod-data-list .list li .btn {
+  margin-top: 32px;
+  display: block;
+  width: 100%;
+  height: 35px;
+  line-height: 34px;
+  background: #3180bf;
+  color: #FFF;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 3px;
+}
+.mod-data-list .list li .new {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  background: url(../img/arr_new.png) no-repeat;
+}
+.mod-common-footer {
+  border-top: 1px solid #e7e7e7;
+}
+.mod-common-footer .about {
+  padding: 30px 0;
+}
+.mod-common-footer .about a {
+  margin-right: 36px;
+  color: #7a7a7a;
+  font-size: 12px;
+}
+.mod-common-footer .cpright {
+  padding: 36px 0 24px;
+  background: #363636;
+  color: #7e7e7e;
+  font-size: 12px;
+  text-align: center;
+}
+.mod-common-footer .cpright p {
+  line-height: 16px;
+}
+.mod-common-footer .cpright p.imgs {
+  margin-top: 14px;
+}
+.mod-sidebar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  width: 50px;
+  margin-top: -75px;
+  background: #fff;
+  overflow: hidden;
+}
+.mod-sidebar a {
+  width: 50px;
+  height: 50px;
+  font-size: 12px;
+  display: block;
+  color: #999;
+  text-align: center;
+}
+.mod-sidebar ul {
+  margin-top: -1px;
+}
+.mod-sidebar li {
+  border-top: 1px solid #e8e8e8;
+}
+.mod-sidebar i.ico {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: #000;
+  background-repeat: no-repeat;
+}
+.mod-sidebar p.ico {
+  line-height: 46px;
+  height: 32px;
+}

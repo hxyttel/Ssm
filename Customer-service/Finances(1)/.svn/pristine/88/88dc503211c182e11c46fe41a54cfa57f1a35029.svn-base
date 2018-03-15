@@ -1,0 +1,11 @@
+package com.p2p.service.back;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.p2p.base.IBaseService;
+import com.p2p.pojo.Indexpic;
+
+public interface IndexpicService extends IBaseService<Serializable, Indexpic>{
+	
+}

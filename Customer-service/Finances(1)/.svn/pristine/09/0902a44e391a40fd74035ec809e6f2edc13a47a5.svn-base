@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.MoneyrecordMapper">
+<resultMap type="com.p2p.pojo.Moneyrecord" id="BaseResultMap">
+	      <id column="mr_id" property="mrid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="mr_detail" property="mrdetail"/>
+ 		  <result column="mr_wastemonr" property="mrwastemoney"/>
+ 		  <result column="mr_wasttime" property="mrwasttime"/>
+</resultMap>
+	<!-- 员工表查询 -->
+	<select id="getModel"  resultMap="BaseResultMap">
+ 		select * from moneyreccoord 
+ 	</select>
+ 	
+ 	<!-- 员工添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="mrid">
+ 		 insert into moneyreccoord(u_id,mr_detail,mr_wastemonr,mr_wasttime) 
+ 		 values(#{uid},#{mrdetail},#{mrwastemoney},#{mrwasttime})
+ 	</insert>
+ 	
+ 	<!-- 员工删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Moneyrecord">
+		delete from moneyreccoord where mr_id = #{mrid};
+	</delete>
+	
+	<!-- 修改员工 -->
+    <update id="update" parameterType="com.p2p.pojo.Moneyrecord" >
+ 		update moneyreccoord
+ 		<trim prefix="set" suffixOverrides=",">
+		  <if test="uid!=null">u_id=#{uid},</if>
+		  <if test="mrdetail!=null">mr_detail=#{mrdetail},</if>
+		  <if test="mrwastemoney">mr_wastemonr=#{mrwastemoney},</if>
+		  <if test="mrwasttime!=null">mr_wasttime=#{mrwasttime},</if>
+ 		</trim>
+ 		<where>
+ 		    mr_id=#{mrid}
+ 		</where>
+    </update>
+	
+	<!-- 查询员工的总记录数 -->
+    <select id="moneyrecordCount" resultType="java.lang.Integer">
+        select count(*) from moneyreccoord;
+    </select>
+    
+   	<!-- 查询所有员工 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from moneyreccoord
+		<where>
+		    1=1
+			<if test="cord.mrwastemoney != null and cord.mrwastemoney !='' ">
+			    and mr_wastemoney like CONCAT(CONCAT('%', #{cord.mrwastemoney}), '%')
+			</if>
+			<if test="cord.mrwasttime != null and cord.mrwasttime !=''">
+			     and mr_wasttime like CONCAT(CONCAT('%', #{cord.mrwasttime}), '%')
+			</if>
+		</where>       
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.p2p.mapper.UserbackcardMapper">
+	<resultMap type="com.p2p.pojo.Userbackcard" id="UserbackcardResultMap">
+    	<id column="ub_id" property="ubid"/>
+		<result column="ui_id" property="uiid"/>
+		<result column="ub_backcardnum" property="ubbackcardnum"/>
+		<result column="ub_placeback" property="ubplaceback"/>
+		<result column="ub_bindtime" property="ubbindtime"/>
+		<result column="ub_status" property="ubstatus"/>
+		<result column="ub_money" property="ubmoney"/>
+	</resultMap>
+	<sql id="mybacksql">
+		ui_id,ub_backcardnum,ub_placeback,ub_bindtime,ub_status,ub_money
+	</sql>
+	<select id="getModel" parameterType="com.p2p.pojo.Userbackcard" resultMap="UserbackcardResultMap">
+		select * from user_backcard ub
+		<where>
+ 		     1=1
+ 			    <if test="ubid!=null">and ub.ic_id=#{ubid}</if>
+		  		<if test="uiid!=null">and ub.ui_id=#{uiid}</if>
+		  		<if test="ubbackcardnum!=null">and ub.ub_backcardnum=#{ubbackcardnum}</if>
+		  		<if test="ubplaceback!=null">and ub.ub_placeback=#{ubplaceback}</if>
+		  		<if test="ubbindtime!=null">and ub.ub_bindtime=#{ubbindtime}</if>
+		  		<if test="ubstatus!=null">and ub.ub_status=#{ubstatus}</if>
+		  		<if test="ubmoney!=null">and ub.ub_money=#{ubmoney}</if>
+ 		</where>
+	</select>
+	<insert id="addModel" parameterType="com.p2p.pojo.Userbackcard" useGeneratedKeys="true" keyProperty="id">
+		insert into user_backcard(<include refid="mybacksql" />) values(#{uiid},#{ubbackcardnum},#{ubplaceback},#{ubbindtime},#{ubstatus},#{ubmoney})
+	</insert>
+	<delete id="delete" parameterType="com.p2p.pojo.Userbackcard">
+		delete from user_backcard where ub_id = #{ubid}
+	</delete>
+	<select id="getAllModel" resultMap="UserbackcardResultMap">
+		select * from user_backcard
+	</select>
+</mapper>

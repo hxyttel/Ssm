@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.AdminMapper">
+	<resultMap type="com.p2p.pojo.Admin" id="adminssm">
+		<id column="a_id" property="aid"/>
+		<result column="a_password" property="apassword"/>
+		<result column="a_name" property="aname"/>
+		<result column="a_card" property="acard"/>
+		<result column="a_phone" property="aphone"/>
+		<result column="a_img" property="aimg"/>
+		<result column="a_mail" property="amail"/>
+	</resultMap>
+	<!-- 查所有 -->
+	<select id="list" resultMap="adminssm">
+		select * from admin
+	</select>
+	<!-- 增加 -->
+	<select id="add" parameterType="com.p2p.pojo.Admin">
+		insert into admin(a_id,a_password,a_name,a_card,a_phone,a_img,a_mail) values(#{aid},#{apassword},#{aname},#{acard},#{aphone},#{aimg},#{amail})
+	</select>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from admin where a_id = #{a_id}
+	</delete>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Admin">
+		update admin set a_password = #{apassword}, a_name = #{aname}, a_card = #{acard}, a_phone = #{aphone}, a_img = #{aimg}, a_mail = #{amail}
+			where a_id = #{aid}
+	</update>
+	<!-- 根据id查用户 -->
+	<select id="getById" resultMap="adminssm" parameterType="java.lang.Integer">
+		select * from admin where a_id = #{aid}
+	</select>
+	<!-- 登录验证 -->
+	<select id="login" parameterType="String" resultMap="adminssm">
+		select * from admin where a_phone = #{aphone}
+	</select>
+</mapper>

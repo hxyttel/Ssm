@@ -1,0 +1,18 @@
+package com.p2p.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.p2p.base.IBaseDao;
+import com.p2p.pojo.Loan;
+
+public interface LoanMapper extends IBaseDao<Integer,Loan>{
+			Loan getByemployname(String ename);
+			//实现分页查询
+			List<Loan> selectPage(Pagination page,Map<String ,Object> params,@Param(value="loan") Loan loan);
+			//查询总的记录数
+			abstract Integer loancount();
+}

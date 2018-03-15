@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.UserinfoMapper">
+<resultMap type="com.p2p.pojo.Userinfo" id="BaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_headImg" property="uiheadImg"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pv_id" property="pvid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 		  <result column="ui_openstatus" property="uiopenstatus"/>
+ 		<!-- 一对一对应用户表 -->
+ 		<association property="user" javaType="com.p2p.pojo.User">
+ 		  <id column="u_id" property="uid"/>
+ 		  <result column="u_password" property="upassword"/>
+ 		  <result column="u_phone" property="uphone"/>
+ 		  <result column="u_loginTime" property="uloginTime"/>
+ 		   <result column="order_invite" property="orderinvite"/>
+ 		  <result column="u_invite" property="uinvite"/>
+ 		  <result column="u_enable" property="uenable"/>
+ 		  <result column="u_isAccountSum" property="uisAccountSum"/>
+ 		  <result column="qr_code" property="qrcode"/>
+ 		   <result column="u_address" property="uaddress"/>
+ 		  <result column="u_ip" property="uip"/>
+ 		  <result column="u_regTime" property="uregTime"/>
+ 		  <result column="u_credit" property="ucredit"/>
+ 		  <result column="u_balance" property="ubalance"/>
+ 		  <result column="ul_id" property="ulid"/>
+ 		  <result column="vd_id" property="vdid"/>
+ 		</association>
+ 		<!-- 一对一对应身份证表 -->
+ 		<association property="idCard" javaType="com.p2p.pojo.IdCard">
+ 			<id column="ic_id" property="icid"/>
+			<result column="ic_frontUrl" property="icfrontUrl"/>
+			<result column="ic_backUrl" property="icbackUrl"/>
+			<result column="ic_status" property="icstatus"/>
+			<result column="ic_starttime" property="icstarttime"/>
+			<result column="ic_number" property="icnumber"/>
+			<result column="ui_id" property="uiid"/>
+			<result column="ic_name" property="icname"/>
+ 		</association>
+ 		<!-- 一对多对应银行卡表 -->
+ 		<!-- <association property="userbackcard" javaType="com.p2p.pojo.Userbackcard">
+ 			<id column="ub_id" property="ubid"/>
+			<result column="ui_id" property="uiid"/>
+			<result column="ub_backcardnum" property="ubbackcardnum"/>
+			<result column="ub_placeback" property="ubplaceback"/>
+			<result column="ub_bindtime" property="ubbindtime"/>
+			<result column="ub_status" property="ubstatus"/>
+			<result column="ub_money" property="ubmoney"/>
+ 		</association> -->
+</resultMap>
+	
+	<sql id="myusersql">
+		u_id,ui_name,ui_headImg,ui_sex,ui_birthday,pv_id,cy_id,
+		ae_id,ui_dealpwd,ui_email,ui_emailstatus,ui_openstatus
+	</sql>
+	<!-- 增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Userinfo" useGeneratedKeys="true" keyProperty="uiid">
+ 		 insert into user_info(<include refid="myusersql" />)
+ 		 values(#{uid},#{uiname},#{uiheadImg},#{uisex},#{uibirthday},#{pvid},#{cyid},#{aeid},#{uidealpwd},#{uiemail},#{uiemailstatus},#{uiopenstatus})
+ 	</insert>
+ 	
+ 	<select id="getModel" parameterType="com.p2p.pojo.Userinfo" resultMap="BaseResultMap">
+ 		select * from user_info ui,idCard ic<!-- ,user_backcard ub -->
+ 		 <where>
+ 		     1=1
+ 			    <if test="uiid!=null">and ui.ui_id=#{uiid}</if>
+		  		<if test="uid!=null">and ui.u_id=#{uid}</if>
+		  		<if test="uiname!=null">and ui.ui_name=#{uiname}</if>
+		  		<if test="uiheadImg!=null">and ui.ui_headImg=#{uiheadImg}</if>
+		  		<if test="uisex!=null">and ui.ui_sex=#{uisex}</if>
+		  		<if test="uibirthday!=null">and ui.ui_birthday=#{uibirthday}</if>
+		  		<if test="pvid!=null">and ui.pv_id=#{pvid}</if>
+		  		<if test="cyid!=null">and ui.cy_id=#{cyid}</if>
+		  		<if test="aeid!=null">and ui.ae_id=#{aeid}</if>
+		  		<if test="uidealpwd!=null">and ui.ui_dealpwd=#{uidealpwd}</if>
+		  		<if test="uiemail!=null">and ui.ui_email=#{uiemail}</if>
+		  		<if test="uiemailstatus!=null">and ui.ui_emailstatus=#{uiemailstatus}</if>
+		  		<if test="uiopenstatus!=null">and ui.ui_openstatus=#{uiopenstatus}</if>
+ 				<!-- 身份证idCard表 -->
+ 				<if test="uiid!=null">and ic.ui_id = #{uiid}</if>
+ 				<!-- 银行卡idCard表 -->
+ 				<!-- <if test="uiid!=null">and ub.ui_id = #{uiid}</if> -->
+ 				<!-- 关键 -->
+ 				and  ui.ui_id = ic.ui_id;
+ 		</where>
+ 	</select>
+ 	<select id="seleUserinfoByuid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+ 		select * from user_info ui <where>
+ 			ui.u_id = #{uid}
+ 		</where>
+ 	</select>
+ 	<select id="getUserinfoByuiid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+ 		select * from user_info ui <where>
+ 			ui.ui_id = #{uiid}
+ 		</where>
+ 	</select>
+ 	<update id="update" parameterType="com.p2p.pojo.Userinfo">
+ 		update user_info ui
+ 		<trim prefix="set" suffixOverrides=",">
+		  <if test="uidealpwd!=null">ui.ui_dealpwd=#{uidealpwd},</if>
+		  <if test="uiemail!=null">ui.ui_email=#{uiemail},</if>
+		  <if test="uiheadImg!=null">ui.ui_headImg=#{uiheadImg},</if>
+		  <if test="uiname!=null">ui.ui_name=#{uiname},</if>
+		  <if test="uisex!=null">ui.ui_sex=#{uisex},</if>
+		  <if test="uibirthday!=null">ui.ui_birthday=#{uibirthday},</if>
+		  <if test="pvid!=null">ui.pv_id=#{pvid},</if>
+		  <if test="cyid!=null">ui.cy_id=#{cyid},</if>
+		  <if test="aeid!=null">ui.ae_id=#{aeid},</if>
+		  <if test="uiemailstatus!=null">ui.ui_emailstatus=#{uiemailstatus},</if>
+		  <if test="uiopenstatus!=null">ui.ui_openstatus=#{uiopenstatus},</if>
+ 		</trim>
+ 		<where>
+ 		    ui.ui_id=#{uiid}
+ 		</where>
+ 	</update>
+ 	<!-- 查询 -->
+     <select id="seleUserlevelList" resultMap="BaseResultMap">
+      	select * from user_info 
+    </select> 
+    
+    <!-- 根据邮箱查询用户 -->
+    <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    	select *from user_info where ui_email=#{uiemail}
+    </select>
+</mapper>

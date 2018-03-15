@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.WithdrawalsMapper">
+	<resultMap type="com.p2p.pojo.Withdrawals" id="withdrawalsMap">
+		<id column="c_id" property="cid"/>
+		<id column="c_suid" property="csuid"/>
+		<id column="c_money" property="cmoney"/>
+		<id column="c_card" property="ccard"/>
+		<id column="c_order" property="corder"/>
+		<id column="c_time" property="ctime"/>
+		<id column="c_state" property="cstate"/>
+		<id column="c_nowMoney" property="cnowMoney"/>
+		<id column="c_poundage" property="cpoundage"/>
+		<id column="c_ip" property="cip"/>
+		<association property="user" javaType="com.p2p.pojo.Users">
+				<result property="suname" column="su_name"/>
+			</association>
+	</resultMap>
+	<select id="list" resultMap="withdrawalsMap">
+	select * from withdrawalsP2p c ,users u where c.c_suid=u.id
+	</select>
+	<select id="listLike" resultMap="withdrawalsMap" parameterType="com.p2p.pojo.Withdrawals">
+		select * from withdrawalsP2p c ,users u
+	 	<where>
+	 		c.c_suid=u.id
+	 		<if test="user.suname!=null">and u.su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')</if>
+	 		<if test="corder!=null">and c.c_order LIKE CONCAT(CONCAT('%', #{corder}), '%')</if>
+	 		<if test="cstate!=null">and c.c_state LIKE CONCAT(CONCAT('%', #{cstate}), '%')</if>
+	 	</where> 
+	</select>
+	<select id="getById" resultMap="withdrawalsMap">
+		select * from withdrawalsP2p where c_id=#{cid}
+	</select>
+	<insert id="add" parameterType="com.p2p.pojo.Withdrawals">
+		insert into withdrawalsP2p(c_id,c_suid,c_money,c_card,c_order,c_time,c_state,c_nowMoney,c_poundage,c_ip)
+		values(#{cid},#{csuid},#{cmoney},#{ccard},#{corder},#{ctime},#{cstate},#{cnowMoney},#{cpoundage},#{cip})
+	</insert>
+	<update id="update" parameterType="com.p2p.pojo.Withdrawals">
+		update withdrawalsP2p
+		<trim prefix="set" suffixOverrides=",">
+			<if test="csuid!=null">c_suid=#{csuid},</if>
+			<if test="cmoney!=null">c_money=#{cmoney},</if>
+			<if test="ccard!=null">c_card=#{ccard},</if>
+			<if test="corder!=null">c_order=#{corder},</if>
+			<if test="ctime!=null">c_time=#{ctime},</if>
+			<if test="cstate!=null">c_state=#{cstate},</if>
+			<if test="cnowMoney!=null">c_nowMoney=#{cnowMoney},</if>
+			<if test="cpoundage!=null">c_poundage=#{cpoundage},</if>
+			<if test="cip!=null">c_ip=#{cip}</if>
+		</trim>
+		<where>
+			c_id=#{cid}
+		</where>
+	</update>
+	<delete id="delete" parameterType="Integer">
+		delete from withdrawalsP2p where c_id=#{cid}
+	</delete>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RepaymentMapper">
+	<resultMap type="com.p2p.pojo.Repayment" id="repayMap">
+		<id column="rm_id" property="rmid"/>
+		<result column="f_id" property="fid"/>
+		<result column="rm_plan" property="rmplan"/>
+		<result column="rm_face" property="rmface"/>
+		<result column="rm_wait" property="rmwait"/>
+		<result column="rm_all" property="rmall"/>
+		<result column="rm_state" property="rmstate"/>
+		<result column="rm_style" property="rmstyle"/>
+		<association property="fabiao" javaType="com.p2p.pojo.Fabiao">
+			<id column="f_id" property="fid"/>
+ 		  <result column="f_title" property="ftitle"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="f_code" property="fcode"/>
+ 		  <result column="f_type" property="ftype"/>
+ 		  <result column="f_part" property="fpart"/>
+ 		  <result column="f_roe" property="froe"/>
+ 		  <result column="f_increase" property="fincrease"/>
+ 		  <result column="f_content" property="fcontent"/>
+ 		  <result column="f_situation" property="fsituation"/>
+ 		  <result column="f_opinion" property="fopinion"/>
+ 		  <result column="f_money" property="fmoney"/>
+ 		  <result column="f_endmoney" property="fendmoney"/>
+ 		  <result column="f_endtime" property="fendtime"/>
+ 		  <result column="f_minmoney" property="fminmoney"/>
+ 		  <result column="f_maxmoney" property="fmaxmoney"/>
+ 		  <result column="f_rate" property="frate"/>
+ 		  <result column="f_image" property="fimage"/>
+ 		  <result column="f_orderimg" property="forderimg"/>
+ 		  <result column="f_contract" property="fcontract"/>
+ 		  <result column="f_bidstatus" property="fbidstatus"/>
+ 		  <result column="f_status" property="fstatus"/>
+ 		  <result column="f_security" property="fsecurity"/>
+ 		  <result column="f_procedures" property="fprocedures"/>
+ 		  <result column="f_repayment" property="frepayment"/>
+ 		  <result column="f_securitymea" property="fsecuritymea"/>
+ 		  <result column="f_huanstat" property="fhuanstat"/>
+ 		  <result column="f_huanend" property="fhuanend"/>
+		</association>
+	</resultMap>
+	<!-- 查询全部 -->
+	<select id="getAllModel">
+		select * from repayment r,fabiao f where r.f_id=f.f_id
+	</select>
+	<!-- 根据id查询单个 -->
+	<select id="findModel" parameterType="java.lang.Integer" resultMap="repayMap">
+		select * from repayment r,fabiao f where r.f_id=f.f_id and r.rmid=#{rmid}
+	</select>
+	<!-- 根据对象查询单个 -->
+	<select id="getModel" parameterType="com.p2p.pojo.Repayment" resultMap="repayMap">
+		select * from repayment r,fabiao f 
+		<where>
+			r.f_id=f.f_id
+			<if test="fid!=null">and r.f_id=#{fid}</if>
+			<if test="rmplan!=null">and r.rm_plan=#{rmplan}</if>
+			<if test="rmface!=null">and r.rm_face=#{rmface}</if>
+			<if test="rmwait!=null">and r.rm_wait=#{rmwait}</if>
+			<if test="rmall!=null">and r.rm_all=#{rmall}</if>
+			<if test="rmstate!=null">and r.rm_state=#{rmstate}</if>
+			<if test="rmstyle!=null">and r.rm_style=#{rmstyle}</if>
+		</where>
+	</select>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.p2p.pojo.Repayment">
+		update repayment 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="fid!=null">f_id =#{fid},</if>
+			<if test="rmplan!=null">rm_plan =#{rmplan},</if>
+			<if test="rmface!=null">rm_face =#{rmface},</if>
+			<if test="rmwait!=null">rm_wait =#{rmwait},</if>
+			<if test="rmall!=null">rm_all =#{rmall},</if>
+			<if test="rmstate!=null">rm_state =#{rmstate},</if>
+			<if test="rmstyle!=null">rm_style =#{rmstyle},</if>
+		</trim>
+		<where>
+			rm_id=#{rmid}
+		</where>
+	</update>
+	<!-- 增加 -->
+	<insert id="addModel" parameterType="com.p2p.pojo.Repayment">
+		insert into repayment(f_id,rm_plan,rm_face,rm_wait,rm_all,rm_state,rm_style)
+		values(#{fid},#{rmplan},#{rmface},#{rmwait},#{rmall},#{rmstate},#{rmstyle})
+	</insert>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		deletl from repayment where rm_id=#{rmid}
+	</delete>
+	
+	
+</mapper>

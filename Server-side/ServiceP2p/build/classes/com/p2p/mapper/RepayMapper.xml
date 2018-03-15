@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.p2p.mapper.RepayMapper">
+		<resultMap type="com.p2p.pojo.Repayment" id="repaymentt">
+			<result column="r_id" property="rid"/>
+			<result column="r_suid" property="rsuid"/>
+			<result column="r_moeny" property="rmoeny"/>
+			<result column="r_time" property="rtime"/>
+			<result column="r_state" property="rstate"/>
+			<result column="r_handmoney" property="rhandmoney"/>
+			<association property="user" javaType="com.p2p.pojo.Users">
+				<result column="su_name" property="suname"/>
+			</association>
+		</resultMap>
+		
+		<!-- 查询所有 -->
+		<select id="list" resultMap="repaymentt">
+			select r.*,u.su_name from repayment r,users u where r.r_suid=u.id
+		</select>
+		<!-- 模糊查询 -->
+		<select id="listLike" parameterType="com.p2p.pojo.Repayment" resultMap="repaymentt">
+			select r.*,u.su_name from repayment r,users u
+			<where>
+				r.r_suid=u.id
+				<if test="user.suname!=null">and u.su_name LIKE CONCAT(CONCAT('%', #{user.suname}), '%')</if>
+			</where>
+		</select>
+		<!-- 增加 -->
+		<select id="add" parameterType="com.p2p.pojo.Repayment">
+			insert into repayment (r_suid,r_moeny,r_time,r_state,r_order,r_handmoney) values(#{rsuid},#{rmoeny},#{rtime},#{rstate},#{rorder},#{rhandmoney})
+		</select>
+		
+		<!-- 删除 -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from repayment where r_id = #{r_id}
+		</delete>
+		
+		<!-- 修改 -->
+		<update id="update" parameterType="com.p2p.pojo.Repayment">
+			update repayment 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="rsuid!=null">r_suid = #{rsuid},</if>
+				<if test="rmoeny!=null">r_moeny = #{rmoeny},</if>
+				<if test="rtime!=null">r_time = #{rtime},</if>
+				<if test="rstate!=null">r_state = #{rstate},</if>
+				<if test="rorder!=null">r_order = #{rorder},</if>
+				<if test="rhandmoney!=null">r_handmoney = #{rhandmoney},</if>
+			</trim>
+			<where>
+				r_id = #{rid}
+			</where>
+			
+		</update>
+		
+		<!-- 根据id查用户 -->
+		<select id="getById" resultMap="repaymentt" parameterType="java.lang.Integer">
+			select * from repayment where r_id = #{r_id}
+		</select>
+		<select id="getByOrder" resultMap="repaymentt" parameterType="java.lang.String">
+			select * from repayment where r_order = #{r_order}
+		</select>
+		
+	</mapper>

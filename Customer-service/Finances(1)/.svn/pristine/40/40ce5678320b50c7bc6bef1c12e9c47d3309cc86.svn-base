@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RedmoneyMapper">
+	 <resultMap id="BaseResultMap" type="com.p2p.pojo.Redmoney">
+		<id column="r_id" property="rid"/>
+		<result column="u_id" property="uid"/>   
+		<result column="r_image" property="rimage"/>  
+		<result column="r_endtime" property="rendtime"/>  
+		<result column="r_stardtime" property="rstardtime"/> 
+		<result column="r_money" property="rmoney"/>  
+		<result column="r_start" property="rstart"/> 
+		<result column="r_condition" property="rcondition"/>   
+    </resultMap>
+     <resultMap type="com.p2p.pojo.Userinfo" id="userInfoBaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ic_id" property="icid"/>
+ 		   <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pe_id" property="peid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 	</resultMap>
+    
+    <!-- 红包查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select r.r_id,r.u_id,r.r_image,r.r_endtime,r.r_stardtime,r.r_money,r.r_start,r.r_condition,ui.ui_name as uiname,u.u_id  from  redmoney r ,user u ,user_info ui  
+		<where>
+			 r.u_id = u.u_id and ui.u_id = u.u_id
+		</where>
+ 	</select>
+ 	     <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select r.r_id,r.u_id,r.r_image,r.r_endtime,r.r_stardtime,r.r_money,r.r_start,r.r_condition,ui.ui_name as uiname,u.u_id  from  redmoney r ,user u ,user_info ui  
+		<where>
+			 r.u_id = u.u_id and ui.u_id = u.u_id
+		</where>  
+    </select>
+ 	 <!-- 查询红包的总记录数 -->
+    <select id="redmoneyCount" resultType="java.lang.Integer">
+        select count(*) from redmoney;
+    </select>
+   
+    <!-- 红包添加 -->
+	<insert id="addModel"  parameterType="com.p2p.pojo.Redmoney"  useGeneratedKeys="true" keyProperty="rid">
+ 		 insert into redmoney(u_id,r_image,r_endtime,r_stardtime,r_money,r_start,r_condition) 
+ 		 values(#{uid},#{rimage},#{rendtime},#{rstardtime},#{rmoney},#{rstart},#{rcondition})
+ 	</insert>
+ 	 <!-- 修改红包-->
+    <update id="update" parameterType="com.p2p.pojo.Redmoney" >
+        UPDATE redmoney 
+        <trim prefix="set" suffixOverrides=",">
+        	<if test="uid!=null">u_id = #{uid},</if>
+			<if test="rimage!=null">r_image=#{rimage},</if>
+			<if test="rendtime!=null">r_endtime=#{rendtime},</if>
+			<if test="rstardtime!=null">r_stardtime =#{rstardtime},</if>
+			<if test="rmoney!=null">r_money =#{rmoney},</if>
+			<if test="rstart!=null">r_start =#{rstart},</if>
+			<if test="rcondition!=null">r_condition =#{rcondition},</if>
+		</trim>	
+		WHERE r_id=#{rid}
+    </update>
+     <!-- 删除 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Redmoney">
+        DELETE FROM redmoney WHERE r_id=#{rid} 
+    </delete>
+     <!-- 查询 -->
+     <select id="selectRedmoneyList" resultMap="userInfoBaseResultMap">
+      	select * from user_info 
+    </select> 
+   
+    <!-- 投资项目查询可使用红包 -->
+    <select id="selectByUserId" resultMap="BaseResultMap">
+     <![CDATA[
+    	select * from redmoney WHERE u_id=#{userid} and r_start=0 and r_endtime >=now(); 
+     ]]>
+    </select>
+    
+    <!--查询还没过期的并且没有使用的  -->
+    <select id="selectByNIU" resultMap="BaseResultMap">
+		select * from redmoney WHERE u_id=#{uid} and r_start=0 and r_endtime>=now(); 
+    </select>
+    
+    <!-- 查询已使用 -->
+	<select id="selectByUse" resultMap="BaseResultMap">
+		select * from redmoney WHERE u_id=#{uid} and r_start=1;
+	</select>
+	
+	<!-- 查询过期 -->
+	<select id="selectByOver" resultMap="BaseResultMap">
+	<![CDATA[
+		select * from redmoney WHERE u_id=#{uid} and r_endtime<=now();
+	]]>
+	</select>
+	<select id="getModel" parameterType="com.p2p.pojo.Redmoney" resultMap="BaseResultMap">
+		select * from redmoney
+		<where>
+			1=1
+			<if test="rid!=null">and r_id = #{rid}</if>
+			<if test="uid!=null">and u_id = #{uid}</if>
+			<if test="rimage!=null">and r_image=#{rimage}</if>
+			<if test="rendtime!=null">and r_endtime=#{rendtime}</if>
+			<if test="rstardtime!=null">and r_stardtime =#{rstardtime}</if>
+			<if test="rmoney!=null and rmoney!='0.0'.toString()">and r_money =#{rmoney}</if>
+			<if test="rstart!=null">and r_start =#{rstart}</if>
+			<if test="rcondition!=null">and r_condition =#{rcondition}</if>
+		</where>
+	</select>
+	
+</mapper>

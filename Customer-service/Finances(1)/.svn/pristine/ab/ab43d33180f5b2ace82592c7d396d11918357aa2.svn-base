@@ -1,0 +1,389 @@
+package com.p2p.controller.front;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.p2p.controller.back.SendMsgUtil;
+import com.p2p.pojo.Fabiao;
+import com.p2p.pojo.Moneyrecord;
+import com.p2p.pojo.RepayAllInfo;
+import com.p2p.pojo.RepayService;
+import com.p2p.pojo.Repayment;
+import com.p2p.pojo.User;
+import com.p2p.pojo.Userinfo;
+import com.p2p.service.back.MessageUtilService;
+import com.p2p.service.back.MoneyrecordServiece;
+import com.p2p.service.back.SendMsgService;
+import com.p2p.service.front.FabiaoService;
+import com.p2p.service.front.IUserService;
+import com.p2p.service.front.RepaymentService;
+import com.p2p.service.front.UserInfoService;
+import com.p2p.util.DateUtils;
+import com.p2p.util.MessageBenas;
+import com.p2p.util.SendServiceUtil;
+
+/**
+ * 还款Controller
+ * 
+ * @author  lxj
+ * */
+@Controller
+@RequestMapping(value="/repay")
+public class RepaymentController {
+	@Resource(name="repaymentServiceImpl")
+	private RepaymentService repaymentService;  //还款
+	@Resource(name="fabiaoServiceImpl")
+	private FabiaoService fabiaoService;  //发标
+	@Resource(name="IUserServiceImpl")
+	private IUserService iUserService;  //用户
+	@Resource(name="userInfoServiceImpl")
+	private UserInfoService userInfoService;  //用户详情
+	@Resource(name="moneyrecordServiceImpl")
+	private MoneyrecordServiece moneyrecordServiece;  //资金详情记录
+	
+	@Resource(name="sendMsgServiceImpl")
+	private SendMsgService sendmsg;
+	@Resource(name="messageUtilServiceImpl")
+	private MessageUtilService messageUtil;
+	
+	/**
+	 * 查询还款设置(进入还款页面)
+	 * 根据用户id查询是否已设置还款方式
+	 * 根据用户id  修改  发标方式(手动(分期期限,已还多少期)、自动在(一次性还完))
+	 * */
+	@RequestMapping(value="/repayverify")
+	public ModelAndView getUserRepay(@RequestParam Integer uid) {
+		ModelAndView mv = new ModelAndView();
+		
+		Fabiao fabiao = new Fabiao();
+		fabiao.setUid(uid);
+		Fabiao fa = fabiaoService.getModel(fabiao);
+		
+		//保存页面需要获取的字段
+		RepayAllInfo getinfo = new RepayAllInfo();
+		BigDecimal hundred = new BigDecimal("100");
+		BigDecimal froe = new BigDecimal(fa.getFroe().toString());
+		BigDecimal fincrease = new BigDecimal(fa.getFincrease().toString());  
+		BigDecimal rate = new BigDecimal(froe.add(fincrease).toString());  //期利率(小数点形式)
+		BigDecimal bidmoney = new BigDecimal(fa.getFmoney().toString());  //借款金额
+		BigDecimal interest = new BigDecimal(bidmoney.multiply(rate).toString());  //总利息
+		
+		getinfo.setAllmongy(bidmoney.add(interest).setScale(2));  //还款总金额
+		getinfo.setBidMoney(bidmoney);  //借款金额
+		getinfo.setAllInterest(interest.setScale(2));  //总利息(免平台利息(1期)默认)
+		getinfo.setAllrate(rate.multiply(hundred));  //总收益率(收益率+活动加息)
+		
+		if(fa.getFhkstype()!=null) {
+			//自动还款
+			if(fa.getFhkstype()==1) {
+				getinfo.setRaterm(1);  //还款期限
+				getinfo.setRastyle(1);  //还款方式(自动)
+				
+				BigDecimal raterm = new BigDecimal(getinfo.getRaterm().toString());
+				BigDecimal allmoney = new BigDecimal(getinfo.getAllmongy().toString());
+				
+				getinfo.setTermmoney(allmoney.divide(raterm, 2, BigDecimal.ROUND_HALF_UP).setScale(2));  //每期偿还
+				getinfo.setTermcount(fa.getFyhqx());  //已还期限
+			}
+			
+			//手动还款
+			if(fa.getFhkstype()==2) {
+				getinfo.setRaterm(fa.getFfqqx());  //还款期限
+				getinfo.setRastyle(2);  //还款方式(手动)
+				
+				BigDecimal raterm = new BigDecimal(getinfo.getRaterm().toString());
+				
+				if(getinfo.getRaterm()==6) {
+					BigDecimal extra = new BigDecimal("0.01");
+					BigDecimal rate6 = new BigDecimal(rate.add(extra).toString());  //期利率(小数点形式)
+					getinfo.setAllrate(rate6.multiply(hundred).setScale(2));  //总收益率
+					
+					BigDecimal interest6 = new BigDecimal(bidmoney.multiply(rate6).toString());  //总利息
+					getinfo.setAllInterest(interest6.setScale(2));  //总利息+平台利息(6期)
+					
+					getinfo.setAllmongy(bidmoney.add(interest6).setScale(2));
+				}else if(getinfo.getRaterm()==12) {
+					BigDecimal extra = new BigDecimal("0.012");
+					
+					BigDecimal rate12 = new BigDecimal(rate.add(extra).toString());  //期利率(小数点形式)
+					getinfo.setAllrate(rate12.multiply(hundred).setScale(2));  //总收益率
+					
+					BigDecimal interest12 = new BigDecimal(bidmoney.multiply(rate12).toString());  //总利息
+					getinfo.setAllInterest(interest12.setScale(2));  //总利息+平台利息(12期)
+					
+					getinfo.setAllmongy(bidmoney.add(interest12).setScale(2));
+				}else if(getinfo.getRaterm()==24) {
+					BigDecimal extra = new BigDecimal("0.015");
+					
+					BigDecimal rate24 = new BigDecimal(rate.add(extra).toString());  //期利率(小数点形式)
+					getinfo.setAllrate(rate24.multiply(hundred).setScale(2));  //总收益率
+					
+					BigDecimal interest24 = new BigDecimal(bidmoney.multiply(rate24).toString());  //总利息
+					getinfo.setAllInterest(interest24.setScale(2));  //总利息+平台利息(24期)
+					
+					getinfo.setAllmongy(bidmoney.add(interest24).setScale(2));
+				}
+				BigDecimal allmoney = new BigDecimal(getinfo.getAllmongy().toString());
+				getinfo.setTermmoney(allmoney.divide(raterm, 2, BigDecimal.ROUND_HALF_UP).setScale(2));  //每期偿还
+				getinfo.setTermcount(fa.getFyhqx());  //已还期限
+			}
+		}
+		mv.addObject("getinfo", getinfo);
+		
+		mv.addObject("fabiaos", fa);
+		mv.addObject("pageName", "myinfo");
+		mv.setViewName("views/front/user/repayverify");
+		return mv;
+	}
+	
+	/**
+	 * 根据用户选择的还款类型计算每期还款金额
+	 * @throws JsonProcessingException 
+	 * */
+	@RequestMapping(value="/getEachMoney")
+	@ResponseBody
+	public String getEachMoney(RepayAllInfo repayinfo) throws JsonProcessingException {
+		Map<String,Object> repmap = new HashMap<>();
+		ObjectMapper om = new ObjectMapper();
+		try {
+			if(repayinfo.getRastyle()==1) {
+				repayinfo.setRaterm(1);  //还款期限
+				
+				BigDecimal raterm = new BigDecimal(repayinfo.getRaterm().toString());
+				BigDecimal allmoney = new BigDecimal(repayinfo.getAllmongy().toString());
+				
+				repayinfo.setTermmoney(allmoney.divide(raterm, 2, BigDecimal.ROUND_HALF_UP).setScale(2));  //每期偿还
+				repayinfo.setTermcount(0);  //已还期限
+				repmap.put("count", 1);
+			}
+			if(repayinfo.getRastyle()==2) {
+				BigDecimal hundred = new BigDecimal("100");
+				 
+				BigDecimal bidmoney = new BigDecimal(repayinfo.getBidMoney().toString());
+				repayinfo.setRaterm(repayinfo.getRaterm());  //还款期限
+				
+				BigDecimal raterm = new BigDecimal(repayinfo.getRaterm().toString());
+				
+				if(repayinfo.getRaterm()==6) {
+					repayinfo.setAllrate(repayinfo.getAllrate().divide(hundred, 2, BigDecimal.ROUND_HALF_UP).setScale(2));
+					BigDecimal rate = new BigDecimal(repayinfo.getAllrate().toString());
+					
+					BigDecimal extra = new BigDecimal("0.01");
+					
+					BigDecimal rate6 = new BigDecimal(rate.add(extra).toString());  //期利率(小数点形式)
+					repayinfo.setAllrate(rate6.multiply(hundred).setScale(2));  //总收益率
+					
+					BigDecimal interest6 = new BigDecimal(bidmoney.multiply(rate6).toString());  //总利息
+					repayinfo.setAllInterest(interest6.setScale(2));  //总利息+平台利息(6期)
+					
+					repayinfo.setAllmongy(bidmoney.add(interest6).setScale(2));
+				}else if(repayinfo.getRaterm()==12) {
+					repayinfo.setAllrate(repayinfo.getAllrate().divide(hundred, 2, BigDecimal.ROUND_HALF_UP).setScale(2));
+					BigDecimal rate = new BigDecimal(repayinfo.getAllrate().toString());
+					BigDecimal extra = new BigDecimal("0.012");
+					
+					BigDecimal rate12 = new BigDecimal(rate.add(extra).toString());  //期利率(小数点形式)
+					repayinfo.setAllrate(rate12.multiply(hundred).setScale(2));  //总收益率
+					
+					BigDecimal interest12 = new BigDecimal(bidmoney.multiply(rate12).toString());  //总利息
+					repayinfo.setAllInterest(interest12.setScale(2));  //总利息+平台利息(12期)
+					
+					repayinfo.setAllmongy(bidmoney.add(interest12).setScale(2));
+				}else if(repayinfo.getRaterm()==24) {
+					repayinfo.setAllrate(repayinfo.getAllrate().divide(hundred, 2, BigDecimal.ROUND_HALF_UP).setScale(2));
+					BigDecimal rate = new BigDecimal(repayinfo.getAllrate().toString());
+					BigDecimal extra = new BigDecimal("0.015");
+					
+					BigDecimal rate24 = new BigDecimal(rate.add(extra).toString());  //期利率(小数点形式)
+					repayinfo.setAllrate(rate24.multiply(hundred).setScale(2));  //总收益率
+					
+					BigDecimal interest24 = new BigDecimal(bidmoney.multiply(rate24).toString());  //总利息
+					repayinfo.setAllInterest(interest24.setScale(2));  //总利息+平台利息(24期)
+					
+					repayinfo.setAllmongy(bidmoney.add(interest24).setScale(2));
+				}
+				BigDecimal allmoney = new BigDecimal(repayinfo.getAllmongy().toString());
+				repayinfo.setTermmoney(allmoney.divide(raterm, 2, BigDecimal.ROUND_HALF_UP).setScale(2));  //每期偿还
+				repayinfo.setTermcount(0);  //已还期限
+				repmap.put("count", 2);
+			}
+			repmap.put("getinfos", repayinfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		String repay = om.writeValueAsString(repmap);
+		return repay;
+	}
+	
+	/**
+	 * 用户还款设置  及添加用户还款初始数据
+	 * */
+	@RequestMapping(value="/updateAndadd")
+	@ResponseBody
+	public int updateAndadd(RepayAllInfo allinfo,@RequestParam Integer uid) {
+		int result = 0;
+		Fabiao fabiao2 = new Fabiao();
+		fabiao2.setUid(uid);
+		Fabiao fa = fabiaoService.getModel(fabiao2);
+		if(fa!=null) {
+			try {
+				Fabiao fabiao1 = new Fabiao();
+				fabiao1.setFid(fa.getFid());
+				fabiao1.setFfqqx(allinfo.getRaterm());
+				fabiao1.setFyhqx(allinfo.getTermcount());
+				fabiao1.setFhkstype(allinfo.getRastyle());
+				int isUpdate = fabiaoService.update(fabiao1);
+				if(isUpdate>0) {
+					BigDecimal yhqx = new BigDecimal(allinfo.getTermcount());
+					Repayment repayment = new Repayment();
+					repayment.setFid(fa.getFid());  //发标人id
+					repayment.setRmplan(allinfo.getTermmoney());  //计划还款(每期还款)
+					
+					if(allinfo.getTermcount()==0) {
+						repayment.setRmface(yhqx);  //实际还款
+					}else {
+						repayment.setRmface(allinfo.getTermmoney().multiply(yhqx));  //实际还款
+					}
+					
+					repayment.setRmwait(allinfo.getAllmongy().subtract(repayment.getRmface()));  //待还款
+					repayment.setRmall(allinfo.getAllmongy());  //还款总金额
+					repayment.setRmstate(fa.getFstatus());  //还款状态
+					repayment.setRmstyle(allinfo.getRastyle());  //还款方式
+					repayment.setFcode(fa.getFcode());  //发标订单号
+					int isAdd = repaymentService.addModel(repayment);
+					if(isAdd>0) {
+						result = 1;
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * 添加还款金额
+	 * */
+	/*@RequestMapping(value="/addrepays")
+	public String addRepay() {
+		
+		
+		return null;
+	}*/
+	
+	/**
+	 * 修改用户还款金额
+	 * */
+	@RequestMapping(value="updateUserRepay")
+	@ResponseBody
+	public int updateUserRepay(@RequestParam Integer fid,@RequestParam BigDecimal bidMoney,@RequestParam BigDecimal repmoney,@RequestParam String phone) {
+		int result = 0;
+		Fabiao fa = new Fabiao();
+		fa.setFid(fid);
+		Fabiao fabiao1 = fabiaoService.getModel(fa);
+		if(fabiao1!=null) {
+			try {
+				RepayService reService = new RepayService();
+				reService.setRsuid(fabiao1.getUid());
+				reService.setRmoney(repmoney.doubleValue());
+				reService.setRtime(DateUtils.getDateTimeFormat(new Date()));
+				reService.setRorder(fabiao1.getFcode());
+				reService.setRstate(fabiao1.getFstatus());
+				
+				Double handmoney = 0.00;
+				int term = fabiao1.getFfqqx();  //还款期限
+				//计算每次平台收益
+				if(term==6) {
+					BigDecimal extra = new BigDecimal("0.01");
+					BigDecimal money = bidMoney.multiply(extra).divide(new BigDecimal(term), 2, BigDecimal.ROUND_HALF_UP);
+					handmoney = money.doubleValue();
+				}else if(term==12) {
+					BigDecimal extra = new BigDecimal("0.012");
+					BigDecimal money = bidMoney.multiply(extra.divide(new BigDecimal(term),2, BigDecimal.ROUND_HALF_UP));
+					handmoney = money.doubleValue();
+				}else if(term==24) {
+					BigDecimal extra = new BigDecimal("0.015");
+					BigDecimal money = bidMoney.multiply(extra.divide(new BigDecimal(term),2, BigDecimal.ROUND_HALF_UP));
+					handmoney = money.doubleValue();
+				}
+				reService.setRhandmoney(handmoney);
+				
+				//向服务端传递对象(url是服务端地址)
+				int repaycount = SendServiceUtil.list(reService, "192.168.90.47:8080/ServiceP2p/repayment/add");
+				if(repaycount==1) {  //返回值为1时还款成功
+					//先将用户余额扣除
+					User nowuser = new User();
+					nowuser.setUid(fabiao1.getUid());
+					User nowuser1 = iUserService.getModel(nowuser);
+					User nowuser2 = new User();
+					nowuser2.setUid(nowuser1.getUid());
+					//将计算结果保留两位小数
+					String money = new java.text.DecimalFormat("#.00").format(nowuser1.getUbalance()-repmoney.doubleValue());
+					nowuser2.setUbalance(Double.valueOf(money));
+					int updateUser = iUserService.update(nowuser2);
+					if(updateUser>0) {
+						//平台获取本次还款的所有金额
+						User platform = new User();
+						platform.setUid(1);
+						platform.setUbalance(repmoney.doubleValue());
+						
+						Repayment repay = new Repayment();
+						repay.setFid(fid);
+						Repayment repay1 = repaymentService.getModel(repay);  //根据发标人id获取还款表中数据
+						Repayment repay2 = new Repayment();
+						repay2.setRmid(repay1.getRmid());
+						repay2.setRmface(repay1.getRmface().add(repmoney));
+						repay2.setRmwait(repay1.getRmall().subtract(repay.getRmface()));
+						//如果待还款金额为0时,则为结清标
+						if(repay2.getRmwait().intValue()==0) {
+							repay2.setRmstate(3);  
+						}
+						int updateRepay = repaymentService.update(repay2);  //修改还款表信息
+						if(updateRepay>0) {
+							Fabiao fabiao2 = new Fabiao();
+							fabiao2.setFid(fid);
+							fabiao2.setFyhqx(fabiao1.getFyhqx()+1);
+							if(fabiao1.getFfqqx()==fabiao2.getFyhqx()) {
+								fabiao2.setFstatus(3);
+							}
+							int updateFabiao = fabiaoService.update(fabiao2);
+							if(updateFabiao>0) {
+								Moneyrecord moneyrecord = new Moneyrecord();
+								moneyrecord.setUid(fabiao1.getUid());
+								Userinfo Userinfo =userInfoService.seleUserinfoByuid(fabiao1.getUid());
+								moneyrecord.setMrdetail(Userinfo.getUiname()+"在亿信平台还款了"+repmoney+"元");
+								moneyrecord.setMrwastemoney(repmoney.doubleValue());
+								moneyrecord.setMrwasttime(DateUtils.getDateFormat(new Date()));
+								moneyrecordServiece.addModel(moneyrecord);
+								
+								//向用户发送短信提示还款成功
+								SendMsgUtil sUtil = new SendMsgUtil();
+								Map<String,Object> orther = new HashMap<String,Object>();
+								orther.put("repmoney",repmoney);
+								sUtil.Send(phone,MessageBenas.MSG_REGCODE,orther,sendmsg,messageUtil);
+								
+								result = 1;
+							}
+						}
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+}

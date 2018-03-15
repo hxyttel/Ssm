@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.WithdrawalsMapper">
+	<resultMap id="BaseResultMap" type="com.p2p.pojo.Withdrawals">
+		<id column="w_id" property="wid"/>
+		<result column="u_id" property="uid"/>   
+		<result column="w_money" property="wmoney"/>  
+		<result column="w_time" property="wtime"/>  
+		<result column="w_moneytowhere" property="wmoneytowhere"/> 
+		<result column="w_status" property="wstatus"/>  
+		<result column="w_fee" property="wfee"/>  
+		<result column="w_nowMoney" property="wnowMoney"/>
+		<result column="w_order" property="worder"/>
+    </resultMap>
+    <resultMap type="com.p2p.pojo.Userinfo" id="userInfoBaseResultMap">
+		  <id column="ui_id" property="uiid"/>
+ 		  <result column="u_id" property="uid"/>
+ 		  <result column="ui_name" property="uiname"/>
+ 		  <result column="ui_sex" property="uisex"/>
+ 		  <result column="ic_id" property="icid"/>
+ 		   <result column="ui_birthday" property="uibirthday"/>
+ 		  <result column="pe_id" property="peid"/>
+ 		  <result column="cy_id" property="cyid"/>
+ 		  <result column="ae_id" property="aeid"/>
+ 		  <result column="ui_dealpwd" property="uidealpwd"/>
+ 		  <result column="ui_email" property="uiemail"/>
+ 		  <result column="ui_emailstatus" property="uiemailstatus"/>
+ 	</resultMap>
+	 <!-- 提现查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select wl.w_id,wl.u_id,wl.w_money,wl.w_time,wl.w_moneytowhere,wl.w_status,wl.w_fee,ui.ui_name as uiname,u.u_id  from  withdrawals wl ,user u ,user_info ui 
+		<where>
+			 wl.u_id = u.u_id and ui.u_id = u.u_id
+		</where>
+ 	</select>
+ 	  <!-- 查询 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+			select wl.w_id,wl.u_id,wl.w_money,wl.w_time,wl.w_moneytowhere,wl.w_status,wl.w_fee,ui.ui_name as uiname,u.u_id  from  withdrawals wl ,user u ,user_info ui 
+		<where>
+			 wl.u_id = u.u_id and ui.u_id = u.u_id
+		</where>        
+    </select>
+    <!-- 查询提现的总记录数 -->
+    <select id="withdrawalsCount" resultType="java.lang.Integer">
+        select count(*) from withdrawals;
+    </select>
+     <!-- 提现添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="wid">
+ 		 insert into withdrawals(u_id,w_money,w_time,w_moneytowhere,w_status,w_fee,w_nowMoney,w_order) 
+ 		 values(#{uid},#{wmoney},#{wtime},#{wmoneytowhere},#{wstatus},#{wfee},#{wnowMoney},#{worder})
+ 	</insert>
+ 	 <!-- 删除提现 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Withdrawals">
+        DELETE FROM withdrawals WHERE w_id=#{wid}
+    </delete>
+     <!-- 查询 -->
+     <select id="seleWithdrawalsList" resultMap="userInfoBaseResultMap">
+      	select * from user_info 
+    </select> 
+    <!-- 提现修改 -->
+    <update id="update" parameterType="com.p2p.pojo.Withdrawals">
+    	update withdrawals 
+    	<trim prefix="set" suffixOverrides=",">
+    		<if test="uid!=null">u_id=#{uid},</if>
+    		<if test="wtime!=null">w_time =#{wtime},</if>
+    		<if test="wfee!=null">w_fee=#{wfee},</if>
+    		<if test="wnowMoney!=null">w_nowMoney=#{wnowMoney},</if>
+    		<if test="wstatus!=null">w_status=#{wstatus},</if>
+    	</trim>
+    		<where>
+		 		w_order= #{worder}    		
+    		</where>
+    </update>
+</mapper>

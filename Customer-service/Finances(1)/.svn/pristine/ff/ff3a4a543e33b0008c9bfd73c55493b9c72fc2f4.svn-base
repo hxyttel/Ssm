@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.RedmoneyMapper">
+	 <resultMap id="BaseResultMap" type="com.p2p.pojo.Redmoney">
+		<id column="r_id" property="rid"/>
+		<result column="u_id" property="uid"/>   
+		<result column="r_image" property="rimage"/>  
+		<result column="r_endtime" property="rendtime"/>  
+		<result column="r_stardtime" property="rstardtime"/> 
+		<result column="r_money" property="rmoney"/>  
+    </resultMap>
+    
+    <!-- 红包查询 -->
+	<select id="getAllModel"  resultMap="BaseResultMap">
+ 		select * from redmoney 
+ 	</select>
+ 	 <!-- 查询红包的总记录数 -->
+    <select id="redmoneyCount" resultType="java.lang.Integer">
+        select count(*) from redmoney;
+    </select>
+        <!-- 查询所有角色 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+		select * from redmoney;        
+    </select>
+    <!-- 红包添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="rid">
+ 		 insert into redmoney(u_id,r_image,r_endtime,r_stardtime,r_money) 
+ 		 values(#{uid},#{rimage},#{rendtime},#{rstardtime},#{rmoney})
+ 	</insert>
+ 	 <!-- 修改红包-->
+    <update id="update" parameterType="com.p2p.pojo.Redmoney" >
+        UPDATE redmoney SET
+        	u_id = #{uid},
+			r_image=#{rimage},
+			r_endtime=#{rendtime},
+			r_stardtime =#{rstardtime},
+			r_money =#{rmoney}
+		WHERE r_id=#{rid}
+    </update>
+     <!-- 删除 -->
+    <delete id="delete" parameterType="com.p2p.pojo.Redmoney">
+        DELETE FROM redmoney WHERE r_id=#{rid} 
+    </delete>
+</mapper>

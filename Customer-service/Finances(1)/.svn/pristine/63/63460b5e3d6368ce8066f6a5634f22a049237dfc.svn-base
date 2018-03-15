@@ -1,0 +1,14 @@
+package com.p2p.service.back;
+
+import com.p2p.base.IBaseService;
+import com.p2p.pojo.Role;
+import com.p2p.util.PageInfo;
+
+public interface RoleService extends IBaseService<Integer,Role>{
+	
+	//实现分页查询
+	abstract void selectPage(PageInfo pageInfo);//实现分页
+		
+	//查询总的记录数
+	abstract Integer roleCount();
+}

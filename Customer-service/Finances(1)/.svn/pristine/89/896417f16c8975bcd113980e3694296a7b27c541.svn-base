@@ -1,0 +1,153 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
+<jsp:include page="/statics/back/static/jsp/init.jsp"></jsp:include>
+<html>
+	<head>
+		<title>亿信金融后台登录</title>
+		<link rel="Shortcut  Icon" href="/Finances/statics/other/lco/smalllog.png">
+		<link href="${pageContext.request.contextPath}/statics/backlogin/css/style.css" rel='stylesheet' type='text/css' />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Simple Login Form,Login Forms,Sign up Forms,Registration Forms,News latter Forms,Elements"./>
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		</script>
+		<!--webfonts-->
+			<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
+		<!--//webfonts-->
+				<script  type="text/javascript">
+	        function reloadValidateCode(){
+	            $("#validateCodeImg").attr("src","<%=basePath%>/back/validateCode?data=" + new Date() + Math.floor(Math.random()*24));
+	        }
+	        
+	        //判断用户名
+	        function empName(){
+	        	var name =$("#name").val();
+	        	if(name==null || name==''){
+	        		$("#nameNull").show();
+	        	}
+	        	else{
+	        		$("#nameNull").hide();
+	        	}
+	        }
+	        
+	       function empPassword(){
+	    	   var password =$("#password").val();
+	        	if(password==null || password==''){
+	        		$("#passwordNull").show();
+	        	} 
+	        	else{
+	        		$("#passwordNull").hide();
+	        	}
+	       } 
+	       
+	       function empImgcode(){
+	    	   var imgcode =$("#imgcode").val();
+	    	   var url = "${pageContext.request.contextPath}/back/SureCode";
+	        	if(imgcode==null || imgcode==''){
+	        		$("#imgcodeNull").show();
+	        	}else{
+	        		$.post(
+			    			url,
+			    			{
+			    				imgcode:imgcode,
+			    			},
+			    			function(data){
+			    				//后台返回int类型的数据
+			    				if(data<0){
+			    					$("#imgcodeNull").hide();
+			    					$("#imgcodeError").show();
+			    				}else{
+			    					$("#imgcodeNull").hide();
+			    					$("#imgcodeError").hide();
+			    				}
+			    			},
+			    			"text"
+			    		);	
+	        	}
+	       } 
+	       function login(){
+	    	   var name =$("#name").val();
+	    	   var password =$("#password").val();
+	    	   var imgcode =$("#imgcode").val();
+	    	   if(name==null || name==''){
+	        		$("#nameNull").show();
+	        	}
+	        	else if(password==null || password==''){
+	        		$("#nameNull").hide();
+	        	}
+	        	else if(imgcode==null || imgcode==''){
+	        		$("#imgcodeNull").show();
+	        	}
+	    	   else{
+	    		   $("#nameNull").hide();
+	    		   $("#passwordNull").hide();
+	    		   $("#imgcodeNull").hide();
+	    		   location.href="<%=path%>/back/loginindex?name="+name+"&password="+password+"&imgcode="+imgcode;
+	    	   }
+	    	   
+	       }
+    </script>
+	</head>
+	<body onLoad="sendRequest()">
+	
+	<!--/start-login-one-->
+	<h1>亿信金融后台登录</h1>
+			<div class="login">	
+				<div class="ribbon-wrapper h2 ribbon-red">
+					<div class="ribbon-front">
+						<h2>亿信</h2>
+					</div>
+					<div class="ribbon-edge-topleft2"></div>
+					<div class="ribbon-edge-bottomleft"></div>
+				</div>
+				<form>
+					<ul>
+						<li>
+							<input type="text" name="name" id="name" placeholder="请输入账号" onblur="empName()"/>
+						</li>
+						<li id="nameNull" style="color: red;display:none">用户名不能为空!</li>
+						
+						 <li>
+							<input type="password" name="password" id="password" placeholder="请输入密码" onblur="empPassword()"/>
+						</li>
+						 <li id="passwordNull" style="color: red;display:none">密码不能为空!</li>
+						
+						<li>
+							<input type="text" name="imgcode" id="imgcode" placeholder="请输入验证码" onblur="empImgcode()"/>
+							<span style="margin-left : 200px; display: block;width: 95px;height: 30px;">
+								<img id="validateCodeImg" src="<%=basePath%>/back/validateCode" onclick="reloadValidateCode()"/>
+							</span>
+						</li>
+						
+						<li>
+			                <span id="imgcodeNull" style="color: red;display:none">验证码不能为空!</span>
+			                <span id="imgcodeError" style="color: red;display:none">验证码错误!</span>
+			            </li>
+						
+					</ul>
+	
+				</form>
+				
+				<div class="submit">
+					<input type="submit" onclick="login()" value="登录" >
+					<h4 style="color: red;">${sessionScope.message_login}</h4>
+	                  	  	<%
+		                    	if(session.getAttribute("message_login")!=null){
+		                    		session.removeAttribute("message_login");
+		                            
+		                    	}
+	                    	%>
+				</div>
+				
+			</div>
+	<!--start-copyright-->
+	   		<div class="copy-right">
+					<p>版权 &copy; 2018 | 亿信金融 | 保留所有权利  | Template by &nbsp;<a href="/Finances/toindex">.亿信金融.</a></p>
+			</div>
+		<!--//end-copyright-->
+	</body>
+</html>

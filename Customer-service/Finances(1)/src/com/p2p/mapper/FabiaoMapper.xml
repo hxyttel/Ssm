@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.p2p.mapper.FabiaoMapper">
+	<resultMap type="com.p2p.pojo.Fabiao" id="BaseResultMap">
+		  <id column="f_id" property="fid"/>
+		<result column="f_title" property="ftitle"/>
+		<result column="u_id" property="uid"/>
+		<result column="f_code" property="fcode"/>
+		<result column="f_type" property="ftype"/>
+		<result column="f_part" property="fpart"/>
+		<result column="f_roe" property="froe"/>
+		<result column="f_increase" property="fincrease"/>
+		<result column="f_content" property="fcontent"/>
+		<result column="f_situation" property="fsituation"/>
+		<result column="f_opinion" property="fopinion"/>
+		<result column="f_money" property="fmoney"/>
+		<result column="f_endmoney" property="fendmoney"/>
+		<result column="f_endtime" property="fendtime"/>
+		<result column="f_minmoney" property="fminmoney"/>
+		<result column="f_maxmoney" property="fmaxmoney"/>
+		<result column="f_rate" property="frate"/>
+		<result column="f_image" property="fimage"/>
+		<result column="f_orderimg" property="forderimg"/>
+		<result column="f_contract" property="fcontract"/>
+		<result column="f_bidstatus" property="fbidstatus"/>
+		<result column="f_status" property="fstatus"/>
+		<result column="f_security" property="fsecurity"/>
+		<result column="f_procedures" property="fprocedures"/>
+		<result column="f_repayment" property="frepayment"/>
+		<result column="f_securitymea" property="fsecuritymea"/>
+		<result column="f_huanstat" property="fhuanstat"/>
+		<result column="f_huanend" property="fhuanend"/>
+		<result column="f_fqqx" property="ffqqx"/>
+		<result column="f_yhqx" property="fyhqx"/>
+		<result column="f_hkstype" property="fhkstype"/>
+	</resultMap>
+	<select id="getModel" parameterType="com.p2p.pojo.Fabiao" resultMap="BaseResultMap">
+ 		select * from fabiao 
+ 		 <where>
+ 		     1=1
+ 			    <if test="fid!=null">and f_id=#{fid}</if>
+		  		<if test="ftitle!=null">and f_title=#{ftitle}</if>
+		  		<if test="uid!=null">and u_id=#{uid}</if>
+		  		<if test="fcode!=null">and f_code=#{fcode}</if>
+		  		<if test="ftype!=null">and f_type=#{ftype}</if>
+		  		<if test="fpart!=null">and f_part=#{fpart}</if>
+		  		<if test="froe!=null">and f_roe=#{froe}</if>
+		  		<if test="fincrease!=null">and f_increase=#{fincrease}</if>
+		  		<if test="fcontent!=null">and f_content=#{fcontent}</if>
+		  		<if test="fsituation!=null">and  f_situation=#{fsituation}</if>
+		  		<if test="fopinion!=null">and  f_opinion=#{fopinion}</if>
+		  		<if test="fmoney!=null">and  f_money=#{fmoney}</if>
+		  		<if test="fendmoney!=null">and  f_endmoney=#{fendmoney}</if>
+		  		<if test="fendtime!=null">and f_endtime=#{fendtime}</if>
+		  		<if test="fminmoney!=null">and f_minmoney=#{fminmoney}</if>
+		  		<if test="fmaxmoney!=null">and f_maxmoney=#{fmaxmoney}</if>
+		  		<if test="frate!=null">and f_rate=#{frate}</if>
+		  		<if test="fimage!=null">and  f_image=#{fimage}</if>
+		  		<if test="forderimg!=null">and  f_orderimg=#{forderimg}</if>
+		  		<if test="fcontract!=null">and  f_contract=#{fcontract}</if>
+		  		<if test="fbidstatus!=null">and f_bidstatus=#{fbidstatus}</if>
+		  		<if test="fstatus!=null">and f_status=#{fstatus}</if>
+		  		<if test="fsecuritymea!=null">and f_securitymea=#{fsecuritymea}</if>
+		  		<if test="fsecurity!=null">and f_security=#{fsecurity}</if>
+		  		<if test="fprocedures!=null">and f_procedures=#{fprocedures}</if>
+ 				<if test="frepayment!=null">and f_repayment=#{frepayment}</if>
+ 				<if test="fhuanstat!=null">and f_huanstat=#{fhuanstat}</if>
+ 				<if test="fhuanend!=null">and f_huanend=#{fhuanend}</if>
+ 				<if test="ffqqx!=null">and f_fqqx=#{ffqqx}</if>
+ 				<if test="fyhqx!=null">and f_yhqx=#{fyhqx}</if>
+ 				<if test="fhkstype!=null">and f_hkstype=#{fhkstype}</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 发标添加 -->
+	<insert id="addModel" useGeneratedKeys="true" keyProperty="fid">
+ 		 insert into fabiao(f_title,u_id,f_code,f_type,f_part,f_roe,f_increase,f_content,f_situation,f_opinion,f_money,f_endmoney,f_endtime,f_minmoney,f_maxmoney,f_rate,f_image,f_orderimg,f_contract,f_bidstatus,f_status,f_securitymea,f_security,f_procedures,f_repayment,f_huanstat,f_huanend) 
+ 		 values(#{ftitle},#{uid},#{fcode},#{ftype},#{fpart},#{froe},#{fincrease},#{fcontent},#{fsituation},#{fopinion},#{fmoney},#{fendmoney},#{fendtime},#{fminmoney},#{fmaxmoney},#{frate},#{fimage},#{forderimg},#{fcontract},#{fbidstatus},#{fstatus},#{fsecuritymea},#{fsecurity},#{fprocedures},#{frepayment},#{fhuanstat},#{fhuanend})
+ 	</insert>
+ 	
+ 	<!-- 发标删除 -->
+ 	<delete id="delete" parameterType="com.p2p.pojo.Fabiao">
+		delete from fabiao where f_id = #{fid};
+	</delete>
+	
+	<!-- 修改发标 -->
+    <update id="update" parameterType="com.p2p.pojo.Fabiao" >
+        UPDATE fabiao  
+		<trim prefix="set" suffixOverrides=",">
+		  		<if test="ftitle!=null">f_title=#{ftitle},</if>
+		  		<if test="uid!=null">u_id=#{uid},</if>
+		  		<if test="fcode!=null">f_code=#{fcode},</if>
+		  		<if test="ftype!=null">f_type=#{ftype},</if>
+		  		<if test="fpart!=null">f_part=#{fpart},</if>
+		  		<if test="froe!=null">f_roe=#{froe},</if>
+		  		<if test="fincrease!=null">f_increase=#{fincrease},</if>
+		  		<if test="fcontent!=null">f_content=#{fcontent},</if>
+		  		<if test="fsituation!=null">f_situation=#{fsituation},</if>
+		  		<if test="fopinion!=null">f_opinion=#{fopinion},</if>
+		  		<if test="fmoney!=null">f_money=#{fmoney},</if>
+		  		<if test="fendmoney!=null">f_endmoney=#{fendmoney},</if>
+		  		<if test="fendtime!=null">f_endtime=#{fendtime},</if>
+		  		<if test="fminmoney!=null">f_minmoney=#{fminmoney},</if>
+		  		<if test="fmaxmoney!=null">f_maxmoney=#{fmaxmoney},</if>
+		  		<if test="frate!=null">f_rate=#{frate},</if>
+		  		<if test="fimage!=null">f_image=#{fimage},</if>
+		  		<if test="forderimg!=null">f_orderimg=#{forderimg},</if>
+		  		<if test="fcontract!=null">f_contract=#{fcontract},</if>
+		  		<if test="fbidstatus!=null">f_bidstatus=#{fbidstatus},</if>
+		  		<if test="fstatus!=null">f_status=#{fstatus},</if>
+		  		<if test="fsecurity!=null">f_security=#{fsecurity},</if>
+		  		<if test="fprocedures!=null">f_procedures=#{fprocedures},</if>
+ 				<if test="frepayment!=null">f_repayment=#{frepayment},</if>
+ 				<if test="fsecuritymea!=null">f_securitymea=#{fsecuritymea},</if>
+ 				<if test="fhuanstat!=null">f_huanstat=#{fhuanstat},</if>
+ 				<if test="fhuanend!=null">f_huanend=#{fhuanend},</if>
+ 				<if test="ffqqx!=null">f_fqqx=#{ffqqx},</if>
+ 				<if test="fyhqx!=null">f_yhqx=#{fyhqx},</if>
+ 				<if test="fhkstype!=null">f_hkstype=#{fhkstype},</if>
+ 		</trim>
+			
+		<where>
+			f_id=#{fid}
+		</where>
+		
+    </update>
+    
+    <select id="getAllModel" resultMap="BaseResultMap">
+    	<!-- 查已发布的项目 -->
+    	select f.* ,ui.ui_name as uiname  from fabiao f ,user u ,user_info ui 
+    	<where>
+    		 f.u_id = u.u_id and ui.u_id = u.u_id
+    	</where>
+    </select>
+    
+    <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    	<!-- 
+    		查询可投标和满标
+    		根据f_status做升序排练
+    	 -->
+    	select * from fabiao where 
+    		f_status not in(4,5,6)
+    		<if test="type!=null">and f_part=#{type}</if>
+    	   	order by f_status;
+    </select>
+    <select id="selectByStatus" resultMap="BaseResultMap">
+    	select * from fabiao where 
+    		f_status not in(4,5,6)
+    </select>
+     <select id="selectByLike" resultMap="BaseResultMap" parameterType="com.p2p.pojo.ProjectSelect">
+    	<!-- 
+    		查询可投标和满标
+    		根据f_status做升序排练
+    	 -->
+    select * from fabiao where 1=1
+    
+    <if test="borrow_interest_rate!=null and  borrow_interest_rate == '0|8'.toString()">
+    	and f_roe in(0.00,0.08)
+    </if>
+     <if test="borrow_interest_rate!=null and  borrow_interest_rate == '9|9'.toString()">
+    	and f_roe = 0.09
+    </if>
+    <if test="borrow_interest_rate!=null and  borrow_interest_rate == '10|10'.toString()">
+    	and f_roe = 0.10
+    </if>
+    <if test="borrow_interest_rate!=null and  borrow_interest_rate == '10.1|100'.toString()">
+    	and f_roe > 0.10
+    </if>
+    
+	 <if test="leftday!=null and  leftday == '0|60'.toString()">
+		 <![CDATA[
+			and datediff(f_endtime,CURDATE()) <=60
+		]]>
+	</if>
+	 <if test="leftday!=null and  leftday == '61|180'.toString()">
+		<![CDATA[
+		 	and datediff(f_endtime,CURDATE()) >= 61  and  datediff(f_endtime,CURDATE()) <= 180
+		]]>
+	</if>
+	 <if test="leftday!=null and  leftday == '181|360'.toString()">
+		<![CDATA[
+			and datediff(f_endtime,CURDATE()) >= 181 and  datediff(f_endtime,CURDATE()) <= 360
+		]]>
+	</if>
+	 <if test="leftday!=null and  leftday == '361|3600'.toString()">
+		<![CDATA[
+		 	and datediff(f_endtime,CURDATE()) >= 361
+		]]>
+	</if>
+	
+	 <if test="borrow_money!=null and  borrow_money == '0|500000'.toString()">
+   		<![CDATA[
+		  and  f_money<=500000
+		]]>
+    </if>
+     <if test="borrow_money!=null and  borrow_money == '500001|1000000'.toString()">
+   		<![CDATA[
+		  and  f_money>=500001 and  f_money<=1000000
+		]]>
+    </if>
+     <if test="borrow_money!=null and  borrow_money == '1000001|2000000'.toString()">
+   		<![CDATA[
+		  and f_money>=1000001 and  f_money<=2000000
+		]]>
+    </if>
+	
+
+	<if test="progress!=null and  progress == '0|30'.toString()">
+		<![CDATA[
+			and  f_endmoney/f_money <=0.30
+		]]>
+	</if>
+	<if test="progress!=null and  progress == '31|60'.toString()">
+		<![CDATA[
+			and  f_endmoney/f_money >=0.31 and  f_endmoney/f_money <=0.60
+		]]>
+	</if>
+	 <if test="progress!=null and  progress == '61|100'.toString()">
+		<![CDATA[
+		 	and f_endmoney/f_money >=0.61 and  f_endmoney/f_money <=1
+		]]>
+	</if>
+	
+
+	<if test="borrow_status!=null and  borrow_status == '2'.toString()">
+		<!-- 正在募集 -->
+		  and f_status=1
+	</if>
+	<if test="borrow_status!=null and  borrow_status == '6'.toString()">
+		<!-- 还款中 -->
+		  and f_status=2
+	</if>
+    <if test="borrow_status!=null and  borrow_status == '7'.toString()">
+		<!-- 已结清 -->
+		  and f_status=3
+	</if>
+	 <if test="pagetype!=null and pagetype!=''">
+		<!-- 是什么标 -->
+		and  f_part=#{pagetype}
+	</if>
+    </select>
+    <select id="selectProductsByPage" resultMap="BaseResultMap">
+    	 select * from fabiao where 
+    		f_status not in(4,5,6)
+    		<if test="fpart!=null">and f_part=#{fpart}</if>
+    		and f_endtime >=now()
+    	   	order by f_status limit #{startPos},#{pageSize}
+    </select>
+    <select id="getProductsCount" resultType="long">
+    	 SELECT COUNT(*) FROM fabiao where 1=1 
+    	 <if test="fpart!=null">and f_part=#{fpart}</if>
+    </select>
+    
+    <!-- 后台表管理 -->
+    <select id="selectPageFabiao" resultMap="BaseResultMap">
+		select * from fabiao 
+	</select>
+	<select id="selectFabiao" resultMap="BaseResultMap">
+		select * from fabiao where f_status=6;
+	</select>
+	<!-- 后台表总记录数查询 -->
+	<select id="fabiaoCount" resultType="java.lang.Integer">
+		select count(*) from fabiao where f_status=6;
+	</select>
+	<!-- 查询流标 -->
+	<select id="selectlb" resultMap="BaseResultMap">
+		<![CDATA[
+			select * from fabiao where f_endtime<=#{time} and f_status !=6 and f_endmoney<f_money;
+		]]>
+	</select>
+	<!-- 查询满标 -->
+	<select id="selectmb" resultMap="BaseResultMap">	
+		select * from fabiao where f_endmoney>=f_money  and f_status !=6;
+	</select>
+	<!-- 查询还款标 -->
+	<select id="selecthkb" resultMap="BaseResultMap">
+		<![CDATA[
+			select * from fabiao where f_huanstat<=#{time}  and f_status !=6;
+		]]>
+	</select>
+	<!-- 修改流标 -->
+	<update id="updatelb" parameterType="com.p2p.pojo.Fabiao">
+		update  fabiao set f_status=#{start} where f_id=#{fid}
+	</update>
+	<select id="hotselect" resultMap="BaseResultMap">
+		
+ 	</select>
+ 	
+ 	<!-- 查询所有还款标 -->
+ 	<select id="getRepayByStatus" resultMap="BaseResultMap">
+ 		select *from fabiao where f_status=2
+ 	</select>
+</mapper>

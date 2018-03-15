@@ -1,0 +1,344 @@
+.mod-two-column {
+  background: #e8e8e8;
+  padding-top: 15px;
+  padding-bottom: 40px;
+  overflow: hidden;
+}
+.mod-two-column .side-bar {
+  float: left;
+  width: 200px;
+  background: #fff;
+}
+.mod-two-column .side-bar .menu {
+  padding: 0 20px 0;
+}
+.mod-two-column .side-bar .menu dl {
+  border-bottom: 1px solid #cbcbcb;
+  padding-bottom: 15px;
+}
+.mod-two-column .side-bar .menu dl.last {
+  border-bottom: none;
+}
+.mod-two-column .side-bar .menu dl dt {
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+.mod-two-column .side-bar .menu dl dd {
+  font-size: 16px;
+}
+.mod-two-column .side-bar .menu dl dd a {
+  padding: 8px 0 8px 18px;
+}
+.mod-two-column .side-bar .menu dl dd.on a {
+  color: #3180bf;
+}
+.mod-two-column .side-bar .menu a {
+  display: block;
+  color: #1e1e1e;
+}
+.mod-two-column .main {
+  margin-left: 214px;
+  padding: 20px 30px 40px;
+  background: #fff;
+  min-height: 683px;
+}
+.mod-two-column .main h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.mod-two-column .main .tab {
+  font-size: 16px;
+}
+.mod-two-column .main .tab ul {
+  overflow: hidden;
+  border-bottom: 1px solid #3180bf;
+}
+.mod-two-column .main .tab li {
+  float: left;
+  margin-right: 20px;
+  padding: 0 10px 15px;
+}
+.mod-two-column .main .tab li.on {
+  padding-bottom: 11px;
+  border-bottom: 4px solid #3180bf;
+}
+.mod-two-column .main .tab li.on a {
+  color: #3180bf;
+}
+.mod-two-column .main .tab a {
+  color: #8d8d8d;
+}
+.mod-two-column .main .tip {
+  font-size: 14px;
+  color: #8d8d8d;
+  line-height: 22px;
+  padding: 15px 0;
+}
+.mod-two-column .main .tip p {
+  padding: 5px 0;
+}
+.mod-two-column .main .tip .btn-inline {
+  position: relative;
+  top: 0px;
+  margin-left: 8px;
+  border: 1px solid #3180bf;
+  border-radius: 3px;
+  padding: 3px 10px;
+  color: #3180bf;
+}
+.mod-two-column .main .search {
+  padding: 25px 0;
+  font-size: 14px;
+  color: #1e1e1e;
+}
+.mod-two-column .main .search.no-padding-top {
+  padding-top: 14px;
+}
+.mod-two-column .main .search input[type='text'],
+.mod-two-column .main .search input[type='search'],
+.mod-two-column .main .search input[type='date'],
+.mod-two-column .main .search select {
+  width: 76px;
+  border: 1px solid #cbcbcb;
+  margin-left: 10px;
+  height: 22px;
+  line-height: 22px;
+}
+.mod-two-column .main .search input[type='checkbox'] {
+  position: relative;
+  top: 2px;
+}
+.mod-two-column .main .search select {
+  height: 24px;
+  line-height: 24px;
+}
+.mod-two-column .main .search label {
+  display: inline-block;
+  *display: inline;
+  margin-right: 20px;
+  height: 22px;
+  line-height: 22px;
+}
+.mod-two-column .main .search button {
+  position: relative;
+  top: 2px;
+  border-radius: 2px;
+  margin-right: 20px;
+  display: inline-block;
+  *display: inline;
+  color: #3180bf;
+  border: 1px solid #3180bf;
+  font-size: 16px;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 10px;
+  background: none;
+  font-family: "microsoft yahei";
+}
+.mod-two-column .main .data {
+  font-size: 12px;
+}
+.mod-two-column .main .data h3 {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+.mod-two-column .main .data table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+  margin-bottom: 12px;
+}
+.mod-two-column .main .data table thead {
+  color: #8d8d8d;
+}
+.mod-two-column .main .data table thead td {
+  border: none;
+  border-bottom: 1px solid #cbcbcb;
+  padding-bottom: 10px;
+}
+.mod-two-column .main .data table td {
+  vertical-align: top;
+  text-align: left;
+  padding: 10px 4px;
+  padding-bottom: 40px;
+}
+.mod-two-column .main .data table td a {
+  color: #3180bf;
+}
+.mod-two-column .main .data table td:nth-child(2n) {
+  background: #f9f9f9;
+}
+.mod-two-column .main .data table .no-data td {
+  text-align: center;
+  padding: 40px 0;
+}
+.mod-two-column .main .data.letter table thead td {
+  font-size: 12px;
+}
+.mod-two-column .main .data.letter table td {
+  font-size: 14px;
+  border-bottom: 1px solid #cbcbcb;
+  padding: 0;
+  height: 50px;
+  line-height: 50px;
+}
+.mod-two-column .main .data.letter table td:nth-child(2n) {
+  background: #fff;
+}
+.mod-two-column .main .mod-attstation .item {
+  border-bottom: 1px solid #cbcbcb;
+  padding-bottom: 26px;
+  margin-bottom: 20px;
+}
+.mod-two-column .main .mod-attstation .item h2 {
+  color: #8d8d8d;
+  font-size: 18px;
+  margin-bottom: 32px;
+}
+.mod-two-column .main .mod-attstation .item:last-child {
+  border: none;
+}
+.mod-two-column .main .mod-attstation .item .process ul {
+  overflow: hidden;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #8d8d8d;
+  margin-right: -108px;
+}
+.mod-two-column .main .mod-attstation .item .process ul li {
+  float: left;
+  width: 14%;
+  text-align: left;
+}
+.mod-two-column .main .mod-attstation .item .process ul li span {
+  display: block;
+  margin-top: 4px;
+}
+.mod-two-column .main .mod-attstation .item .process ul li .btn {
+  color: #3180bf ;
+  border-radius: 2px;
+  padding: 0 4px;
+  display: inline-block;
+  border: 1px solid #3180bf;
+}
+.mod-two-column .main .mod-attstation .item .process .bar {
+  position: relative;
+  border-radius: 4px;
+  background: #e8e8e8;
+  width: 98%;
+  height: 16px;
+  margin: 0 auto;
+  display: block;
+}
+.mod-two-column .main .mod-attstation .item .process .bar .bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 16px;
+  background: #3180bf;
+  border-radius: 4px;
+}
+.mod-two-column .main .mod-attstation .item .process .bar .num {
+  color: #3180bf;
+  font-size: 12px;
+  position: absolute;
+  top: -14px;
+  left: 0%;
+  margin-left: -10px;
+}
+.mod-two-column .main .mod-attstation .data {
+  width: 436px;
+  padding-bottom: 20px;
+}
+.mod-two-column .main .mod-attstation .data h3 {
+  font-size: 16px;
+  font-weight: normal;
+}
+.mod-two-column .main .mod-attstation .data table td {
+  background: #f9f9f9;
+}
+.mod-two-column .main .mod-attstation .data table td:nth-child(2n) {
+  background: #fff;
+}
+.mod-two-column .text-data {
+  position: relative;
+  margin-top: -24px;
+}
+.mod-two-column .text-data .item {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #cbcbcb;
+}
+.mod-two-column .text-data .item.no-border-bottom {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.mod-two-column .text-data .item.gray {
+  color: #8d8d8d;
+}
+.mod-two-column .text-data .item a {
+  color: #3180bf;
+}
+.mod-two-column .text-data h3 {
+  font-size: 18px;
+  padding-bottom: 20px;
+  color: #1e1e1e;
+}
+.mod-two-column .text-data .btn {
+  color: #3180bf;
+  position: absolute;
+  top: 26px;
+  right: 0;
+  font-size: 16px;
+}
+.mod-two-column .text-data .btn-inline {
+  color: #3180bf;
+  border: 1px solid #3180bf;
+  border-radius: 3px;
+  margin-left: 12px;
+  padding: 0 6px;
+  font-size: 16px;
+}
+.mod-two-column .text-data p {
+  font-size: 16px;
+  line-height: 32px;
+}
+.mod-two-column .text-data p span {
+  display: inline-block;
+}
+.mod-two-column .text-data p span.clom-5 {
+  width: 19%;
+}
+.mod-two-column .text-data p span.clom-4 {
+  width: 24%;
+}
+.mod-two-column .text-data p span.clom-3 {
+  width: 32%;
+}
+.mod-two-column .text-data p span.clom-2 {
+  width: 50%;
+}
+.mod-two-column .text-data p span.clom-1 {
+  width: 100%;
+}
+.mod-two-column .text-data p.font-small {
+  font-size: 14px;
+  height: 14px;
+  line-height: 14px;
+  padding-top: 10px;
+}
+.mod-two-column .text-data p em {
+  display: inline;
+}
+.mod-two-column .text-data p .fl {
+  float: left;
+}
+.mod-two-column .auto-form {
+  font-size: 14px;
+}
+.mod-two-column .auto-form label {
+  display: block;
+}
